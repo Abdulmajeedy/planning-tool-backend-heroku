@@ -1,0 +1,13 @@
+version: "3"
+services:
+  system-config:
+    image: postgres-spring4
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - 5431
+    ports:
+      - 5431:5431
+
+    restart: unless-stopped

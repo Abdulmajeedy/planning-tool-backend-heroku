@@ -1,0 +1,15 @@
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/datasource/PostgresDatasource.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/repository/ZoneRepository.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/repository/DistrictRepository.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/models/Shehia.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/repository/RegionRepository.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/service/ShehiaService.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/repository/ShehiaRepository.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/service/ZoneService.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/models/Zones.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/SystemConfigurationApplication.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/models/Region.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/models/District.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/service/RegionService.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/config/SwaggerConfig.java
+/var/www/html/shuleyangu-system-configuration/src/main/java/com/hmy/shuleyangu/systemconfiguration/service/DistrictService.java
