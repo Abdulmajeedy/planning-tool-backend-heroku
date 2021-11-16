@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "zones")
+@RequestMapping
 public class ZoneController {
     private final ZoneService zoneService;
 

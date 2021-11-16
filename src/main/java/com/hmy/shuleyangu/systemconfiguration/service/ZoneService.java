@@ -23,10 +23,10 @@ public class ZoneService {
 
     }
     public void addNewZone(Zones zones) {
-        Optional<Zones> zoneOptional = zoneRepository.findZoneByCode(zones.getZoneCode());
-        if (zoneOptional.isPresent()){
-            throw new IllegalStateException("zone already registered");
-        }
+//        Optional<Zones> zoneOptional = zoneRepository.findZoneByCode(zones.getZoneCode());
+//        if (zoneOptional.isPresent()){
+//            throw new IllegalStateException("zone already registered");
+//        }
         zoneRepository.save(zones);
     }
 

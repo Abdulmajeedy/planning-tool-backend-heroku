@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface ZoneRepository extends JpaRepository<Zones,UUID> {
-    Optional<Zones> findZoneByCode(String zoneCode);
+//    Optional<Zones> findZoneByCode(String zoneCode);
 }

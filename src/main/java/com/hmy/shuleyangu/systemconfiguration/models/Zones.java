@@ -1,29 +1,25 @@
 package com.hmy.shuleyangu.systemconfiguration.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
-@Data
-@AllArgsConstructor
 @Table
 @Entity
 public class Zones extends Auditable<String>{
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
     @Id
-    @SequenceGenerator(
-            name = "zone_sequence",
-            sequenceName = "zone_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "zone_sequence"
-
-    )
     private final UUID zoneID;
     private final String zoneCode;
     private final String zoneName;
+
+    public Zones(UUID zoneID, String zoneCode, String zoneName) {
+        this.zoneID = zoneID;
+        this.zoneCode = zoneCode;
+        this.zoneName = zoneName;
+    }
 
 
     public UUID getZoneID() {
@@ -37,4 +33,5 @@ public class Zones extends Auditable<String>{
     public String getZoneName() {
         return zoneName;
     }
+
 }
