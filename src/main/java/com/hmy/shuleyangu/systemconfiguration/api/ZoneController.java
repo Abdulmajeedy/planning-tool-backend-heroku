@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping
@@ -23,11 +24,35 @@ public class ZoneController {
 
     }
     @PostMapping(path = "/addZone")
-    public void registerNewStudent(@RequestBody Zones zones)
+    public String registerNewZone(@RequestBody Zones zones)
     {
-        zoneService.addNewZone(zones);
+//        zoneService.addNewZone(zones);
+        if(zones != null) {
+            zoneService.addNewZone(zones);
+            return "Added a zone successfully";
+        } else {
+            return "Request does not contain a body";
+        }
+
 
     }
+    @GetMapping(path = "/getZone/{id}")
+    public Zones getZoneById(@PathVariable("id") UUID zoneId){
 
+        return zoneService.getZoneById(zoneId).orElse(null);
+    }
+
+
+    @DeleteMapping(path = "deleteZone/{id}")
+    public void deleteById(@PathVariable("id")UUID zoneId){
+        zoneService.deleteZone(zoneId);
+    }
+//
+//    @PutMapping(path = "updateZone/{id}")
+//    public void updateZone(@PathVariable("id")UUID zoneId,
+//                           @RequestBody Zones zoneToUpdate){
+//        zoneService.updateZoneById(zoneId,zoneToUpdate);
+//
+//    }
 
 }

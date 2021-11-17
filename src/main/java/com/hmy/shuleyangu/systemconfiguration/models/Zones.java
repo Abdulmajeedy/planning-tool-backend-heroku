@@ -11,9 +11,9 @@ public class Zones extends Auditable<String>{
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
     @Id
-    private final UUID zoneID;
-    private final String zoneCode;
-    private final String zoneName;
+    private UUID zoneID;
+    private String zoneCode;
+    private String zoneName;
 
     public Zones(UUID zoneID, String zoneCode, String zoneName) {
         this.zoneID = zoneID;
@@ -21,6 +21,20 @@ public class Zones extends Auditable<String>{
         this.zoneName = zoneName;
     }
 
+    public void setZoneID(UUID zoneID) {
+        this.zoneID = zoneID;
+    }
+
+    public void setZoneCode(String zoneCode) {
+        this.zoneCode = zoneCode;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public Zones() {
+    }
 
     public UUID getZoneID() {
         return zoneID;

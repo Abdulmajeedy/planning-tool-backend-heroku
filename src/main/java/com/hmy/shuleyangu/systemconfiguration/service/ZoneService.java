@@ -3,11 +3,11 @@ package com.hmy.shuleyangu.systemconfiguration.service;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.ZoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ZoneService {
@@ -19,15 +19,44 @@ public class ZoneService {
     }
 
     public List<Zones> getZones() {
-        return zoneRepository.findAll();
+        return (List<Zones>) zoneRepository.findAll();
+
 
     }
     public void addNewZone(Zones zones) {
-//        Optional<Zones> zoneOptional = zoneRepository.findZoneByCode(zones.getZoneCode());
-//        if (zoneOptional.isPresent()){
+//        List<Zones> zoneOptional = zoneRepository.findByName(zones.getZoneName());
+//        if (zoneOptional){
 //            throw new IllegalStateException("zone already registered");
 //        }
-        zoneRepository.save(zones);
+//
+        Zones z = zoneRepository.save(zones);
+        System.out.println(z.getClass().getSimpleName());
     }
+
+    public Optional<Zones>getZoneById(UUID zoneId){
+
+        return zoneRepository.findById(zoneId);
+    }
+
+    public void deleteZone(UUID zoneId){
+        zoneRepository.deleteById(zoneId);
+    }
+
+//
+//    public void updateZoneById(UUID zoneId, Zones zoneUpdate) {
+//        Optional<Zones> u = zoneRepository.findById(zoneId);
+//
+//        return zoneRepository.findById(zoneId).map(zone->{
+//                    int indexOfZoneToUpdate = DB.indexOf(zone);
+//                    if (indexOfZoneToUpdate>=0){
+//                        DB.set(indexOfZoneToUpdate,new Zones(zoneId,zoneUpdate.getZoneCode(),zoneUpdate.getZoneName()));
+//                        return 1;
+//                    }
+//                    return 0;
+//
+//                })
+//                .orElse(0);
+//
+//    }
 
 }
