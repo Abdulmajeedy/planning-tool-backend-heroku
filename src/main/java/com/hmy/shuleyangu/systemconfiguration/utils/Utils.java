@@ -1,4 +1,4 @@
-package com.hmy.shuleyangu.systemconfiguration.utils;
+/* package com.hmy.shuleyangu.systemconfiguration.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -43,3 +43,4 @@ public class Utils {
         return outputStream.toByteArray();
     }
 }
+ */
