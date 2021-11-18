@@ -26,7 +26,6 @@ public class ZoneController {
     @PostMapping(path = "/addZone")
     public String registerNewZone(@RequestBody Zones zones)
     {
-//        zoneService.addNewZone(zones);
         if(zones != null) {
             zoneService.addNewZone(zones);
             return "Added a zone successfully";
@@ -48,11 +47,11 @@ public class ZoneController {
         zoneService.deleteZone(zoneId);
     }
 //
-//    @PutMapping(path = "updateZone/{id}")
-//    public void updateZone(@PathVariable("id")UUID zoneId,
-//                           @RequestBody Zones zoneToUpdate){
-//        zoneService.updateZoneById(zoneId,zoneToUpdate);
-//
-//    }
+    @PutMapping(path = "updateZone/{id}")
+    public void updateZone(@PathVariable("id")UUID zoneId,
+                           @RequestBody Zones zoneToUpdate){
+        zoneService.updateZoneById(zoneId,zoneToUpdate);
+
+    }
 
 }

@@ -20,17 +20,11 @@ public class ZoneService {
 
     public List<Zones> getZones() {
         return (List<Zones>) zoneRepository.findAll();
-
-
     }
+
     public void addNewZone(Zones zones) {
-//        List<Zones> zoneOptional = zoneRepository.findByName(zones.getZoneName());
-//        if (zoneOptional){
-//            throw new IllegalStateException("zone already registered");
-//        }
-//
-        Zones z = zoneRepository.save(zones);
-        System.out.println(z.getClass().getSimpleName());
+      zoneRepository.save(zones);
+
     }
 
     public Optional<Zones>getZoneById(UUID zoneId){
@@ -42,10 +36,10 @@ public class ZoneService {
         zoneRepository.deleteById(zoneId);
     }
 
-//
-//    public void updateZoneById(UUID zoneId, Zones zoneUpdate) {
-//        Optional<Zones> u = zoneRepository.findById(zoneId);
-//
+
+    public void updateZoneById(UUID zoneId, Zones zoneUpdate) {
+        Optional<Zones> u = zoneRepository.findById(zoneId);
+
 //        return zoneRepository.findById(zoneId).map(zone->{
 //                    int indexOfZoneToUpdate = DB.indexOf(zone);
 //                    if (indexOfZoneToUpdate>=0){
@@ -56,7 +50,7 @@ public class ZoneService {
 //
 //                })
 //                .orElse(0);
-//
-//    }
+
+    }
 
 }

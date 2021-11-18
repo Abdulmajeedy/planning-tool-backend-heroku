@@ -1,9 +1,17 @@
 package com.hmy.shuleyangu.systemconfiguration.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity
 public class Zones extends Auditable<String>{
@@ -15,11 +23,10 @@ public class Zones extends Auditable<String>{
     private String zoneCode;
     private String zoneName;
 
-    public Zones(UUID zoneID, String zoneCode, String zoneName) {
-        this.zoneID = zoneID;
-        this.zoneCode = zoneCode;
-        this.zoneName = zoneName;
-    }
+//
+//    @ManyToOne
+//    @JoinColumn(name = "region_id_region_id")
+    private UUID regionId;
 
     public void setZoneID(UUID zoneID) {
         this.zoneID = zoneID;
@@ -31,9 +38,6 @@ public class Zones extends Auditable<String>{
 
     public void setZoneName(String zoneName) {
         this.zoneName = zoneName;
-    }
-
-    public Zones() {
     }
 
     public UUID getZoneID() {

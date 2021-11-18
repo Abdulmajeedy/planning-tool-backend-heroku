@@ -1,4 +1,13 @@
 package com.hmy.shuleyangu.systemconfiguration.repository;
 
-public interface DistrictRepository {
+import com.hmy.shuleyangu.systemconfiguration.models.District;
+import com.hmy.shuleyangu.systemconfiguration.models.Zones;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface DistrictRepository extends CrudRepository<District, UUID> {
+
 }
