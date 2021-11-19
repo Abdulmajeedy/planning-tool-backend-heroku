@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping
@@ -32,7 +33,24 @@ public class DistrictController {
         } else {
             return "Request does not contain a body";
         }
+    }
+    @GetMapping(path = "/getDistrict/{id}")
+    public District getDistrict(@PathVariable("id") UUID districtId){
 
+        return districtService.getDistrictById(districtId).orElse(null);
+    }
+
+
+    @DeleteMapping(path = "deleteDistrict/{id}")
+    public void deleteById(@PathVariable("id")UUID zoneId){
+        districtService.deleteDistrict(zoneId);
+    }
+
+
+    @PutMapping(path = "updateDistrict/{id}")
+    public void updateZone(@PathVariable("id")UUID districtId,
+                           @RequestBody District districtToUpdate){
+        districtService.updateDistrict(districtId,districtToUpdate);
 
     }
 }

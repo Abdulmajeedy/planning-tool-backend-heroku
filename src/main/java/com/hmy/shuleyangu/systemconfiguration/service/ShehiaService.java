@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ShehiaService {
@@ -26,4 +28,28 @@ public class ShehiaService {
         shehiaRepository.save(shehia);
 
     }
+    public Optional<Shehia> getShehiaById(UUID shehiaId){
+
+        return shehiaRepository.findById(shehiaId);
+    }
+
+    public void deleteShehia(UUID shehiaId){
+        shehiaRepository.deleteById(shehiaId);
+    }
+
+    public void updateShehia(UUID shehiaId, Shehia shehia) {
+        shehiaRepository.findById(shehiaId)
+                .orElseThrow(()
+                        -> new IllegalStateException(
+                        "Shehia with Id "+ shehiaId + " does not exist"
+                ));
+
+
+        shehia.setShehiaId(shehiaId);
+        shehiaRepository.save(shehia);
+
+    }
+
+
 }
+

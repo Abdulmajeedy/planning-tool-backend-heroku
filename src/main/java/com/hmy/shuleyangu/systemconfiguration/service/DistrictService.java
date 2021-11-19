@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DistrictService {
@@ -28,4 +30,26 @@ public class DistrictService {
 
     }
 
+    public Optional<District> getDistrictById(UUID districtId){
+
+        return districtRepository.findById(districtId);
     }
+
+    public void deleteDistrict(UUID districtId){
+        districtRepository.deleteById(districtId);
+    }
+
+    public void updateDistrict(UUID districtId, District district) {
+        districtRepository.findById(districtId)
+                .orElseThrow(()
+                        -> new IllegalStateException(
+                        "District with Id " + districtId + " does not exist"
+                ));
+
+
+        district.setDistrictId(districtId);
+        districtRepository.save(district);
+    }
+    }
+
+

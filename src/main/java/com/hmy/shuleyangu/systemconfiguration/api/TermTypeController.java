@@ -1,5 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.api;
 
+import com.hmy.shuleyangu.systemconfiguration.models.Shehia;
 import com.hmy.shuleyangu.systemconfiguration.models.TermTypes;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.service.TermTypeService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping
@@ -29,6 +31,11 @@ public class TermTypeController {
     public ResponseEntity<String> registerNewTermType(@RequestBody TermTypes termTypes)
     {
         termTypeService.addNewTermType(termTypes);
-        return ResponseEntity.ok("Term type system Added succesfully");
+        return ResponseEntity.ok("Term type system Added successfully");
+    }
+    @GetMapping(path = "/getTermType/{id}")
+    public TermTypes getTermType(@PathVariable("id") UUID termTypeId){
+
+        return termTypeService.getTermTypeById(termTypeId).orElse(null);
     }
 }

@@ -24,6 +24,9 @@ public class District extends Auditable<String>{
     public UUID getDistrictId() {
         return districtId;
     }
+    public void setDistrictId(UUID districtId){
+        this.districtId=districtId;
+    }
 
     public String getDistrictCode() {
         return districtCode;
