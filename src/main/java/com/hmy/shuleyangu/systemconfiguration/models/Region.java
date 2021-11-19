@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -16,18 +17,19 @@ import java.util.UUID;
 public class Region extends Auditable<String>{
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(name = "regionId", updatable = false, nullable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID regionId;
     @Column(name="regionCode")
     private String regionCode;
     @Column(name="regionName")
     private String regionName;
-//
-//    @OneToMany(targetEntity = Zones.class,cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(referencedColumnName = "zoneID")
-   private UUID zoneID;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "zoneId")
+   private Zones zones;
+
+    @OneToMany(mappedBy = "region")
+    private List<District> districts;
 
     public UUID getRegionId() {
         return regionId;

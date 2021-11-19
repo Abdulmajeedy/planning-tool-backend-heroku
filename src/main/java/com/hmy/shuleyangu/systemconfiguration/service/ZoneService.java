@@ -3,6 +3,8 @@ package com.hmy.shuleyangu.systemconfiguration.service;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.ZoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,21 +38,18 @@ public class ZoneService {
         zoneRepository.deleteById(zoneId);
     }
 
+    public void updateZone(UUID zoneId, Zones zones) {
+     zoneRepository.findById(zoneId)
+                .orElseThrow(()
+                        -> new IllegalStateException(
+                        "Zone with Id "+ zoneId + " does not exist"
+                ));
 
-    public void updateZoneById(UUID zoneId, Zones zoneUpdate) {
-        Optional<Zones> u = zoneRepository.findById(zoneId);
 
-//        return zoneRepository.findById(zoneId).map(zone->{
-//                    int indexOfZoneToUpdate = DB.indexOf(zone);
-//                    if (indexOfZoneToUpdate>=0){
-//                        DB.set(indexOfZoneToUpdate,new Zones(zoneId,zoneUpdate.getZoneCode(),zoneUpdate.getZoneName()));
-//                        return 1;
-//                    }
-//                    return 0;
-//
-//                })
-//                .orElse(0);
+        zones.setZoneID(zoneId);
+        zoneRepository.save(zones);
 
     }
+
 
 }

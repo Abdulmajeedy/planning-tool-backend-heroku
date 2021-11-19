@@ -3,6 +3,7 @@ package com.hmy.shuleyangu.systemconfiguration.api;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.service.ZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,16 +25,10 @@ public class ZoneController {
 
     }
     @PostMapping(path = "/addZone")
-    public String registerNewZone(@RequestBody Zones zones)
+    public ResponseEntity<String>registerNewZone(@RequestBody Zones zones)
     {
-        if(zones != null) {
-            zoneService.addNewZone(zones);
-            return "Added a zone successfully";
-        } else {
-            return "Request does not contain a body";
-        }
-
-
+        zoneService.addNewZone(zones);
+        return ResponseEntity.ok("ZoneAdded succesfully");
     }
     @GetMapping(path = "/getZone/{id}")
     public Zones getZoneById(@PathVariable("id") UUID zoneId){
@@ -50,7 +45,7 @@ public class ZoneController {
     @PutMapping(path = "updateZone/{id}")
     public void updateZone(@PathVariable("id")UUID zoneId,
                            @RequestBody Zones zoneToUpdate){
-        zoneService.updateZoneById(zoneId,zoneToUpdate);
+        zoneService.updateZone(zoneId,zoneToUpdate);
 
     }
 

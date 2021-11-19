@@ -9,21 +9,17 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Data
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Table
 @Entity
 public class Shehia extends Auditable<String>{
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @GeneratedValue(generator = "UUID")
     @Id
     private UUID shehiaId;
     private String shehiaCode;
     private String shehiaName;
-    private UUID districtId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "districtId")
+    private District district;
 
     public UUID getShehiaId() {
         return shehiaId;
@@ -49,11 +45,4 @@ public class Shehia extends Auditable<String>{
         this.shehiaName = shehiaName;
     }
 
-    public UUID getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(UUID districtId) {
-        this.districtId = districtId;
-    }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -17,9 +18,11 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable <U>{
     @CreatedBy
+//    @Column(name="CREATED_BY", updatable=false)
     protected U createdBy;
     @CreatedDate
     @Temporal(TIMESTAMP)
+//    @Column(name="CREATED_DATE", updatable=false)
     protected Date createdDate;
     @LastModifiedBy
     protected U modifiedBy;

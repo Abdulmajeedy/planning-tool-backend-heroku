@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 @Data
 @ToString
@@ -15,18 +16,15 @@ import java.util.UUID;
 @Table
 @Entity
 public class Zones extends Auditable<String>{
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
     @Id
+    @Column(name = "zoneId", updatable = false, nullable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID zoneID;
     private String zoneCode;
     private String zoneName;
 
-//
-//    @ManyToOne
-//    @JoinColumn(name = "region_id_region_id")
-    private UUID regionId;
+    @OneToMany(mappedBy = "zones")
+    private List<Region> region;
 
     public void setZoneID(UUID zoneID) {
         this.zoneID = zoneID;
