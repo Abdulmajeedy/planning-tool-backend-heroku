@@ -35,7 +35,6 @@ public class RegionService {
         return regionRepository.findById(regionId);
     }
 
-
     public void deleteRegion(UUID zoneId){
         regionRepository.deleteById(zoneId);
     }

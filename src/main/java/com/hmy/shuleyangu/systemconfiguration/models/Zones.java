@@ -19,15 +19,15 @@ public class Zones extends Auditable<String>{
     @Id
     @Column(name = "zoneId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
-    private UUID zoneID;
+    private UUID zoneId;
     private String zoneCode;
     private String zoneName;
 
     @OneToMany(mappedBy = "zones")
     private List<Region> region;
 
-    public void setZoneID(UUID zoneID) {
-        this.zoneID = zoneID;
+    public void setZoneID(UUID zoneId) {
+        this.zoneId = zoneId;
     }
 
     public void setZoneCode(String zoneCode) {
@@ -38,8 +38,8 @@ public class Zones extends Auditable<String>{
         this.zoneName = zoneName;
     }
 
-    public UUID getZoneID() {
-        return zoneID;
+    public UUID getZoneId() {
+        return zoneId;
     }
 
     public String getZoneCode() {

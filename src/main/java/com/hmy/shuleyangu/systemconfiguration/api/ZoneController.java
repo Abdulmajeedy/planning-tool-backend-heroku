@@ -1,5 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.api;
 
+import com.hmy.shuleyangu.systemconfiguration.dto.ZoneDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.service.ZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,9 @@ public class ZoneController {
         return ResponseEntity.ok("ZoneAdded succesfully");
     }
     @GetMapping(path = "/getZone/{id}")
-    public Zones getZoneById(@PathVariable("id") UUID zoneId){
+    public ZoneDto getZoneById(@PathVariable("id") UUID zoneId){
 
-        return zoneService.getZoneById(zoneId).orElse(null);
+        return zoneService.getZoneById(zoneId);
     }
 
 

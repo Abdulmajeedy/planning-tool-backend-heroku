@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Year;
 import java.util.Date;
 import java.util.UUID;
 @Data
@@ -17,7 +18,7 @@ public class AcademicYear extends Auditable<String>{
     @GeneratedValue(generator = "UUID")
     @Column(name = "academicYearId", updatable = false, nullable = false)
     private UUID academicYearId;
-    private Date year;
+    private Year year;
     private int status;
 
     public UUID getAcademicYearId() {
@@ -28,11 +29,11 @@ public class AcademicYear extends Auditable<String>{
         this.academicYearId = academicYearId;
     }
 
-    public Date getYear() {
+    public Year getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(Year year) {
         this.year = year;
     }
 
