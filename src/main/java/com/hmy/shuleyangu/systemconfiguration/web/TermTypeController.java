@@ -1,10 +1,7 @@
-package com.hmy.shuleyangu.systemconfiguration.api;
+package com.hmy.shuleyangu.systemconfiguration.web;
 
-import com.hmy.shuleyangu.systemconfiguration.models.Shehia;
 import com.hmy.shuleyangu.systemconfiguration.models.TermTypes;
-import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.service.TermTypeService;
-import com.hmy.shuleyangu.systemconfiguration.service.ZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

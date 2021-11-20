@@ -1,7 +1,6 @@
-package com.hmy.shuleyangu.systemconfiguration.api;
+package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.models.District;
-import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.service.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

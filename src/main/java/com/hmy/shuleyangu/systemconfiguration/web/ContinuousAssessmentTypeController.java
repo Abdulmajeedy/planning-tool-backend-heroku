@@ -1,9 +1,7 @@
-package com.hmy.shuleyangu.systemconfiguration.api;
+package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.models.ContinuousAssessmentType;
-import com.hmy.shuleyangu.systemconfiguration.models.Shehia;
 import com.hmy.shuleyangu.systemconfiguration.service.ContinuousAssessmentTypeService;
-import com.hmy.shuleyangu.systemconfiguration.service.ZoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

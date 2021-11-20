@@ -1,8 +1,6 @@
-package com.hmy.shuleyangu.systemconfiguration.api;
+package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.models.AcademicYear;
-import com.hmy.shuleyangu.systemconfiguration.models.Shehia;
-import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.service.AcademicYearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

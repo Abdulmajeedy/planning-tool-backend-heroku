@@ -1,6 +1,5 @@
-package com.hmy.shuleyangu.systemconfiguration.api;
+package com.hmy.shuleyangu.systemconfiguration.web;
 
-import com.hmy.shuleyangu.systemconfiguration.models.District;
 import com.hmy.shuleyangu.systemconfiguration.models.Shehia;
 import com.hmy.shuleyangu.systemconfiguration.service.ShehiaService;
 import org.springframework.beans.factory.annotation.Autowired;

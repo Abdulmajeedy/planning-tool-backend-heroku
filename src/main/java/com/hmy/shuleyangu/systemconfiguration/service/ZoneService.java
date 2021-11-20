@@ -1,6 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
-import com.hmy.shuleyangu.systemconfiguration.dto.ZoneDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.ZoneRepository;
 import org.modelmapper.ModelMapper;
@@ -29,7 +29,7 @@ public class ZoneService {
 //      zoneRepository.save(zones);
 //
 //    }
-public Map<String,Boolean> addNewZone(Zones zoneDto){
+public Map<String,Boolean> addNewZone(ZoneRequestDto zoneDto){
     Zones zone = modelMapper.map(zoneDto,Zones.class);
     zoneRepository.save(zone);
     Map<String,Boolean> response= new HashMap<>();
@@ -37,10 +37,10 @@ public Map<String,Boolean> addNewZone(Zones zoneDto){
     return response;
 }
 
-    public ZoneDto getZoneById(UUID zoneID) {
+    public ZoneRequestDto getZoneById(UUID zoneID) {
         return modelMapper.map(
                 zoneRepository.findById(zoneID).orElseThrow(()-> new ResourceAccessException("Zone not found of this id::"+zoneID)),
-                ZoneDto.class
+                ZoneRequestDto.class
         );
     }
 //    public Optional<Zones> getZoneById(UUID zoneId){
