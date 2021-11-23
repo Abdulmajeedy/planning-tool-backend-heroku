@@ -15,7 +15,7 @@ public class Zones extends Auditable<String>{
     @Id
   @Column(name = "zoneId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
-    private UUID zoneId;
+    private String Id;
     private String zoneCode;
     private String zoneName;
 

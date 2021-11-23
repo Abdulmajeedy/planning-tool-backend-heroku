@@ -26,7 +26,7 @@ public class RegionService {
     public List<Region> findAllRegions(PageRequest pageRequest) {
         return regionRepository.findAll(pageRequest).getContent();
     }
-    public Optional<Region> getRegionById(UUID regionId){
+    public Optional<Region> getRegionById(String regionId){
 
         return regionRepository.findById(regionId);
     }
@@ -37,11 +37,11 @@ public class RegionService {
     }
 
 
-    public void deleteRegion(UUID zoneId){
+    public void deleteRegion(String zoneId){
         regionRepository.deleteById(zoneId);
     }
 
 
-    public void updateRegion(UUID regionId, Region regionToUpdate) {
+    public void updateRegion(String regionId, Region regionToUpdate) {
     }
 }

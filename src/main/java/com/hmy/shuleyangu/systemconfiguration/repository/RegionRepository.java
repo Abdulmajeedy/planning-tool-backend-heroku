@@ -11,6 +11,6 @@ import java.net.ContentHandler;
 import java.util.UUID;
 
 @Repository
-public interface RegionRepository extends JpaRepository<Region, UUID> {
+public interface RegionRepository extends JpaRepository<Region, String> {
 
 }

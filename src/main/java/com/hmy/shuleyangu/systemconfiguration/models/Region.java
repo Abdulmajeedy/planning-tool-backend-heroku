@@ -16,7 +16,7 @@ public class Region extends Auditable<String>{
     @Id
     @Column(name = "regionId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
-    private UUID regionId;
+    private String Id;
     @Column(name="regionCode")
     private String regionCode;
     @Column(name="regionName")

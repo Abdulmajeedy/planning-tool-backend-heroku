@@ -29,17 +29,17 @@ public class ZoneService {
         return zoneRepository.save(zones);
     }
 
-    public Optional<Zones> getZoneById(UUID zoneId){
+    public Optional<Zones> getZoneById(String zoneId){
 
         return zoneRepository.findById(zoneId);
     }
 
-    public void deleteZone(UUID zoneId){
+    public void deleteZone(String zoneId){
 
         zoneRepository.deleteById(zoneId);
     }
 
-    public void updateZone(UUID zoneId, Zones zones) {
+    public void updateZone(String zoneId, Zones zones) {
      zoneRepository.findById(zoneId)
                 .orElseThrow(()
                         -> new IllegalStateException(
@@ -47,7 +47,7 @@ public class ZoneService {
                 ));
 
 
-        zones.setZoneId(zoneId);
+        zones.setId(zoneId);
         zoneRepository.save(zones);
 
 

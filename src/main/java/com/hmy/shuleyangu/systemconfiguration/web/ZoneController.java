@@ -37,7 +37,7 @@ public class ZoneController implements ZoneApi {
         for(Zones z:zones)
         {
             ZoneResponseDto responseDto = new ZoneResponseDto();
-            responseDto.setZoneId(z.getZoneId());
+            responseDto.setZoneId(z.getId());
             responseDto.setZoneCode(z.getZoneCode());
             responseDto.setZoneName(z.getZoneName());
             responseDto.setCreatedDate(z.getCreatedDate());
@@ -49,32 +49,28 @@ public class ZoneController implements ZoneApi {
         return ResponseEntity.ok(zon);
     }
 
-    public ResponseEntity<ZoneResponseDto> registerNewZone(Zones zoneDto)
+    public ResponseEntity<ZoneResponseDto> registerNewZone(ZoneRequestDto zoneDto)
     {
-        Optional<Zones> zn = zoneService.getZoneById(zoneDto.getZoneId());
 
-        if(!zn.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         Zones z = new Zones();
         z.setZoneCode(zoneDto.getZoneCode());
         z.setZoneName(zoneDto.getZoneName());
         Zones responsive = zoneService.addNewZone(z);
 
         ZoneResponseDto responseDto = new ZoneResponseDto();
-        responseDto.setZoneId(responsive.getZoneId());
+        responseDto.setZoneId(responsive.getId());
         responseDto.setZoneCode(responsive.getZoneCode());
         responseDto.setZoneName(responsive.getZoneName());
         responseDto.setCreatedBy(responsive.getCreatedBy());
         responseDto.setCreatedDate(responsive.getCreatedDate());
         responseDto.setModifiedBy(responsive.getModifiedBy());
         responseDto.setModifiedDate(responsive.getModifiedDate());
-        responseDto.setZoneId(z.getZoneId());
+        responseDto.setZoneId(z.getId());
         return ResponseEntity.ok(responseDto);
 
     }
     @Override
-    public ResponseEntity<ZoneResponseDto> getZoneById(UUID zoneId)
+    public ResponseEntity<ZoneResponseDto> getZoneById(String zoneId)
     {
         Optional<Zones> zn = zoneService.getZoneById(zoneId);
         if(!zn.isPresent())
@@ -85,7 +81,7 @@ public class ZoneController implements ZoneApi {
         {
             Zones z = zn.get();
             ZoneResponseDto responseDto = new ZoneResponseDto();
-            responseDto.setZoneId(z.getZoneId());
+            responseDto.setZoneId(z.getId());
             responseDto.setZoneCode(z.getZoneCode());
             responseDto.setZoneName(z.getZoneName());
             responseDto.setCreatedDate(z.getCreatedDate());
@@ -97,14 +93,14 @@ public class ZoneController implements ZoneApi {
     }
 
 
-    public ResponseEntity<ZoneResponseDto>deleteById(UUID zoneId){
+    public ResponseEntity<ZoneResponseDto>deleteById(String zoneId){
         zoneService.deleteZone(zoneId);
        return new ResponseEntity(ApiResponse.ok("Zone with Id "+ zoneId + " has been deleted"), null,HttpStatus.OK);
 
     }
     
     
-    public void updateZone(UUID zoneId, Zones zoneToUpdate){
+    public void updateZone(String zoneId, Zones zoneToUpdate){
         zoneService.updateZone(zoneId,zoneToUpdate);
     }
 

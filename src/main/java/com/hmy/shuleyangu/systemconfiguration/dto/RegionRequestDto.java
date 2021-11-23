@@ -8,6 +8,5 @@ import java.util.UUID;
 public class RegionRequestDto {
     private String regionCode;
     private String regionName;
-    private UUID regionId;
-//    private UUID zoneId;
+    private String zoneId;
 }

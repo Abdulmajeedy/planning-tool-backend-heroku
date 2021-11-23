@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.UUID;
 @Data
 public class RegionResponseDto extends Auditable<String> {
-    private UUID regionId;
+    private String regionId;
     private String regionCode;
     private String regionName;
 
