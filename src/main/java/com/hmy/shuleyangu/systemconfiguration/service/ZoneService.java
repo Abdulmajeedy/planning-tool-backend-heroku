@@ -5,50 +5,37 @@ import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.ZoneRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.*;
 
 @Service
 public class ZoneService {
     private final ModelMapper modelMapper;
-    private final ZoneRepository zoneRepository;
-
     @Autowired
+    private ZoneRepository zoneRepository;
     public ZoneService(ModelMapper modelMapper, ZoneRepository zoneRepository){
         this.modelMapper = modelMapper;
         this.zoneRepository = zoneRepository;
     }
 
-    public List<Zones> getZones() {
-        return (List<Zones>) zoneRepository.findAll();
+    public List<Zones> findAllZones(PageRequest pageRequest) {
+        return zoneRepository.findAll(pageRequest).getContent();
     }
-//
-//    public void addNewZone(Zones zones) {
-//      zoneRepository.save(zones);
-//
-//    }
-public Map<String,Boolean> addNewZone(ZoneRequestDto zoneDto){
-    Zones zone = modelMapper.map(zoneDto,Zones.class);
-    zoneRepository.save(zone);
-    Map<String,Boolean> response= new HashMap<>();
-    response.put("response",Boolean.TRUE);
-    return response;
-}
 
-    public ZoneRequestDto getZoneById(UUID zoneID) {
-        return modelMapper.map(
-                zoneRepository.findById(zoneID).orElseThrow(()-> new ResourceAccessException("Zone not found of this id::"+zoneID)),
-                ZoneRequestDto.class
-        );
+    public Zones addNewZone(Zones zones) {
+
+        return zoneRepository.save(zones);
     }
-//    public Optional<Zones> getZoneById(UUID zoneId){
-//
-//        return zoneRepository.findById(zoneId);
-//    }
+
+    public Optional<Zones> getZoneById(UUID zoneId){
+
+        return zoneRepository.findById(zoneId);
+    }
 
     public void deleteZone(UUID zoneId){
+
         zoneRepository.deleteById(zoneId);
     }
 
@@ -60,10 +47,13 @@ public Map<String,Boolean> addNewZone(ZoneRequestDto zoneDto){
                 ));
 
 
-        zones.setZoneID(zoneId);
+        zones.setZoneId(zoneId);
         zoneRepository.save(zones);
 
+
     }
+
+
 
 
 }

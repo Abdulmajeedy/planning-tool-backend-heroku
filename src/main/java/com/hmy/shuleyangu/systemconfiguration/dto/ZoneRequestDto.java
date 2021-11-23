@@ -8,4 +8,5 @@ import java.util.UUID;
 public class ZoneRequestDto {
     private String zoneCode;
     private String zoneName;
+private UUID zoneId;
 }

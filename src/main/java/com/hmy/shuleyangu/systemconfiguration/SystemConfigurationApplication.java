@@ -1,6 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration;
 
-import com.hmy.shuleyangu.systemconfiguration.models.SpringSecurityAuditorAware;
+import com.hmy.shuleyangu.systemconfiguration.config.SpringSecurityAuditorAware;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
