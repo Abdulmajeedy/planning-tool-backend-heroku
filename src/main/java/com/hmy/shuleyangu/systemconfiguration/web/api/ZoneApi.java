@@ -19,19 +19,16 @@ public interface ZoneApi {
             @RequestParam(defaultValue = "10", required = false) int size);
 
    @RequestMapping(value = "/", method = RequestMethod.POST,produces = "application/json",consumes="application/json")
-    public ResponseEntity<ZoneResponseDto> registerNewZone(@RequestBody ZoneRequestDto zones);
+    public ResponseEntity<ZoneResponseDto> registerNewZone(@RequestBody Zones zones);
 
     @RequestMapping(value = "/{zoneId}", method = RequestMethod.GET,produces = "application/json")
     public ResponseEntity<ZoneResponseDto> getZoneById(@PathVariable UUID zoneId);
 
     @DeleteMapping(path = "/{zoneId}")
-    public void deleteById(@PathVariable("zoneId")UUID zoneId);
+    public ResponseEntity<ZoneResponseDto> deleteById(@PathVariable("zoneId")UUID zoneId);
 
-    @PutMapping(path = "/{zoneId}")
-    public void updateZone(@PathVariable("zoneId")UUID zoneId,
-                           @RequestBody Zones zoneToUpdate);
-//    @RequestMapping(value = { "/{zoneId}"}, method = RequestMethod.PUT,produces = "application/json",consumes="application/json")
-//    public ResponseEntity<ZoneResponseDto> updateZone(@PathVariable  UUID zoneId, @RequestBody ZoneRequestDto categoryRequestDto);
+    @RequestMapping(value = "/{zoneId}", method = RequestMethod.PUT,produces = "application/json",consumes="application/json")
+    public void updateZone(@PathVariable("zoneId")UUID zoneId, @RequestBody Zones zoneToUpdate);
 
 }
 

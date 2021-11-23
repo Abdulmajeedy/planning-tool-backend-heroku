@@ -49,7 +49,7 @@ public class ZoneController implements ZoneApi {
         return ResponseEntity.ok(zon);
     }
 
-    public ResponseEntity<ZoneResponseDto> registerNewZone(ZoneRequestDto zoneDto)
+    public ResponseEntity<ZoneResponseDto> registerNewZone(Zones zoneDto)
     {
         Optional<Zones> zn = zoneService.getZoneById(zoneDto.getZoneId());
 
@@ -97,13 +97,14 @@ public class ZoneController implements ZoneApi {
     }
 
 
-    public void deleteById(@PathVariable("zoneId")UUID zoneId){
+    public ResponseEntity<ZoneResponseDto>deleteById(UUID zoneId){
         zoneService.deleteZone(zoneId);
+       return new ResponseEntity(ApiResponse.ok("Zone with Id "+ zoneId + " has been deleted"), null,HttpStatus.OK);
+
     }
-
-
-    public void updateZone(@PathVariable("id")UUID zoneId,
-                           @RequestBody Zones zoneToUpdate){
+    
+    
+    public void updateZone(UUID zoneId, Zones zoneToUpdate){
         zoneService.updateZone(zoneId,zoneToUpdate);
     }
 

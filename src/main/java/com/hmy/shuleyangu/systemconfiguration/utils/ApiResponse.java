@@ -21,8 +21,13 @@ public class ApiResponse<T> {
         this.message = message;
         this.data = data;
         this.error = error;
-        this.pageNumber = pageNumber;
-        this.pageSize = pageSize;
+//        this.pageNumber = pageNumber;
+//        this.pageSize = pageSize;
+    }
+    public ApiResponse(boolean status, String message){
+        this.status = status;
+        this.message = message;
+
     }
 
     public static <Data> ApiResponse<Data> error(String message, List<String> error) {
@@ -31,5 +36,9 @@ public class ApiResponse<T> {
 
     public static <Data> ApiResponse<Data> success(Data data) {
         return new ApiResponse<>(true, "Success", data, null);
+    }
+
+    public static ApiResponse ok(String message) {
+        return new ApiResponse(true, message);
     }
 }
