@@ -12,21 +12,23 @@ import java.util.UUID;
 @Data
 @Entity
 public class Region extends Auditable<String>{
-
     @Id
     @Column(name = "regionId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
-    private String Id;
+    private UUID regionId;
     @Column(name="regionCode")
     private String regionCode;
     @Column(name="regionName")
     private String regionName;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "zoneId")
    private Zones zones;
+
 
     @OneToMany(mappedBy = "region")
     private List<District> districts;
 
-
+    public UUID getZoneId() {
+        return zones.getZoneId();
+    }
 }

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 public class ZoneResponseDto extends Auditable<String> {
-    private String zoneId;
+    private UUID zoneId;
     private String zoneCode;
     private String zoneName;
 }

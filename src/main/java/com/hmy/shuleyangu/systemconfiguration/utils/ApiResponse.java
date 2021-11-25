@@ -4,11 +4,12 @@ import java.util.List;
 
 public class ApiResponse<T> {
     public boolean status;
+    public Integer statusCode;
     public String message;
     public T data;
     public List<String> error;
-    public int pageNumber;
-    public int pageSize;
+//    public int pageNumber;
+//    public int pageSize;
 
     public ApiResponse(boolean status, String message, T data, List<String> error) {
         this.status = status;
@@ -30,6 +31,12 @@ public class ApiResponse<T> {
 
     }
 
+    public ApiResponse(boolean status, String message, T data) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
     public static <Data> ApiResponse<Data> error(String message, List<String> error) {
         return new ApiResponse<>(false, message, null, error);
     }
@@ -38,7 +45,11 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, "Success", data, null);
     }
 
-    public static ApiResponse ok(String message) {
-        return new ApiResponse(true, message);
+    public static <Data> ApiResponse<Data> ok(String message,Data data) {
+        return new ApiResponse<Data>(true, message, data);
+    }
+    public  static ApiResponse ok(String message){
+
+        return new ApiResponse(true,message);
     }
 }

@@ -13,9 +13,8 @@ import java.util.UUID;
 @Entity
 public class Zones extends Auditable<String>{
     @Id
-  @Column(name = "zoneId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
-    private String Id;
+    private UUID zoneId;
     private String zoneCode;
     private String zoneName;
 

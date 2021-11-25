@@ -10,11 +10,12 @@ import java.util.UUID;
 @Entity
 public class District extends Auditable<String>{
     @Id
-    @GeneratedValue
+    @Column(name = "districtId", updatable = false, nullable = false)
+    @GeneratedValue(generator = "UUID")
     private UUID districtId;
     private String districtCode;
     private String districtName;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "regionId")
     private Region region;
 

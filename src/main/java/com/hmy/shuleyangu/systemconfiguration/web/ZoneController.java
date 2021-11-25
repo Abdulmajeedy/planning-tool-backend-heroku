@@ -7,13 +7,13 @@ import com.hmy.shuleyangu.systemconfiguration.repository.ZoneRepository;
 import com.hmy.shuleyangu.systemconfiguration.service.ZoneService;
 import com.hmy.shuleyangu.systemconfiguration.utils.ApiResponse;
 import com.hmy.shuleyangu.systemconfiguration.web.api.ZoneApi;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public class ZoneController implements ZoneApi {
         for(Zones z:zones)
         {
             ZoneResponseDto responseDto = new ZoneResponseDto();
-            responseDto.setZoneId(z.getId());
+            responseDto.setZoneId(z.getZoneId());
             responseDto.setZoneCode(z.getZoneCode());
             responseDto.setZoneName(z.getZoneName());
             responseDto.setCreatedDate(z.getCreatedDate());
@@ -49,28 +49,12 @@ public class ZoneController implements ZoneApi {
         return ResponseEntity.ok(zon);
     }
 
-    public ResponseEntity<ZoneResponseDto> registerNewZone(ZoneRequestDto zoneDto)
-    {
-
-        Zones z = new Zones();
-        z.setZoneCode(zoneDto.getZoneCode());
-        z.setZoneName(zoneDto.getZoneName());
-        Zones responsive = zoneService.addNewZone(z);
-
-        ZoneResponseDto responseDto = new ZoneResponseDto();
-        responseDto.setZoneId(responsive.getId());
-        responseDto.setZoneCode(responsive.getZoneCode());
-        responseDto.setZoneName(responsive.getZoneName());
-        responseDto.setCreatedBy(responsive.getCreatedBy());
-        responseDto.setCreatedDate(responsive.getCreatedDate());
-        responseDto.setModifiedBy(responsive.getModifiedBy());
-        responseDto.setModifiedDate(responsive.getModifiedDate());
-        responseDto.setZoneId(z.getId());
-        return ResponseEntity.ok(responseDto);
-
-    }
     @Override
-    public ResponseEntity<ZoneResponseDto> getZoneById(String zoneId)
+    public void registerNewZone(Zones zones){
+        zoneService.addNewZone(zones);
+    }
+
+    public ResponseEntity<ZoneResponseDto> getZoneById(UUID zoneId)
     {
         Optional<Zones> zn = zoneService.getZoneById(zoneId);
         if(!zn.isPresent())
@@ -81,7 +65,7 @@ public class ZoneController implements ZoneApi {
         {
             Zones z = zn.get();
             ZoneResponseDto responseDto = new ZoneResponseDto();
-            responseDto.setZoneId(z.getId());
+            responseDto.setZoneId(z.getZoneId());
             responseDto.setZoneCode(z.getZoneCode());
             responseDto.setZoneName(z.getZoneName());
             responseDto.setCreatedDate(z.getCreatedDate());
@@ -93,15 +77,25 @@ public class ZoneController implements ZoneApi {
     }
 
 
-    public ResponseEntity<ZoneResponseDto>deleteById(String zoneId){
+    public void deleteById(UUID zoneId){
         zoneService.deleteZone(zoneId);
-       return new ResponseEntity(ApiResponse.ok("Zone with Id "+ zoneId + " has been deleted"), null,HttpStatus.OK);
 
     }
-    
-    
-    public void updateZone(String zoneId, Zones zoneToUpdate){
+
+    public ResponseEntity updateZone(UUID zoneId, Zones zoneToUpdate){
+        Optional<Zones> zn = zoneService.getZoneById(zoneId);
         zoneService.updateZone(zoneId,zoneToUpdate);
+        Zones z = zn.get();
+        ZoneResponseDto responseDto = new ZoneResponseDto();
+        responseDto.setZoneId((zoneId));
+        responseDto.setZoneCode(z.getZoneCode());
+        responseDto.setZoneName(z.getZoneName());
+        responseDto.setModifiedDate(z.getModifiedDate());
+        responseDto.setModifiedBy(z.getModifiedBy());
+
+
+        //return new ResponseEntity(ApiResponse.ok("Zone with Id "+ zoneId + " has been updated"),HttpStatus.OK);
+    return ResponseEntity.ok(responseDto);
     }
 
 

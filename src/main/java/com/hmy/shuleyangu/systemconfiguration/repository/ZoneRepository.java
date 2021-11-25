@@ -11,10 +11,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ZoneRepository extends JpaRepository<Zones,String> {
-Optional<Zones>findById(String zoneId);
-void deleteById(String zoneId);
+public interface ZoneRepository extends JpaRepository<Zones, UUID> {
+Optional<Zones>findById(UUID zoneId);
+void deleteById(UUID zoneId);
 
-//void updateById(UUID zoneId,Zones zone);
+
 
 }

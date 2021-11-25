@@ -1,5 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.models;
 
+import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,50 +17,19 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public abstract class Auditable <U>{
     @CreatedBy
-//    @Column(name="CREATED_BY", updatable=false)
     protected U createdBy;
     @CreatedDate
     @Temporal(TIMESTAMP)
-//    @Column(name="CREATED_DATE", updatable=false)
     protected Date createdDate;
     @LastModifiedBy
     protected U modifiedBy;
     @LastModifiedDate
     protected Date modifiedDate;
 
-    public U getCreatedBy() {
-        return createdBy;
-    }
 
-    public void setCreatedBy(U createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public U getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(U modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
 }
 
 

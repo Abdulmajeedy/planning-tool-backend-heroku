@@ -15,6 +15,7 @@ import java.util.UUID;
 public class DistrictService {
         private final DistrictRepository districtRepository;
         private final ModelMapper modelMapper;
+
         @Autowired
         public DistrictService(DistrictRepository districtRepository, ModelMapper modelMapper){
             this.districtRepository = districtRepository;
@@ -26,9 +27,9 @@ public class DistrictService {
 
     public District addNewDistrict(District district) {
         districtRepository.save(district);
-
         return district;
     }
+
 
     public Optional<District> getDistrictById(UUID districtId){
 

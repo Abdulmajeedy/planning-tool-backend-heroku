@@ -10,4 +10,6 @@ public class DistrictResponseDto extends Auditable<String> {
     private UUID districtId;
     private String districtCode;
     private String districtName;
+    private String regionName;
+    private UUID regionId;
 }

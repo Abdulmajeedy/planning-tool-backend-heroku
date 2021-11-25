@@ -1,6 +1,7 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.ZoneResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.ZoneRepository;
 import org.modelmapper.ModelMapper;
@@ -24,36 +25,34 @@ public class ZoneService {
         return zoneRepository.findAll(pageRequest).getContent();
     }
 
-    public Zones addNewZone(Zones zones) {
 
-        return zoneRepository.save(zones);
+    public void addNewZone(Zones zones) {
+        zoneRepository.save(zones);
     }
 
-    public Optional<Zones> getZoneById(String zoneId){
+    public Optional<Zones> getZoneById(UUID zoneId){
 
         return zoneRepository.findById(zoneId);
     }
 
-    public void deleteZone(String zoneId){
+    public void deleteZone(UUID zoneId){
 
         zoneRepository.deleteById(zoneId);
     }
 
-    public void updateZone(String zoneId, Zones zones) {
+    public void updateZone(UUID zoneId, Zones zones) {
      zoneRepository.findById(zoneId)
                 .orElseThrow(()
                         -> new IllegalStateException(
                         "Zone with Id "+ zoneId + " does not exist"
                 ));
-
-
-        zones.setId(zoneId);
+        zones.setZoneId(zoneId);
         zoneRepository.save(zones);
-
 
     }
 
 
-
-
+    public Zones findAll() {
+        return (Zones) zoneRepository.findAll();
+    }
 }

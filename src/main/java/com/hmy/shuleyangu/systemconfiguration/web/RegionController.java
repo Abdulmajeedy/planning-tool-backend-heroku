@@ -36,22 +36,28 @@ public class RegionController implements RegionApi {
 
     public ResponseEntity<List<RegionResponseDto>> getRegions(int page, int size)
     {
-    PageRequest pageRequest = PageRequest.of(page, size);
+
+        PageRequest pageRequest = PageRequest.of(page, size);
     List<Region> regions = regionService.findAllRegions(pageRequest);
+
     List<RegionResponseDto> regn = new ArrayList<>();
-    for(Region r:regions)
+        for(Region r:regions)
     {
         RegionResponseDto responseDto = new RegionResponseDto();
-        responseDto.setRegionId(r.getId());
+//        responseDto.setZoneId(r.getZones().getZoneId());
+//        responseDto.setZoneName(r.getZones().getZoneName());
+        responseDto.setRegionId(r.getRegionId());
         responseDto.setRegionCode(r.getRegionCode());
         responseDto.setRegionName(r.getRegionName());
         responseDto.setCreatedDate(r.getCreatedDate());
         responseDto.setCreatedBy(r.getCreatedBy());
         responseDto.setModifiedDate(r.getModifiedDate());
         responseDto.setModifiedBy(r.getModifiedBy());
+
         regn.add(responseDto);
     }
     return ResponseEntity.ok(regn);
+
 }
 
     @Override
@@ -69,19 +75,20 @@ public ResponseEntity<RegionResponseDto> registerNewRegion(RegionRequestDto regi
         Region responsive = regionService.addNewRegion(r);
 
         RegionResponseDto responseDto = new RegionResponseDto();
-        responseDto.setRegionId(responsive.getId());
+        responseDto.setZoneName((responsive.getZones().getZoneName()));
+        responseDto.setRegionId(responsive.getRegionId());
         responseDto.setRegionCode(responsive.getRegionCode());
         responseDto.setRegionName(responsive.getRegionName());
         responseDto.setCreatedBy(responsive.getCreatedBy());
         responseDto.setCreatedDate(responsive.getCreatedDate());
         responseDto.setModifiedBy(responsive.getModifiedBy());
         responseDto.setModifiedDate(responsive.getModifiedDate());
-        responseDto.setRegionId(r.getId());
+        responseDto.setRegionId(r.getRegionId());
         return ResponseEntity.ok(responseDto);
 
     }
-    @Override
-    public ResponseEntity<RegionResponseDto> getRegionById(String regionId)
+
+    public ResponseEntity<RegionResponseDto> getRegionById(UUID regionId)
     {
         Optional<Region> rg = regionService.getRegionById(regionId);
         if(!rg.isPresent())
@@ -92,7 +99,7 @@ public ResponseEntity<RegionResponseDto> registerNewRegion(RegionRequestDto regi
         {
             Region r = rg.get();
             RegionResponseDto responseDto = new RegionResponseDto();
-            responseDto.setRegionId(r.getId());
+            responseDto.setRegionId(r.getRegionId());
             responseDto.setRegionCode(r.getRegionCode());
             responseDto.setRegionName(r.getRegionName());
             responseDto.setCreatedDate(r.getCreatedDate());
@@ -102,13 +109,24 @@ public ResponseEntity<RegionResponseDto> registerNewRegion(RegionRequestDto regi
             return ResponseEntity.ok(responseDto);
         }
     }
-    public void deleteById(String regionId){
+    public void deleteById(UUID regionId){
         regionService.deleteRegion(regionId);
     }
 
 
-    public void updateRegion(String regionId, Region regionToUpdate){
+    public ResponseEntity updateRegion(UUID regionId, Region regionToUpdate){
+        Optional<Region> rg = regionService.getRegionById(regionId);
         regionService.updateRegion(regionId,regionToUpdate);
+        Region r = rg.get();
+        RegionResponseDto responseDto = new RegionResponseDto();
+        responseDto.setRegionId(r.getRegionId());
+        responseDto.setRegionCode(r.getRegionCode());
+        responseDto.setRegionName(r.getRegionName());
+        responseDto.setCreatedDate(r.getCreatedDate());
+        responseDto.setCreatedBy(r.getCreatedBy());
+        responseDto.setModifiedDate(r.getModifiedDate());
+        responseDto.setModifiedBy(r.getModifiedBy());
+        return ResponseEntity.ok(responseDto);
     }
 
 }

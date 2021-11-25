@@ -1,7 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
-import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.RegionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,8 @@ public class RegionService {
     public List<Region> findAllRegions(PageRequest pageRequest) {
         return regionRepository.findAll(pageRequest).getContent();
     }
-    public Optional<Region> getRegionById(String regionId){
+
+    public Optional<Region> getRegionById(UUID regionId){
 
         return regionRepository.findById(regionId);
     }
@@ -37,11 +37,11 @@ public class RegionService {
     }
 
 
-    public void deleteRegion(String zoneId){
-        regionRepository.deleteById(zoneId);
+    public void deleteRegion(UUID regionId){
+        regionRepository.deleteById(regionId);
     }
 
 
-    public void updateRegion(String regionId, Region regionToUpdate) {
+    public void updateRegion(UUID regionId, Region regionToUpdate) {
     }
 }
