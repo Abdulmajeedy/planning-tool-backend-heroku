@@ -51,15 +51,15 @@ public class DistrictController implements DistrictApi {
     @Override
     public ResponseEntity<DistrictResponseDto> registerNewDistrict(DistrictRequestDto districtDto)
     {
-        Optional<Region> zn = regionService.getRegionById(districtDto.getRegionId());
+        Optional<Region> rg = regionService.getRegionById(districtDto.getRegionId());
 
-        if(!zn.isPresent()){
+        if(!rg.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         District r = new District();
         r.setDistrictCode(districtDto.getDistrictCode());
         r.setDistrictName(districtDto.getDistrictName());
-        r.setRegion(zn.get());
+        r.setRegion(rg.get());
         District responsive = districtService.addNewDistrict(r);
 
         DistrictResponseDto responseDto = new DistrictResponseDto();
@@ -90,8 +90,8 @@ public class DistrictController implements DistrictApi {
             responseDto.setDistrictId(d.getDistrictId());
             responseDto.setDistrictCode(d.getDistrictCode());
             responseDto.setDistrictName(d.getDistrictName());
-            responseDto.setCreatedDate(d.getCreatedDate());
-            responseDto.setCreatedBy(d.getCreatedBy());
+            responseDto.getCreatedDate();
+            responseDto.getCreatedBy();
             responseDto.setModifiedDate(d.getModifiedDate());
             responseDto.setModifiedBy(d.getModifiedBy());
             return ResponseEntity.ok(responseDto);

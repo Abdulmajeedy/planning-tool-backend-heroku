@@ -10,7 +10,6 @@ import java.util.UUID;
 @Entity
 public class District extends Auditable<String>{
     @Id
-    @Column(name = "districtId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
     private UUID districtId;
     private String districtCode;
@@ -21,6 +20,5 @@ public class District extends Auditable<String>{
 
     @OneToMany(mappedBy = "district")
     private List<Shehia> shehia;
-
-
 }
+

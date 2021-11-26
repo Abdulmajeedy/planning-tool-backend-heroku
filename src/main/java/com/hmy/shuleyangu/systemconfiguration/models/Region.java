@@ -1,5 +1,4 @@
 package com.hmy.shuleyangu.systemconfiguration.models;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +15,7 @@ public class Region extends Auditable<String>{
     @Column(name = "regionId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
     private UUID regionId;
-    @Column(name="regionCode")
     private String regionCode;
-    @Column(name="regionName")
     private String regionName;
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "zoneId")

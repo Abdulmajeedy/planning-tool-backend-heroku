@@ -38,9 +38,9 @@ public class RegionController implements RegionApi {
     {
 
         PageRequest pageRequest = PageRequest.of(page, size);
-    List<Region> regions = regionService.findAllRegions(pageRequest);
+         List<Region> regions = regionService.findAllRegions(pageRequest);
 
-    List<RegionResponseDto> regn = new ArrayList<>();
+        List<RegionResponseDto> regn = new ArrayList<>();
         for(Region r:regions)
     {
         RegionResponseDto responseDto = new RegionResponseDto();
