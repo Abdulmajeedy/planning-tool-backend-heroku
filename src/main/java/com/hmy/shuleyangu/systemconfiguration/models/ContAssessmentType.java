@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-public class ContinuousAssessmentType extends Auditable<String> implements Serializable {
+public class ContAssessmentType extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(generator = "UUID")

@@ -3,11 +3,9 @@ package com.hmy.shuleyangu.systemconfiguration.dto;
 import com.hmy.shuleyangu.systemconfiguration.models.Auditable;
 import lombok.Data;
 
-import java.time.Year;
-
 @Data
-public class AcademicYearResponseDto extends Auditable<String> {
-    private String academicYearId;
-    private Year academicYearName;
+public class ContAssessRespDto extends Auditable<String> {
+    private String contAssessmentTypeId;
+    private String contAssessmentTypeName;
     private int status;
 }

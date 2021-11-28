@@ -27,7 +27,9 @@ import java.util.UUID;
 public class RegionController implements RegionApi {
     @Autowired
     private RegionService regionService;
+    @Autowired
     private RegionRepository regionRepository;
+    @Autowired
     private ZoneService zoneService;
 
     public RegionController(RegionService regionService,ZoneService zoneService){
@@ -59,8 +61,8 @@ public class RegionController implements RegionApi {
 }
 
     @Override
-    public void registerNewRegion(RegionRequestDto region){
-        regionService.addNewRegion(region);
+    public ResponseEntity<RegionResponseDto> registerNewRegion(RegionRequestDto region){
+        return regionService.addNewRegion(region);
     }
 
 

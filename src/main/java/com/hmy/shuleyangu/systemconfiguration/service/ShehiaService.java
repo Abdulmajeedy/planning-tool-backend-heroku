@@ -50,8 +50,6 @@ public class ShehiaService {
                         -> new IllegalStateException(
                         "Shehia with Id "+ shehiaId + " does not exist"
                 ));
-
-
         shehia.setShehiaId(shehiaId);
         shehiaRepository.save(shehia);
 

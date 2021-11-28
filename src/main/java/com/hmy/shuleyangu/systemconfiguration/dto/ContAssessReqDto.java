@@ -1,11 +1,9 @@
 package com.hmy.shuleyangu.systemconfiguration.dto;
 
 import lombok.Data;
-import java.time.Year;
 
 @Data
-public class AcademicYearRequestDto {
-    private Year academicYearName;
+public class ContAssessReqDto {
+    private String contAssessmentTypeName;
     private int status;
-
 }

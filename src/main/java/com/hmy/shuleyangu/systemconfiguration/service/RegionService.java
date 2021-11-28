@@ -1,27 +1,30 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.RegionResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.RegionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class RegionService {
-    private final RegionRepository regionRepository;
-    private final ModelMapper modelMapper;
+    @Autowired
+    private   RegionRepository regionRepository;
+    @Autowired
+    private ZoneService zoneService;
+
 
     @Autowired
-    public RegionService(RegionRepository regionRepository,ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
+    public RegionService(RegionRepository regionRepository) {
         this.regionRepository = regionRepository;
     }
 
@@ -34,15 +37,27 @@ public class RegionService {
         return regionRepository.findById(regionId);
     }
 
-    public void addNewRegion(RegionRequestDto regionDto) {
+    public ResponseEntity<RegionResponseDto> addNewRegion(RegionRequestDto regionDto) {
+        Optional<Zones> zn = zoneService.getZoneById(regionDto.getZoneId());
+        if(!zn.isPresent())
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         Region r = new Region();
-//        r.setRegionCode(region.getRegionCode());
-//        r.setRegionName(region.getRegionName());
-//        r.getZones().setZoneId(region.getZoneId());
-//       System.out.println(region.getZoneId());
-        Region region1 = modelMapper.map(regionDto,Region.class);
-//      System.out.println(region1.getZones().getZoneId());
-        regionRepository.save(region1);
+
+        Zones z = zn.get();
+
+          r.setZones(z);
+          r.setRegionCode(regionDto.getRegionCode());
+          r.setRegionName(regionDto.getRegionName());
+          regionRepository.save(r);
+
+          RegionResponseDto responseDto = new RegionResponseDto();
+          responseDto.setRegionId(r.getRegionId());
+          responseDto.setRegionCode(r.getRegionCode());
+          responseDto.setRegionName(r.getRegionName());
+          responseDto.setZoneId(z.getZoneId());
+          return  ResponseEntity.ok(responseDto);
     }
 
 
