@@ -31,7 +31,7 @@ public class TermTypeController {
         return ResponseEntity.ok("Term type system Added successfully");
     }
     @GetMapping(path = "/getTermType/{id}")
-    public TermTypes getTermType(@PathVariable("id") UUID termTypeId){
+    public TermTypes getTermType(@PathVariable("id") String termTypeId){
 
         return termTypeService.getTermTypeById(termTypeId).orElse(null);
     }

@@ -1,9 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.web;
 
-import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.RegionResponseDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ShehiaRequestDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ShehiaResponseDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.*;
 import com.hmy.shuleyangu.systemconfiguration.models.District;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.models.Shehia;
@@ -64,35 +61,13 @@ public ResponseEntity<List<ShehiaResponseDto>> getShehia(int page, int size)
     return ResponseEntity.ok(sheh);
 }
 
+    public void registerNewShehia(ShehiaRequestDto shehia){
 
-    public ResponseEntity<ShehiaResponseDto> registerNewShehia(ShehiaRequestDto shehiaDto)
-    {
-        Optional<District> ds = districtService.getDistrictById(shehiaDto.getDistrictId());
-        if(!ds.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Shehia s = new Shehia();
-        s.setShehiaCode(shehiaDto.getShehiaCode());
-        s.setShehiaName(shehiaDto.getShehiaName());
-        s.setDistrict(ds.get());
-        Shehia responsive = shehiaService.addNewShehia(s);
-
-        ShehiaResponseDto responseDto = new ShehiaResponseDto();
-        responseDto.setDistrictName((responsive.getDistrict().getDistrictName()));
-        responseDto.setShehiaId(responsive.getShehiaId());
-        responseDto.setShehiaCode(responsive.getShehiaCode());
-        responseDto.setShehiaName(responsive.getShehiaName());
-        responseDto.setCreatedBy(responsive.getCreatedBy());
-        responseDto.setCreatedDate(responsive.getCreatedDate());
-        responseDto.setModifiedBy(responsive.getModifiedBy());
-        responseDto.setModifiedDate(responsive.getModifiedDate());
-        responseDto.setShehiaId(s.getShehiaId());
-        return ResponseEntity.ok(responseDto);
-
+        shehiaService.addNewShehia(shehia);
     }
 
 
-public ResponseEntity<ShehiaResponseDto> getShehiaById(UUID shehiaId)
+public ResponseEntity<ShehiaResponseDto> getShehiaById(String shehiaId)
 {
     Optional<Shehia> sh = shehiaService.getShehiaById(shehiaId);
     if(!sh.isPresent())
@@ -115,12 +90,12 @@ public ResponseEntity<ShehiaResponseDto> getShehiaById(UUID shehiaId)
 }
 
 
-    public void deleteById(UUID shehiaId){
+    public void deleteById(String shehiaId){
         shehiaService.deleteShehia(shehiaId);
     }
 
     @Override
-    public ResponseEntity updateShehia(UUID shehiaId, Shehia shehiaToUpdate){
+    public ResponseEntity updateShehia(String shehiaId, Shehia shehiaToUpdate){
         Optional<Shehia> sh = shehiaService.getShehiaById(shehiaId);
         shehiaService.updateShehia(shehiaId,shehiaToUpdate);
         Shehia s = sh.get();

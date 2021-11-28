@@ -19,18 +19,19 @@ public interface DistrictApi {
             @RequestParam(defaultValue = "10", required = false) int size);
 
     @PostMapping(path = "/")
-   public ResponseEntity<DistrictResponseDto> registerNewDistrict(@RequestBody DistrictRequestDto districtRequestDto);
+    @ResponseStatus(value = HttpStatus.CREATED, reason = "District Created")
+   public void registerNewDistrict(@RequestBody DistrictRequestDto district);
 
   @GetMapping(path = "/{districtId}")
-    public ResponseEntity<DistrictResponseDto> getDistrictById(@PathVariable UUID districtId);
+    public ResponseEntity<DistrictResponseDto> getDistrictById(@PathVariable String districtId);
 
     @DeleteMapping(path = "/{districtId}")
     @ResponseStatus(code = HttpStatus.OK, reason = "District has been deleted")
-    public void deleteById(@PathVariable("districtId")UUID districtId);
+    public void deleteById(@PathVariable("districtId")String districtId);
 
     @PutMapping(path = "/{districtId}")
     @ResponseStatus(code = HttpStatus.OK, reason = "District has been updated")
-    public void updateDistrict(@PathVariable("districtId")UUID districtId,
+    public void updateDistrict(@PathVariable("districtId")String districtId,
                            @RequestBody District districtToUpdate);
 
 }

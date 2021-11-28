@@ -8,7 +8,7 @@ public class DistrictRequestDto {
 
     private String districtCode;
     private String districtName;
-    private UUID regionId;
+    private String regionId;
 
 
 }

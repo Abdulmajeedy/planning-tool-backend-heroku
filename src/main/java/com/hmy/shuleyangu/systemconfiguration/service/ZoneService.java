@@ -24,23 +24,26 @@ public class ZoneService {
     public List<Zones> findAllZones(PageRequest pageRequest) {
         return zoneRepository.findAll(pageRequest).getContent();
     }
-
-
-    public void addNewZone(Zones zones) {
-        zoneRepository.save(zones);
+    public void addNewZone(ZoneRequestDto zn) {
+        Zones z = new Zones();
+        z.setZoneCode(zn.getZoneCode());
+        z.setZoneName(zn.getZoneName());
+        zoneRepository.save(z);
     }
 
-    public Optional<Zones> getZoneById(UUID zoneId){
+
+
+    public Optional<Zones> getZoneById(String zoneId){
 
         return zoneRepository.findById(zoneId);
     }
 
-    public void deleteZone(UUID zoneId){
+    public void deleteZone(String zoneId){
 
         zoneRepository.deleteById(zoneId);
     }
 
-    public void updateZone(UUID zoneId, Zones zones) {
+    public void updateZone(String zoneId, Zones zones) {
      zoneRepository.findById(zoneId)
                 .orElseThrow(()
                         -> new IllegalStateException(

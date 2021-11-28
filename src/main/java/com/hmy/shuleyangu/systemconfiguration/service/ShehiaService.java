@@ -1,5 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
+import com.hmy.shuleyangu.systemconfiguration.dto.ShehiaRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.models.Shehia;
 import com.hmy.shuleyangu.systemconfiguration.repository.ShehiaRepository;
@@ -26,21 +27,24 @@ public class ShehiaService {
     public List<Shehia> getShehia(PageRequest pageRequest) {
         return shehiaRepository.findAll(pageRequest).getContent();
     }
-    public Shehia addNewShehia(Shehia shehia) {
-        shehiaRepository.save(shehia);
-        return shehia;
+
+    public void addNewShehia(ShehiaRequestDto sh) {
+        Shehia s = new Shehia();
+        s.setShehiaCode(sh.getShehiaCode());
+        s.setShehiaName(sh.getShehiaName());
+        shehiaRepository.save(s);
     }
 
-    public Optional<Shehia> getShehiaById(UUID shehiaId){
+    public Optional<Shehia> getShehiaById(String shehiaId){
         return shehiaRepository.findById(shehiaId);
     }
 
 
-    public void deleteShehia(UUID shehiaId){
+    public void deleteShehia(String shehiaId){
         shehiaRepository.deleteById(shehiaId);
     }
 
-    public void updateShehia(UUID shehiaId, Shehia shehia) {
+    public void updateShehia(String shehiaId, Shehia shehia) {
         shehiaRepository.findById(shehiaId)
                 .orElseThrow(()
                         -> new IllegalStateException(

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface TermTypeRepository extends CrudRepository<TermTypes, UUID> {
+public interface TermTypeRepository extends CrudRepository<TermTypes, String> {
 }

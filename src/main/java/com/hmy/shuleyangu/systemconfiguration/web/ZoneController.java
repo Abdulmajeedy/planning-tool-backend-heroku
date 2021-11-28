@@ -49,12 +49,11 @@ public class ZoneController implements ZoneApi {
         return ResponseEntity.ok(zon);
     }
 
-    @Override
-    public void registerNewZone(Zones zones){
+    public void registerNewZone(ZoneRequestDto zones){
         zoneService.addNewZone(zones);
     }
 
-    public ResponseEntity<ZoneResponseDto> getZoneById(UUID zoneId)
+    public ResponseEntity<ZoneResponseDto> getZoneById(String zoneId)
     {
         Optional<Zones> zn = zoneService.getZoneById(zoneId);
         if(!zn.isPresent())
@@ -77,12 +76,12 @@ public class ZoneController implements ZoneApi {
     }
 
 
-    public void deleteById(UUID zoneId){
+    public void deleteById(String zoneId){
         zoneService.deleteZone(zoneId);
 
     }
 
-    public ResponseEntity updateZone(UUID zoneId, Zones zoneToUpdate){
+    public ResponseEntity updateZone(String zoneId, Zones zoneToUpdate){
         Optional<Zones> zn = zoneService.getZoneById(zoneId);
         zoneService.updateZone(zoneId,zoneToUpdate);
         Zones z = zn.get();
@@ -92,10 +91,7 @@ public class ZoneController implements ZoneApi {
         responseDto.setZoneName(z.getZoneName());
         responseDto.setModifiedDate(z.getModifiedDate());
         responseDto.setModifiedBy(z.getModifiedBy());
-
-
-        //return new ResponseEntity(ApiResponse.ok("Zone with Id "+ zoneId + " has been updated"),HttpStatus.OK);
-    return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(responseDto);
     }
 
 

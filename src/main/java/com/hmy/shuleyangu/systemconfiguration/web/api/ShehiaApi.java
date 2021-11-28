@@ -22,17 +22,17 @@ public interface ShehiaApi {
             @RequestParam(defaultValue = "10", required = false) int size);
 
   @PostMapping(path = "/")
-  //@ResponseStatus(value = HttpStatus.CREATED, reason = "Shehia Created")
-    public ResponseEntity<ShehiaResponseDto> registerNewShehia(@RequestBody ShehiaRequestDto shehiaDto);
+  @ResponseStatus(value = HttpStatus.CREATED, reason = "Shehia Created")
+    public void registerNewShehia(@RequestBody ShehiaRequestDto shehiaDto);
 
     @GetMapping(path = "/{shehiaId}")
-    public ResponseEntity<ShehiaResponseDto> getShehiaById(@PathVariable UUID shehiaId);
+    public ResponseEntity<ShehiaResponseDto> getShehiaById(@PathVariable String shehiaId);
 
     @DeleteMapping(path = "/{shehiaId}")
     @ResponseStatus(code = HttpStatus.OK, reason = "Shehia has been Deleted")
-    public void deleteById(@PathVariable("shehiaId")UUID shehiaId);
+    public void deleteById(@PathVariable("shehiaId")String shehiaId);
 
     @PutMapping(path = "/{shehiaId}")
-    public ResponseEntity updateShehia(@PathVariable("shehiaId ")UUID shehiaId,
+    public ResponseEntity updateShehia(@PathVariable("shehiaId ")String shehiaId,
                                        @RequestBody Shehia shehiaToUpdate);
 }

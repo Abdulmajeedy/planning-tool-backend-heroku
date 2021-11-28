@@ -25,7 +25,7 @@ public class AcademicYearController {
 
     }
     @GetMapping(path = "/getAcademicYear/{id}")
-    public AcademicYear getAcademicYear(@PathVariable("id") UUID academicYearId){
+    public AcademicYear getAcademicYear(@PathVariable("id") String academicYearId){
 
         return academicYearService.getAcademicYearById(academicYearId).orElse(null);
     }

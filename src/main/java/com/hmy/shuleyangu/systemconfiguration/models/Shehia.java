@@ -7,14 +7,17 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
 @Entity
-public class Shehia extends Auditable<String>{
+public class Shehia extends Auditable<String> implements Serializable {
+    private static final long serialVersionUID = 1L;
     @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
     @Id
-    private UUID shehiaId;
+    private String shehiaId;
     private String shehiaCode;
     private String shehiaName;
     @ManyToOne(cascade = CascadeType.ALL)

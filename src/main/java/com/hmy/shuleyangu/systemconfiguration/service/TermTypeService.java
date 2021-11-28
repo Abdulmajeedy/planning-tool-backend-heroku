@@ -30,7 +30,7 @@ public class TermTypeService {
 
     }
 
-    public Optional<TermTypes> getTermTypeById(UUID termTypeId){
+    public Optional<TermTypes> getTermTypeById(String termTypeId){
 
         return termTypeRepository.findById(termTypeId);
     }

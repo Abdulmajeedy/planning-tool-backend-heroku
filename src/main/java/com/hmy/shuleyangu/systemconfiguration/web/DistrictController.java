@@ -49,34 +49,12 @@ public class DistrictController implements DistrictApi {
     }
 
     @Override
-    public ResponseEntity<DistrictResponseDto> registerNewDistrict(DistrictRequestDto districtDto)
-    {
-        Optional<Region> rg = regionService.getRegionById(districtDto.getRegionId());
-
-        if(!rg.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        District r = new District();
-        r.setDistrictCode(districtDto.getDistrictCode());
-        r.setDistrictName(districtDto.getDistrictName());
-        r.setRegion(rg.get());
-        District responsive = districtService.addNewDistrict(r);
-
-        DistrictResponseDto responseDto = new DistrictResponseDto();
-        responseDto.setRegionName((responsive.getRegion().getRegionName()));
-        responseDto.setDistrictId(responsive.getDistrictId());
-        responseDto.setDistrictCode(responsive.getDistrictCode());
-        responseDto.setDistrictName(responsive.getDistrictName());
-        responseDto.setCreatedBy(responsive.getCreatedBy());
-        responseDto.setCreatedDate(responsive.getCreatedDate());
-        responseDto.setModifiedBy(responsive.getModifiedBy());
-        responseDto.setModifiedDate(responsive.getModifiedDate());
-        responseDto.setRegionId(r.getDistrictId());
-        return ResponseEntity.ok(responseDto);
-
+    public void registerNewDistrict(DistrictRequestDto district){
+        districtService.addNewDistrict(district);
     }
+
     @Override
-    public ResponseEntity<DistrictResponseDto> getDistrictById(UUID districtId)
+    public ResponseEntity<DistrictResponseDto> getDistrictById(String districtId)
     {
         Optional<District> dis = districtService.getDistrictById(districtId);
         if(!dis.isPresent())
@@ -98,11 +76,11 @@ public class DistrictController implements DistrictApi {
         }
     }
 
-    public void deleteById(UUID zoneId){
+    public void deleteById(String zoneId){
         districtService.deleteDistrict(zoneId);
     }
 
-    public void updateDistrict(UUID districtId, District districtToUpdate){
+    public void updateDistrict(String districtId, District districtToUpdate){
         districtService.updateDistrict(districtId,districtToUpdate);
 
     }

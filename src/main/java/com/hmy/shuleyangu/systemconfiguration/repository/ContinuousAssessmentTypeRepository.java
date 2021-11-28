@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ContinuousAssessmentTypeRepository extends CrudRepository<ContinuousAssessmentType, UUID> {
+public interface ContinuousAssessmentTypeRepository extends CrudRepository<ContinuousAssessmentType, String> {
 }

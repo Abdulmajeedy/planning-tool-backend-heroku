@@ -1,6 +1,9 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
+import com.hmy.shuleyangu.systemconfiguration.dto.DistrictRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.models.District;
+import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.repository.DistrictRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +28,25 @@ public class DistrictService {
         return districtRepository.findAll(pageRequest).getContent();
     }
 
-    public District addNewDistrict(District district) {
-        districtRepository.save(district);
-        return district;
+    public void addNewDistrict(DistrictRequestDto district) {
+    District d = new District();
+    d.setDistrictCode(district.getDistrictCode());
+    d.setDistrictName(district.getDistrictName());
+
+        districtRepository.save(d);
+
     }
 
-
-    public Optional<District> getDistrictById(UUID districtId){
+    public Optional<District> getDistrictById(String districtId){
 
         return districtRepository.findById(districtId);
     }
 
-    public void deleteDistrict(UUID districtId){
+    public void deleteDistrict(String districtId){
         districtRepository.deleteById(districtId);
     }
 
-    public void updateDistrict(UUID districtId, District district) {
+    public void updateDistrict(String districtId, District district) {
         districtRepository.findById(districtId)
                 .orElseThrow(()
                         -> new IllegalStateException(

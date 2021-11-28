@@ -1,6 +1,9 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
+import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
+import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.RegionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +29,28 @@ public class RegionService {
         return regionRepository.findAll(pageRequest).getContent();
     }
 
-    public Optional<Region> getRegionById(UUID regionId){
+    public Optional<Region> getRegionById(String regionId){
 
         return regionRepository.findById(regionId);
     }
 
-    public Region addNewRegion(Region region) {
-      regionRepository.save(region);
-        return region;
+    public void addNewRegion(RegionRequestDto regionDto) {
+        Region r = new Region();
+//        r.setRegionCode(region.getRegionCode());
+//        r.setRegionName(region.getRegionName());
+//        r.getZones().setZoneId(region.getZoneId());
+//       System.out.println(region.getZoneId());
+        Region region1 = modelMapper.map(regionDto,Region.class);
+//      System.out.println(region1.getZones().getZoneId());
+        regionRepository.save(region1);
     }
 
 
-    public void deleteRegion(UUID regionId){
+    public void deleteRegion(String regionId){
         regionRepository.deleteById(regionId);
     }
 
 
-    public void updateRegion(UUID regionId, Region regionToUpdate) {
+    public void updateRegion(String regionId, Region regionToUpdate) {
     }
 }

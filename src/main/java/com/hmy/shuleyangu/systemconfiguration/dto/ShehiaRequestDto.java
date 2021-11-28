@@ -8,7 +8,7 @@ import java.util.UUID;
 public class ShehiaRequestDto {
     private String shehiaCode;
     private String shehiaName;
-    private UUID districtId;
+    private String districtId;
 
 
 }

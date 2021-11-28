@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ShehiaRepository extends JpaRepository<Shehia, UUID>{
-    Optional<Shehia> findById(UUID shehiaId);
+public interface ShehiaRepository extends JpaRepository<Shehia, String>{
+    Optional<Shehia> findById(String shehiaId);
 
 }

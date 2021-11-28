@@ -20,18 +20,18 @@ public interface RegionApi {
 
 
     @PostMapping(path = "/")
-    //@ResponseStatus(value = HttpStatus.CREATED, reason = "Region Created")
-    public ResponseEntity<RegionResponseDto> registerNewRegion(@RequestBody RegionRequestDto regions);
+    @ResponseStatus(value = HttpStatus.CREATED, reason = "Region Created")
+    public void registerNewRegion(@RequestBody RegionRequestDto regions);
 
    @GetMapping(path = "/{regionId}")
-    public ResponseEntity<RegionResponseDto> getRegionById(@PathVariable UUID regionId);
+    public ResponseEntity<RegionResponseDto> getRegionById(@PathVariable String regionId);
 
     @DeleteMapping(path = "/{regionId}")
     @ResponseStatus(code = HttpStatus.OK, reason = "Region has been Deleted")
-    public void deleteById(@PathVariable("regionId")UUID regionId);
+    public void deleteById(@PathVariable("regionId")String regionId);
 
     @PutMapping(path = "/{regionId}")
-    public ResponseEntity updateRegion(@PathVariable("regionId ")UUID regionId,
+    public ResponseEntity updateRegion(@PathVariable("regionId ")String regionId,
                            @RequestBody Region regionToUpdate);
 }
 

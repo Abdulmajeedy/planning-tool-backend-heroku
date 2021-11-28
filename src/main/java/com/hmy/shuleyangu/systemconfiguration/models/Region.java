@@ -5,27 +5,25 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
-public class Region extends Auditable<String>{
+public class Region extends Auditable<String> implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "regionId", updatable = false, nullable = false)
     @GeneratedValue(generator = "UUID")
-    private UUID regionId;
+    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")  @Column(name = "regionId", updatable = false, nullable = false)
+    private String regionId;
     private String regionCode;
     private String regionName;
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "zoneId")
-   private Zones zones;
-
-
+    @JoinColumn(name = "zoneId",referencedColumnName = "zoneId")
+    private Zones zones;
     @OneToMany(mappedBy = "region")
     private List<District> districts;
 
-    public UUID getZoneId() {
-        return zones.getZoneId();
-    }
+
 }
