@@ -20,11 +20,11 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Data
 public abstract class Auditable <U>{
     @CreatedBy
-    @Column(updatable = false,nullable = false)
+    @Column(updatable = false,nullable = true)
     protected U createdBy;
     @CreatedDate
     @Temporal(TIMESTAMP)
-    @Column(updatable = false,nullable = false)
+    @Column(updatable = false,nullable = true)
     protected Date createdDate;
     @LastModifiedBy
     protected U modifiedBy;

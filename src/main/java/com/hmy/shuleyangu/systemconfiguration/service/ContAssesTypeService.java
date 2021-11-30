@@ -1,9 +1,8 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.ContAssessReqDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.ContAssessRespDto;
 import com.hmy.shuleyangu.systemconfiguration.models.ContAssessmentType;
-import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.ContAssessmentTypeRepository;
 import org.modelmapper.ModelMapper;
@@ -15,13 +14,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ContAssessmentTypeService {
-    private final ContAssessmentTypeRepository contAssessTypeRepository;
-    private final ModelMapper modelMapper;
+public class ContAssesTypeService {
+    private ModelMapper modelMapper;
+    @Autowired
+    private ContAssessmentTypeRepository contAssessTypeRepository;
 
     @Autowired
-    public ContAssessmentTypeService(ContAssessmentTypeRepository contAssessmentTypeRepository,
-                                     ModelMapper modelMapper){
+    public ContAssesTypeService(ContAssessmentTypeRepository contAssessmentTypeRepository,
+                                ModelMapper modelMapper){
         this.contAssessTypeRepository = contAssessmentTypeRepository;
         this.modelMapper = modelMapper;
     }
@@ -33,11 +33,13 @@ public class ContAssessmentTypeService {
     public Optional<ContAssessmentType> getContAssesTypeById(String contAssessTypeId){
         return contAssessTypeRepository.findById(contAssessTypeId);
     }
-    public void addNewContAssessType(ContAssessReqDto cad) {
-        ContAssessmentType c = new ContAssessmentType();
-        c.setContAssessmentTypeName(cad.getContAssessmentTypeName());
-        c.setStatus(cad.getStatus());
-        contAssessTypeRepository.save(c);
+
+    public ContAssessRespDto addNewContAssessType(ContAssessReqDto cad) {
+        ModelMapper modelMapper = new ModelMapper();
+        ContAssessmentType c =  modelMapper.map(cad,ContAssessmentType.class);
+        ContAssessmentType ca = contAssessTypeRepository.save(c);
+        ContAssessRespDto respDto = modelMapper.map(ca,ContAssessRespDto.class);
+        return respDto;
     }
 
 
@@ -46,9 +48,18 @@ public class ContAssessmentTypeService {
     }
 
     public void deleteContAssesType(String contAssesTypeId){
-
         contAssessTypeRepository.deleteById(contAssesTypeId);
     }
 
+    public void updateContAssType(String contAssesTypeId, ContAssessmentType cat) {
+        contAssessTypeRepository.findById(contAssesTypeId)
+                .orElseThrow(()
+                        -> new IllegalStateException(
+                        "Continuous Assessment Task with Id "+ contAssesTypeId + " does not exist"
+                ));
+        cat.setContAssessmentTypeId(contAssesTypeId);
+        contAssessTypeRepository.save(cat);
+
+    }
 
 }

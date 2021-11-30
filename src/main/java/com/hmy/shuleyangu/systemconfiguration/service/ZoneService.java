@@ -42,11 +42,11 @@ public class ZoneService {
     }
 
 
-public void updateZone(String zoneId, Zones zones) {
+    public void updateZone(String zoneId, Zones zones) {
     zoneRepository.findById(zoneId)
             .orElseThrow(()
                     -> new IllegalStateException(
-                    "Shehia with Id "+ zoneId + " does not exist"
+                    "Zone with Id "+ zoneId + " does not exist"
             ));
     zones.setZoneId(zoneId);
     zoneRepository.save(zones);

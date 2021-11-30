@@ -5,7 +5,6 @@ import com.hmy.shuleyangu.systemconfiguration.dto.RegionResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.RegionRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -44,7 +43,6 @@ public class RegionService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Region r = new Region();
-
         Zones z = zn.get();
 
           r.setZones(z);
@@ -64,7 +62,6 @@ public class RegionService {
     public void deleteRegion(String regionId){
         regionRepository.deleteById(regionId);
     }
-
 
     public void updateRegion(String regionId, Region regionToUpdate) {
     }

@@ -2,12 +2,8 @@ package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.dto.RegionResponseDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ZoneResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
-import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.RegionRepository;
-import com.hmy.shuleyangu.systemconfiguration.repository.ZoneRepository;
 import com.hmy.shuleyangu.systemconfiguration.service.RegionService;
 import com.hmy.shuleyangu.systemconfiguration.service.ZoneService;
 import com.hmy.shuleyangu.systemconfiguration.utils.ApiResponse;
