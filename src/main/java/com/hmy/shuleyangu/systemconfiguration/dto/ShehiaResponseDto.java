@@ -10,5 +10,5 @@ public class ShehiaResponseDto extends Auditable<String> {
     private String shehiaId;
     private String shehiaCode;
     private String shehiaName;
-    private String districtName;
+    private String districtId;
 }

@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URISyntaxException;
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RequestMapping("/zone")
@@ -20,8 +18,7 @@ public interface ZoneApi {
             @RequestParam(defaultValue = "10", required = false) int size);
 
    @RequestMapping(value = "/", method = RequestMethod.POST,produces = "application/json",consumes="application/json")
-   @ResponseStatus(value = HttpStatus.CREATED, reason = "Zone Created")
-    public void registerNewZone(@RequestBody ZoneRequestDto zones) throws URISyntaxException;
+    public ResponseEntity<ZoneResponseDto> registerNewZone(@RequestBody ZoneRequestDto zones);
 
     @RequestMapping(value = "/{zoneId}", method = RequestMethod.GET,produces = "application/json")
     public ResponseEntity<ZoneResponseDto> getZoneById(@PathVariable String zoneId);

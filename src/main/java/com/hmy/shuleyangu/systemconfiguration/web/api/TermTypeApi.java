@@ -1,10 +1,8 @@
 package com.hmy.shuleyangu.systemconfiguration.web.api;
 
-import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.RegionResponseDto;
+
 import com.hmy.shuleyangu.systemconfiguration.dto.TermTypeRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.dto.TermTypeResponseDto;
-import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.models.TermTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

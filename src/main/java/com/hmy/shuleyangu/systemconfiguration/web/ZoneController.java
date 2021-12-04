@@ -49,8 +49,9 @@ public class ZoneController implements ZoneApi {
         return ResponseEntity.ok(zon);
     }
 
-    public void registerNewZone(ZoneRequestDto zones){
-        zoneService.addNewZone(zones);
+    public ResponseEntity<ZoneResponseDto> registerNewZone(ZoneRequestDto zones){
+
+        return zoneService.addNewZone(zones);
     }
 
     public ResponseEntity<ZoneResponseDto> getZoneById(String zoneId)
@@ -74,7 +75,6 @@ public class ZoneController implements ZoneApi {
             return ResponseEntity.ok(responseDto);
         }
     }
-
 
     public void deleteById(String zoneId){
         zoneService.deleteZone(zoneId);

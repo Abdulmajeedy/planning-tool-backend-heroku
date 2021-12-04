@@ -44,6 +44,10 @@ public class TermTypeService {
         responseDto.setTermTypeName(t.getTermTypeName());
         responseDto.setNumberOfTerms(t.getNumberOfTerms());
         responseDto.setStatus(t.getStatus());
+        responseDto.setCreatedDate(t.getCreatedDate());
+        responseDto.setCreatedBy(t.getCreatedBy());
+        responseDto.setModifiedDate(t.getModifiedDate());
+        responseDto.setModifiedBy(t.getModifiedBy());
         return ResponseEntity.ok(responseDto);
     }
 

@@ -8,6 +8,6 @@ import java.time.Year;
 @Data
 public class AcademicYearResponseDto extends Auditable<String> {
     private String academicYearId;
-    private Year academicYearName;
+    private String academicYearName;
     private int status;
 }

@@ -1,7 +1,6 @@
 package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.*;
-import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.models.TermTypes;
 import com.hmy.shuleyangu.systemconfiguration.service.TermTypeService;
 import com.hmy.shuleyangu.systemconfiguration.utils.ApiResponse;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 public class TermTypeController implements TermTypeApi {
@@ -52,7 +50,6 @@ public class TermTypeController implements TermTypeApi {
         return termTypeService.addNewTermType(termTypeRequestDto);
 
     }
-
 
     public ResponseEntity<TermTypeResponseDto> getTermTypeById(String termTypeId)
     {

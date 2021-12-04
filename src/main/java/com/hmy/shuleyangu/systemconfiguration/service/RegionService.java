@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class RegionService {
     @Autowired
-    private   RegionRepository regionRepository;
+    private RegionRepository regionRepository;
     @Autowired
     private ZoneService zoneService;
 

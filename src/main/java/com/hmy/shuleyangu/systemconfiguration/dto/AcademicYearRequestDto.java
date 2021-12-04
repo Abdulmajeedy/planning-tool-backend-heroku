@@ -5,7 +5,7 @@ import java.time.Year;
 
 @Data
 public class AcademicYearRequestDto {
-    private Year academicYearName;
+    private String academicYearName;
     private int status;
 
 }
