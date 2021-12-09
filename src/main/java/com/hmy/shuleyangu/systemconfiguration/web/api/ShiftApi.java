@@ -2,9 +2,6 @@ package com.hmy.shuleyangu.systemconfiguration.web.api;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.ShiftRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.dto.ShiftResponseDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
-import com.hmy.shuleyangu.systemconfiguration.dto.ZoneResponseDto;
-import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

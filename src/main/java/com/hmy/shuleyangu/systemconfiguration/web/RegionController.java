@@ -35,7 +35,6 @@ public class RegionController implements RegionApi {
 
     public ResponseEntity<List<RegionResponseDto>> getRegions(int page, int size)
     {
-
         PageRequest pageRequest = PageRequest.of(page, size);
          List<Region> regions = regionService.findAllRegions(pageRequest);
 
@@ -50,6 +49,7 @@ public class RegionController implements RegionApi {
         responseDto.setCreatedBy(r.getCreatedBy());
         responseDto.setModifiedDate(r.getModifiedDate());
         responseDto.setModifiedBy(r.getModifiedBy());
+        responseDto.setZoneId(r.getZones().getZoneId());
         regn.add(responseDto);
     }
     return ResponseEntity.ok(regn);
@@ -75,6 +75,7 @@ public class RegionController implements RegionApi {
             RegionResponseDto responseDto = new RegionResponseDto();
             responseDto.setRegionId(r.getRegionId());
             responseDto.setRegionCode(r.getRegionCode());
+            responseDto.setZoneId(r.getZones().getZoneId());
             responseDto.setRegionName(r.getRegionName());
             responseDto.setCreatedDate(r.getCreatedDate());
             responseDto.setCreatedBy(r.getCreatedBy());

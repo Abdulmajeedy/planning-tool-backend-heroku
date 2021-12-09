@@ -1,10 +1,11 @@
-package com.hmy.shuleyangu.systemconfiguration.web.api;
+package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.RoleRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.dto.RoleResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Roles;
 import com.hmy.shuleyangu.systemconfiguration.repository.RoleRepository;
 import com.hmy.shuleyangu.systemconfiguration.service.RoleService;
+import com.hmy.shuleyangu.systemconfiguration.web.api.RoleApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
