@@ -20,8 +20,7 @@ public interface RegionApi {
 
 
     @PostMapping(path = "/")
-    //@ResponseStatus(value = HttpStatus.CREATED, reason = "Region Created")
-    public ResponseEntity<RegionResponseDto> registerNewRegion(@RequestBody RegionRequestDto regions);
+    public ResponseEntity<RegionResponseDto> registerRegion(@RequestBody RegionRequestDto regions);
 
    @GetMapping(path = "/{regionId}")
     public ResponseEntity<RegionResponseDto> getRegionById(@PathVariable String regionId);

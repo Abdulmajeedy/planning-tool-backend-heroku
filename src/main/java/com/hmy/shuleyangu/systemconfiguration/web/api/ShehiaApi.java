@@ -22,8 +22,7 @@ public interface ShehiaApi {
             @RequestParam(defaultValue = "10", required = false) int size);
 
   @PostMapping(path = "/")
-  @ResponseStatus(value = HttpStatus.CREATED, reason = "Shehia Created")
-    public void registerNewShehia(@RequestBody ShehiaRequestDto shehiaDto);
+   public ResponseEntity<ShehiaResponseDto> registerNewShehia(@RequestBody ShehiaRequestDto shehiaDto);
 
     @GetMapping(path = "/{shehiaId}")
     public ResponseEntity<ShehiaResponseDto> getShehiaById(@PathVariable String shehiaId);

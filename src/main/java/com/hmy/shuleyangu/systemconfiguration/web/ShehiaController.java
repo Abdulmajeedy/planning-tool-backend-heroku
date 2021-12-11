@@ -61,9 +61,9 @@ public ResponseEntity<List<ShehiaResponseDto>> getShehia(int page, int size)
     return ResponseEntity.ok(sheh);
 }
 
-    public void registerNewShehia(ShehiaRequestDto shehia){
+    public ResponseEntity<ShehiaResponseDto> registerNewShehia(ShehiaRequestDto shehia){
 
-        shehiaService.addNewShehia(shehia);
+        return shehiaService.addNewShehia(shehia);
     }
 
 

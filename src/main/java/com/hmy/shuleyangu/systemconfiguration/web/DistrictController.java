@@ -2,12 +2,12 @@ package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.*;
 import com.hmy.shuleyangu.systemconfiguration.models.District;
-import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.repository.DistrictRepository;
 import com.hmy.shuleyangu.systemconfiguration.service.DistrictService;
 import com.hmy.shuleyangu.systemconfiguration.service.RegionService;
 import com.hmy.shuleyangu.systemconfiguration.utils.ApiResponse;
 import com.hmy.shuleyangu.systemconfiguration.web.api.DistrictApi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +16,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 public class DistrictController implements DistrictApi {
+    @Autowired
     private DistrictService districtService;
+    @Autowired
     private DistrictRepository districtRepository;
+    @Autowired
     private RegionService regionService;
-
+    @Autowired
     public DistrictController(DistrictService districtService,RegionService regionService){
         this.regionService=regionService;
         this.districtService=districtService;
@@ -31,7 +33,7 @@ public class DistrictController implements DistrictApi {
     public ResponseEntity<List<DistrictResponseDto>> getDistricts(int page, int size)
     {
         PageRequest pageRequest = PageRequest.of(page, size);
-        List<District> districts = districtService.getDistricts(pageRequest);
+        List<District> districts = districtService.findAllDistricts(pageRequest);
         List<DistrictResponseDto> dis = new ArrayList<>();
         for(District d:districts)
         {
@@ -39,6 +41,7 @@ public class DistrictController implements DistrictApi {
             responseDto.setDistrictId(d.getDistrictId());
             responseDto.setDistrictCode(d.getDistrictCode());
             responseDto.setDistrictName(d.getDistrictName());
+            responseDto.setRegionId(d.getRegion().getRegionId());
             responseDto.setCreatedDate(d.getCreatedDate());
             responseDto.setCreatedBy(d.getCreatedBy());
             responseDto.setModifiedDate(d.getModifiedDate());
@@ -49,8 +52,8 @@ public class DistrictController implements DistrictApi {
     }
 
     @Override
-    public void registerNewDistrict(DistrictRequestDto district){
-        districtService.addNewDistrict(district);
+    public ResponseEntity<DistrictResponseDto> registerNewDistrict(DistrictRequestDto district){
+        return districtService.addNewDistrict(district);
     }
 
     @Override

@@ -21,4 +21,15 @@ public class EducationLevel extends Auditable<String> implements Serializable {
 
     @OneToMany(mappedBy = "educationLevel",fetch = FetchType.LAZY)
     private List<Subject> subjects;
+
+    @OneToMany(mappedBy = "educationLevel",fetch = FetchType.LAZY)
+    private List<Combination> subjectCombination;
+
+    @OneToMany(mappedBy = "educationLevel",fetch = FetchType.LAZY)
+    private List<Grades> grades;
+
+    @OneToMany(mappedBy = "educationLevel",fetch = FetchType.LAZY)
+    private List<Classes> classes;
+
+
 }

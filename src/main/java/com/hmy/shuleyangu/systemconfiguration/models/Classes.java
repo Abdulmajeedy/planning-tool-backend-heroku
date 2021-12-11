@@ -2,22 +2,21 @@ package com.hmy.shuleyangu.systemconfiguration.models;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Entity
-public class AcademicYear extends Auditable<String> implements Serializable {
+public class Classes extends Auditable<String> {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    private String academicYearId;
-    private String academicYearName;
-    private int status;
+    private String classId;
+    private String className;
+    private  String alternativeName;
+    private Integer status;
 
-    @OneToMany(mappedBy = "academicYear",fetch = FetchType.LAZY)
-    private List<Grades> grades;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "educationLevelId",referencedColumnName = "educationLevelId")
+    private EducationLevel educationLevel;
 }

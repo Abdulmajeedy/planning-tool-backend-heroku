@@ -1,41 +1,71 @@
 package com.hmy.shuleyangu.systemconfiguration.service;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.DistrictRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.DistrictResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.RegionResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.models.District;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
+import com.hmy.shuleyangu.systemconfiguration.models.Zones;
 import com.hmy.shuleyangu.systemconfiguration.repository.DistrictRepository;
+import com.hmy.shuleyangu.systemconfiguration.repository.RegionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
 @Service
 public class DistrictService {
-        private final DistrictRepository districtRepository;
-        private final ModelMapper modelMapper;
+    @Autowired
+    private DistrictRepository districtRepository;
+    @Autowired
+    private RegionService regionService;
 
         @Autowired
-        public DistrictService(DistrictRepository districtRepository, ModelMapper modelMapper){
+        public DistrictService(DistrictRepository districtRepository){
             this.districtRepository = districtRepository;
-            this.modelMapper = modelMapper;
+
         }
-    public List<District> getDistricts(PageRequest pageRequest) {
+    public List<District> findAllDistricts(PageRequest pageRequest) {
         return districtRepository.findAll(pageRequest).getContent();
     }
 
-    public void addNewDistrict(DistrictRequestDto district) {
+    public ResponseEntity<DistrictResponseDto> addNewDistrict(DistrictRequestDto district) {
+            Optional<Region> rg = regionService.getRegionById(district.getRegionId());
+        if(!rg.isPresent())
+    {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     District d = new District();
-    d.setDistrictCode(district.getDistrictCode());
-    d.setDistrictName(district.getDistrictName());
+        Region r = rg.get();
+        d.setRegion(r);
+        d.setDistrictCode(district.getDistrictCode());
+        d.setDistrictName(district.getDistrictName());
 
         districtRepository.save(d);
 
+        DistrictResponseDto responseDto = new DistrictResponseDto();
+    responseDto.setDistrictId(d.getDistrictId());
+    responseDto.setDistrictCode(d.getDistrictCode());
+    responseDto.setDistrictName(d.getDistrictName());
+    responseDto.setCreatedDate(d.getCreatedDate());
+    responseDto.setCreatedBy(d.getCreatedBy());
+    responseDto.setModifiedDate(d.getModifiedDate());
+    responseDto.setModifiedBy(d.getModifiedBy());
+    responseDto.setRegionId(r.getRegionId());
+    return  ResponseEntity.ok(responseDto);
+
+
     }
+
 
     public Optional<District> getDistrictById(String districtId){
 

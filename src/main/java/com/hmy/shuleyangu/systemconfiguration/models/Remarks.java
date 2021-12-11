@@ -3,10 +3,9 @@ package com.hmy.shuleyangu.systemconfiguration.models;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,7 +14,9 @@ public class Remarks extends Auditable<String> implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
-
     private String remarkId;
     private String remarkName;
+
+    @OneToMany(mappedBy = "remarks",fetch = FetchType.LAZY)
+    private List<Grades> grades;
 }

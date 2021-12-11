@@ -19,8 +19,7 @@ public interface DistrictApi {
             @RequestParam(defaultValue = "10", required = false) int size);
 
     @PostMapping(path = "/")
-    @ResponseStatus(value = HttpStatus.CREATED, reason = "District Created")
-   public void registerNewDistrict(@RequestBody DistrictRequestDto district);
+  public ResponseEntity<DistrictResponseDto> registerNewDistrict(@RequestBody DistrictRequestDto district);
 
   @GetMapping(path = "/{districtId}")
     public ResponseEntity<DistrictResponseDto> getDistrictById(@PathVariable String districtId);

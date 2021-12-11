@@ -21,7 +21,6 @@ public class RegionService {
     @Autowired
     private ZoneService zoneService;
 
-
     @Autowired
     public RegionService(RegionRepository regionRepository) {
         this.regionRepository = regionRepository;
@@ -45,17 +44,21 @@ public class RegionService {
         Region r = new Region();
         Zones z = zn.get();
 
-          r.setZones(z);
-          r.setRegionCode(regionDto.getRegionCode());
-          r.setRegionName(regionDto.getRegionName());
-          regionRepository.save(r);
+        r.setZones(z);
+        r.setRegionCode(regionDto.getRegionCode());
+        r.setRegionName(regionDto.getRegionName());
+        regionRepository.save(r);
 
-          RegionResponseDto responseDto = new RegionResponseDto();
-          responseDto.setRegionId(r.getRegionId());
-          responseDto.setRegionCode(r.getRegionCode());
-          responseDto.setRegionName(r.getRegionName());
-          responseDto.setZoneId(z.getZoneId());
-          return  ResponseEntity.ok(responseDto);
+        RegionResponseDto responseDto = new RegionResponseDto();
+        responseDto.setRegionId(r.getRegionId());
+        responseDto.setRegionCode(r.getRegionCode());
+        responseDto.setRegionName(r.getRegionName());
+        responseDto.setCreatedDate(r.getCreatedDate());
+        responseDto.setCreatedBy(r.getCreatedBy());
+        responseDto.setModifiedDate(r.getModifiedDate());
+        responseDto.setModifiedBy(r.getModifiedBy());
+        responseDto.setZoneId(z.getZoneId());
+        return  ResponseEntity.ok(responseDto);
     }
 
 

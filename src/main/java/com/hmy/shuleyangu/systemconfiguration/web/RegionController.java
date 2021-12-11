@@ -2,6 +2,8 @@ package com.hmy.shuleyangu.systemconfiguration.web;
 
 import com.hmy.shuleyangu.systemconfiguration.dto.RegionRequestDto;
 import com.hmy.shuleyangu.systemconfiguration.dto.RegionResponseDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.ZoneRequestDto;
+import com.hmy.shuleyangu.systemconfiguration.dto.ZoneResponseDto;
 import com.hmy.shuleyangu.systemconfiguration.models.Region;
 import com.hmy.shuleyangu.systemconfiguration.repository.RegionRepository;
 import com.hmy.shuleyangu.systemconfiguration.service.RegionService;
@@ -57,10 +59,9 @@ public class RegionController implements RegionApi {
 }
 
     @Override
-    public ResponseEntity<RegionResponseDto> registerNewRegion(RegionRequestDto region){
-        return regionService.addNewRegion(region);
+    public ResponseEntity<RegionResponseDto> registerRegion(RegionRequestDto regions) {
+        return regionService.addNewRegion(regions);
     }
-
 
     public ResponseEntity<RegionResponseDto> getRegionById(String regionId)
     {
