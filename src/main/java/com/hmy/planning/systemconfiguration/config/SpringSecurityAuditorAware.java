@@ -1,4 +1,4 @@
-package com.hmy.shuleyangu.systemconfiguration.config;
+package com.hmy.planning.systemconfiguration.config;
 
 import org.springframework.data.domain.AuditorAware;
 

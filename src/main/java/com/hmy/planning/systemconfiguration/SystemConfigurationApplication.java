@@ -1,6 +1,6 @@
-package com.hmy.shuleyangu.systemconfiguration;
+package com.hmy.planning.systemconfiguration;
 
-import com.hmy.shuleyangu.systemconfiguration.config.SpringSecurityAuditorAware;
+import com.hmy.planning.systemconfiguration.config.SpringSecurityAuditorAware;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +22,7 @@ public class SystemConfigurationApplication {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(

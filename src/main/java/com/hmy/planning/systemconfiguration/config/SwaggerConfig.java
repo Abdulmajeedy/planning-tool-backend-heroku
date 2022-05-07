@@ -1,4 +1,4 @@
-package com.hmy.shuleyangu.systemconfiguration.config;
+package com.hmy.planning.systemconfiguration.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +21,8 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors.basePackage("com.hmy.shuleyangu.systemconfiguration"))
                 .paths(PathSelectors.any()).build()
-                //.securitySchemes(Arrays.asList(securityScheme()))
-                //.securityContexts(Arrays.asList(securityContext()))
+                // .securitySchemes(Arrays.asList(securityScheme()))
+                // .securityContexts(Arrays.asList(securityContext()))
                 .apiInfo(builder.build());
     }
 
