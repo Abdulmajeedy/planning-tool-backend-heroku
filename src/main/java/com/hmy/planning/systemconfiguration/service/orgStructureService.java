@@ -32,7 +32,7 @@ public class orgStructureService {
     public ResponseEntity<orgStructureResponseDto> addNewOrgStructure(orgStructureRequestDto reqOrg) {
         orgStructure org = new orgStructure();
         org.setOfficeName(reqOrg.getOfficeName());
-        org.setOfficeShortName(reqOrg.getOfficeShortCode());
+        org.setOfficeShortName(reqOrg.getOfficeShortName());
         org.setOfficeCode(reqOrg.getOfficeCode());
         org.setReportTo(reqOrg.getReportTo());
         org.setStatus(reqOrg.getStatus());
@@ -40,7 +40,7 @@ public class orgStructureService {
 
         orgStructureResponseDto roleDto = new orgStructureResponseDto();
         roleDto.setOfficeName(reqOrg.getOfficeName());
-        roleDto.setOfficeShortCode(reqOrg.getOfficeShortCode());
+        roleDto.setOfficeShortName(reqOrg.getOfficeShortName());
         roleDto.setOfficeCode(reqOrg.getOfficeCode());
         roleDto.setReportTo(reqOrg.getReportTo());
         roleDto.setStatus(reqOrg.getStatus());
@@ -71,7 +71,7 @@ public class orgStructureService {
         org.setCreatedBy(reqOrg.getCreatedBy());
         org.setCreatedDate(reqOrg.getCreatedDate());
         org.setModifiedBy(reqOrg.getModifiedBy());
-        orgStructureRepo.save(org);
+        orgStructureRepo.save(reqOrg);
 
     }
 

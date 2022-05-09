@@ -8,7 +8,7 @@ import lombok.Data;
 public class orgStructureResponseDto extends Auditable<String> {
 
     private String officeID;
-    private String officeShortCode;
+    private String officeShortName;
     private String officeCode;
     private String officeName;
     private String reportTo;

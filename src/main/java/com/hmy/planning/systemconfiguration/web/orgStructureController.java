@@ -41,8 +41,9 @@ public class orgStructureController implements orgStructureApi {
         for (orgStructure rol : role) {
             orgStructureResponseDto responseDto = new orgStructureResponseDto();
             responseDto.setOfficeID(rol.getOfficeID());
-            responseDto.setOfficeShortCode(rol.getOfficeShortName());
+            responseDto.setOfficeShortName(rol.getOfficeShortName());
             responseDto.setOfficeName(rol.getOfficeName());
+            responseDto.setOfficeCode(rol.getOfficeCode());
             responseDto.setReportTo(rol.getReportTo());
             responseDto.setStatus(rol.getStatus());
             responseDto.setCreatedDate(rol.getCreatedDate());
@@ -68,7 +69,8 @@ public class orgStructureController implements orgStructureApi {
             orgStructure org = orgStr.get();
             orgStructureResponseDto responseDto = new orgStructureResponseDto();
             responseDto.setOfficeID(org.getOfficeID());
-            responseDto.setOfficeShortCode(org.getOfficeShortName());
+            responseDto.setOfficeCode(org.getOfficeCode());
+            responseDto.setOfficeShortName(org.getOfficeShortName());
             responseDto.setOfficeName(org.getOfficeName());
             responseDto.setReportTo(org.getReportTo());
             responseDto.setStatus(org.getStatus());
@@ -93,7 +95,8 @@ public class orgStructureController implements orgStructureApi {
         orgStructureResponseDto responseDto = new orgStructureResponseDto();
 
         responseDto.setOfficeID(org.getOfficeID());
-        responseDto.setOfficeShortCode(org.getOfficeShortName());
+        responseDto.setOfficeCode(org.getOfficeCode());
+        responseDto.setOfficeShortName(org.getOfficeShortName());
         responseDto.setOfficeName(org.getOfficeName());
         responseDto.setReportTo(org.getReportTo());
         responseDto.setStatus(org.getStatus());

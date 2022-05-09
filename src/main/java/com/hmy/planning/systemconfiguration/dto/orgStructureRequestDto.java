@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class orgStructureRequestDto extends Auditable<String> {
 
-    private String officeShortCode;
+    private String officeShortName;
     private String officeName;
     private String officeCode;
     private String reportTo;
