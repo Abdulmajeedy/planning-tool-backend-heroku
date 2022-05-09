@@ -7,6 +7,7 @@ import java.time.Year;
 public class roleRequestDto {
 
     private String role;
+    private String description;
     private int status;
 
 }

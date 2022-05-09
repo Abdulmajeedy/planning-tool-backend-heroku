@@ -11,5 +11,6 @@ public class roleResponseDto extends Auditable<String> {
 
     private String roleCode;
     private String role;
+    private String description;
     private int status;
 }

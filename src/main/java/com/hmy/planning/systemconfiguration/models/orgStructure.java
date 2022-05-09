@@ -12,17 +12,18 @@ import lombok.Data;
 
 @Data
 @Entity
-public class roles extends Auditable<String> implements Serializable {
+public class orgStructure extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String roleCode;
-    private String role;
-    private String description;
+    private String officeID;
+    private String officeCode;
+    private String officeShortName;
+    private String officeName;
+    private String reportTo;
     private int status;
 
-    // @OneToMany(mappedBy = "academicYear", fetch = FetchType.LAZY)
-    // private List<Grades> grades;
 }
