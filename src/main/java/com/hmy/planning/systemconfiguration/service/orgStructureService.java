@@ -38,17 +38,17 @@ public class orgStructureService {
         org.setStatus(reqOrg.getStatus());
         orgStructureRepo.save(org);
 
-        orgStructureResponseDto roleDto = new orgStructureResponseDto();
-        roleDto.setOfficeName(reqOrg.getOfficeName());
-        roleDto.setOfficeShortName(reqOrg.getOfficeShortName());
-        roleDto.setOfficeCode(reqOrg.getOfficeCode());
-        roleDto.setReportTo(reqOrg.getReportTo());
-        roleDto.setStatus(reqOrg.getStatus());
-        roleDto.setCreatedDate(reqOrg.getCreatedDate());
-        roleDto.setCreatedBy(reqOrg.getCreatedBy());
-        roleDto.setModifiedDate(reqOrg.getModifiedDate());
-        roleDto.setModifiedBy(reqOrg.getModifiedBy());
-        return ResponseEntity.ok(roleDto);
+        orgStructureResponseDto orgDto = new orgStructureResponseDto();
+        orgDto.setOfficeName(reqOrg.getOfficeName());
+        orgDto.setOfficeShortName(reqOrg.getOfficeShortName());
+        orgDto.setOfficeCode(reqOrg.getOfficeCode());
+        orgDto.setReportTo(reqOrg.getReportTo());
+        orgDto.setStatus(reqOrg.getStatus());
+        orgDto.setCreatedDate(reqOrg.getCreatedDate());
+        orgDto.setCreatedBy(reqOrg.getCreatedBy());
+        orgDto.setModifiedDate(reqOrg.getModifiedDate());
+        orgDto.setModifiedBy(reqOrg.getModifiedBy());
+        return ResponseEntity.ok(orgDto);
     }
 
     public void deleteOrgStructure(String officeID) {
@@ -64,7 +64,7 @@ public class orgStructureService {
         orgStructureRepo.findById(
                 officeID)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Role  with Code " + officeID + " does not exist"));
+                        "Office  with ID " + officeID + " does not exist"));
 
         reqOrg.setOfficeID(officeID);
         orgStructure org = new orgStructure();
@@ -74,5 +74,4 @@ public class orgStructureService {
         orgStructureRepo.save(reqOrg);
 
     }
-
 }
