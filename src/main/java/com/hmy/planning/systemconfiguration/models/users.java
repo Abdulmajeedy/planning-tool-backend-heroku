@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class users implements Serializable {
+public class users extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 2364534L;
     @Id
