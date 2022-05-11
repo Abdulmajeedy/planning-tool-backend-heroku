@@ -12,16 +12,15 @@ import lombok.Data;
 
 @Data
 @Entity
-public class projects extends Auditable<String> implements Serializable {
+public class budgetingPeriod extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String projectCode;
-    private String projectName;
-    private String description;
+    private String budgetYearCode;
+    private String year;
     private int status;
 
 }

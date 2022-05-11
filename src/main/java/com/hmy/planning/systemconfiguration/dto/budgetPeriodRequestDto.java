@@ -5,10 +5,9 @@ import com.hmy.planning.systemconfiguration.models.Auditable;
 import lombok.Data;
 
 @Data
-public class projectRequestDto {
+public class budgetPeriodRequestDto {
 
-    private String projectName;
-    private String description;
+    private String year;
     private int status;
 
 }
