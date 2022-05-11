@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.Year;
 
 @Data
-public class usersResponseDto {
+public class usersResponseDto extends Auditable<String> {
 
     private String userCode;
     private String firstName;

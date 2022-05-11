@@ -26,6 +26,7 @@ public class users extends Auditable<String> implements Serializable {
     private String email;
     private String officeCode;
     private boolean active;
-    private String roles;
+    private int Status;
+    private int roles;
 
 }

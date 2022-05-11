@@ -1,6 +1,9 @@
 package com.hmy.planning.systemconfiguration.models;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 
 public class myUserDetails implements UserDetails {
 
@@ -13,13 +16,13 @@ public class myUserDetails implements UserDetails {
     private String company;
     private String department;
 
-    public UUID getUserProfile() {
-        return userProfile;
-    }
+    // public UUID getUserProfile() {
+    // return userProfile;
+    // }
 
-    public void setUserProfile(UUID userProfile) {
-        this.userProfile = userProfile;
-    }
+    // public void setUserProfile(UUID userProfile) {
+    // this.userProfile = userProfile;
+    // }
 
     private UUID userProfile;
 
