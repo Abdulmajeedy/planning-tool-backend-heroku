@@ -1,10 +1,13 @@
 package com.hmy.planning.systemconfiguration.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,5 +25,8 @@ public class budgetingPeriod extends Auditable<String> implements Serializable {
     private String budgetYearCode;
     private String year;
     private int status;
+
+    @OneToMany(mappedBy = "budgetingPeriod", fetch = FetchType.LAZY)
+    private List<ActivityPlanningPeriod> activityPlanningPeriod;
 
 }
