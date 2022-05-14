@@ -35,7 +35,7 @@ public interface objectiveApi {
 
     @DeleteMapping(path = "/{objectiveCode}")
     @ResponseStatus(code = HttpStatus.OK, reason = "Academic year Deleted")
-    public void deleteById(@PathVariable("officeID") String roleCode);
+    public void deleteById(@PathVariable("objectiveCode") String objectiveCode);
 
     @RequestMapping(value = "/{objectiveCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
     public ResponseEntity updateObjective(@PathVariable("objectiveCode") String objectiveCode,

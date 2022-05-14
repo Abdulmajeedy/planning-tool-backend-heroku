@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class objectiveController implements objectiveApi {
 
     private objectiveService objectiveService;
@@ -33,10 +35,9 @@ public class objectiveController implements objectiveApi {
     public ResponseEntity<List<objectiveResponseDto>> getObjective(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         List<Objectives> objective = objectiveService.findAllObjectives(pageRequest);
-        List<objectiveResponseDto> roleDto = new ArrayList<>();
+        List<objectiveResponseDto> objDto = new ArrayList<>();
         for (Objectives object : objective) {
             objectiveResponseDto responseDto = new objectiveResponseDto();
-
             responseDto.setObjectiveCode(object.getObjectiveCode());
             responseDto.setObjective(object.getObjective());
             responseDto.setStatus(object.getStatus());
@@ -44,9 +45,9 @@ public class objectiveController implements objectiveApi {
             responseDto.setCreatedBy(object.getCreatedBy());
             responseDto.setModifiedDate(object.getModifiedDate());
             responseDto.setModifiedBy(object.getModifiedBy());
-            roleDto.add(responseDto);
+            objDto.add(responseDto);
         }
-        return ResponseEntity.ok(roleDto);
+        return ResponseEntity.ok(objDto);
     }
 
     @Override
