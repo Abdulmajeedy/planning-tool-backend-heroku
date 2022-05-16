@@ -9,6 +9,7 @@ public class objectiveResponseDto extends Auditable<String> {
 
     private String objectiveCode;
     private String objective;
+    private String budgetYearCode;
     private int status;
 
 }

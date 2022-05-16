@@ -40,6 +40,7 @@ public class objectiveController implements objectiveApi {
             objectiveResponseDto responseDto = new objectiveResponseDto();
             responseDto.setObjectiveCode(object.getObjectiveCode());
             responseDto.setObjective(object.getObjective());
+            responseDto.setBudgetYearCode(object.getBudgetingPeriod().getBudgetYearCode());
             responseDto.setStatus(object.getStatus());
             responseDto.setCreatedDate(object.getCreatedDate());
             responseDto.setCreatedBy(object.getCreatedBy());

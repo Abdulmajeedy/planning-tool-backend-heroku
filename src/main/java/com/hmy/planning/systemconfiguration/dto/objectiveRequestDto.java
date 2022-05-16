@@ -6,6 +6,7 @@ import lombok.Data;
 public class objectiveRequestDto {
 
     private String objective;
+    private String budgetYearCode;
     private int status;
 
 }

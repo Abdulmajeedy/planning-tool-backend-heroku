@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class strategiesRequestDto {
 
-    private String strategyCode;
     private String strategy;
+    private String ObjectiveCode;
     private int status;
 
 }

@@ -69,4 +69,8 @@ public class budgetPeriodService {
         budgetRepo.save(reqBudgetPeriod);
     }
 
+    public Optional<budgetingPeriod> getBudgetYearCode(String BudgetYearCode) {
+        return budgetRepo.findById(BudgetYearCode);
+    }
+
 }

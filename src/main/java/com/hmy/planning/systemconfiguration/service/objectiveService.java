@@ -5,10 +5,12 @@ import java.util.*;
 import com.hmy.planning.systemconfiguration.dto.objectiveRequestDto;
 import com.hmy.planning.systemconfiguration.dto.objectiveResponseDto;
 import com.hmy.planning.systemconfiguration.models.Objectives;
+import com.hmy.planning.systemconfiguration.models.budgetingPeriod;
 import com.hmy.planning.systemconfiguration.repository.ObjectiveRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +20,12 @@ public class objectiveService {
     @Autowired
     private ObjectiveRepository objectiveRepo;
 
+    private budgetPeriodService budgetPeriodService;
+
     @Autowired
-    public objectiveService(ObjectiveRepository objectiveRepo) {
+    public objectiveService(ObjectiveRepository objectiveRepo, budgetPeriodService budgetPeriodService) {
         this.objectiveRepo = objectiveRepo;
+        this.budgetPeriodService = budgetPeriodService;
 
     }
 
@@ -29,14 +34,24 @@ public class objectiveService {
     }
 
     public ResponseEntity<objectiveResponseDto> addNewObjective(objectiveRequestDto reqObjective) {
+        Optional<budgetingPeriod> budgetPeriod = budgetPeriodService
+                .getBudgetYearCode(reqObjective.getBudgetYearCode());
+
+        if (!budgetPeriod.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        budgetingPeriod budPeriod = budgetPeriod.get();
         Objectives objective = new Objectives();
 
         objective.setObjective(reqObjective.getObjective());
+        objective.setBudgetingPeriod(budPeriod);
         objective.setStatus(reqObjective.getStatus());
         objectiveRepo.save(objective);
 
         objectiveResponseDto objectiveDto = new objectiveResponseDto();
         objectiveDto.setObjective(objective.getObjective());
+        objective.setBudgetingPeriod(objective.getBudgetingPeriod());
         objectiveDto.setStatus(objective.getStatus());
         objectiveDto.setCreatedDate(objective.getCreatedDate());
         objectiveDto.setCreatedBy(objective.getCreatedBy());
@@ -65,6 +80,10 @@ public class objectiveService {
         objectives.setCreatedDate(reqObjective.getCreatedDate());
         objectives.setModifiedBy(reqObjective.getModifiedBy());
         objectiveRepo.save(reqObjective);
+    }
+
+    public Optional<Objectives> getObjectiveCode(String ObjectiveCode) {
+        return objectiveRepo.findById(ObjectiveCode);
     }
 
 }
