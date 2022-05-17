@@ -20,11 +20,13 @@ public class strategiesService {
     @Autowired
     private StrategiesRepository strategyRepo;
 
+    @Autowired
     private objectiveService objectiveService;
 
     @Autowired
-    public strategiesService(StrategiesRepository strategyRepo) {
+    public strategiesService(StrategiesRepository strategyRepo, objectiveService objectiveService) {
         this.strategyRepo = strategyRepo;
+        this.objectiveService = objectiveService;
     }
 
     public List<Strategies> findAllStrategies(PageRequest pageRequest) {

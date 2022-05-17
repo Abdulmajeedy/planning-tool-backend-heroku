@@ -9,6 +9,7 @@ public class activityResponseDto extends Auditable<String> {
 
     private String activityCode;
     private String activityName;
+    private String strategyCode;
     private int Status;
 
 }

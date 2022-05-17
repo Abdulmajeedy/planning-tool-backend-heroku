@@ -27,8 +27,9 @@ public class strategiesController implements strategiesApi {
     private ModelMapper modelMapper;
 
     @Autowired
-    public strategiesController(strategiesService strategiesService, ModelMapper modelMapper) {
-
+    public strategiesController(strategiesService strategiesService, ModelMapper modelMapper,
+            ObjectiveRepository objectiveRepo) {
+        this.objectiveRepo = objectiveRepo;
         this.strategiesService = strategiesService;
         this.modelMapper = modelMapper;
     }
