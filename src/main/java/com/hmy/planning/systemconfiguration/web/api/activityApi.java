@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public interface activityApi {
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<activityResponseDto>> getBudgetPeriod(
+    public ResponseEntity<List<activityResponseDto>> getActivities(
             @RequestParam(defaultValue = "0", required = false) int page,
             @RequestParam(defaultValue = "10", required = false) int size);
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<activityResponseDto> registerNewBudgetPeriod(
+    public ResponseEntity<activityResponseDto> registerNewActivity(
             @RequestBody activityRequestDto budgetPeriod);
 
     @RequestMapping(value = "/{activityCode}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<activityResponseDto> getBudgetPeriodById(
+    public ResponseEntity<activityResponseDto> getActivityById(
             @PathVariable("activityCode") String activityCode);
 
     @DeleteMapping(path = "/{activityCode}")
@@ -39,7 +39,7 @@ public interface activityApi {
     public void deleteById(@PathVariable("activityCode") String activityCode);
 
     @RequestMapping(value = "/{activityCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-    public ResponseEntity updateBudgetPeriod(@PathVariable("activityCode") String activityCode,
+    public ResponseEntity updateActivity(@PathVariable("activityCode") String activityCode,
             @RequestBody Activity activity);
 
 }
