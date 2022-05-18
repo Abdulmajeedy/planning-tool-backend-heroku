@@ -60,16 +60,16 @@ public class activityService {
         return ResponseEntity.ok(actDto);
     }
 
-    public void deleteActivity(String strategyCode) {
+    public void deleteActivity(String activityCode) {
 
-        activityRepo.deleteById(strategyCode);
+        activityRepo.deleteById(activityCode);
     }
 
     public Optional<Activity> getActivityById(String activityCode) {
         return activityRepo.findById(activityCode);
     }
 
-    public void updateStrategies(String activityCode, Activity reqActivity) {
+    public void updateActivity(String activityCode, Activity reqActivity) {
         activityRepo.findById(activityCode)
                 .orElseThrow(() -> new IllegalStateException(
                         "Office  with ID " + activityCode + " does not exist"));
