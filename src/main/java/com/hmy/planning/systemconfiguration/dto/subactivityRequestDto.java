@@ -10,6 +10,7 @@ public class subactivityRequestDto {
     private int Unit_cost_per_unit;
     private int no_of_unit;
     private int estimates;
+    private String activityCode;
     private int approvalStatus;
     private int status;
 

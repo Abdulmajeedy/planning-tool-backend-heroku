@@ -4,11 +4,13 @@ import java.util.*;
 
 import com.hmy.planning.systemconfiguration.dto.subactivityRequestDto;
 import com.hmy.planning.systemconfiguration.dto.subactivityResponseDto;
+import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.models.SubActivity;
 import com.hmy.planning.systemconfiguration.repository.SubActivityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,13 @@ public class subactivityService {
     private strategiesService strategiesService;
 
     @Autowired
-    public subactivityService(SubActivityRepository subactivityRepo, strategiesService strategiesService) {
+    private activityService activityService;
+
+    @Autowired
+    public subactivityService(SubActivityRepository subactivityRepo, strategiesService strategiesService,
+            activityService activityService) {
         this.subactivityRepo = subactivityRepo;
+        this.activityService = activityService;
         this.strategiesService = strategiesService;
     }
 
@@ -32,24 +39,31 @@ public class subactivityService {
     }
 
     public ResponseEntity<subactivityResponseDto> addNewActivity(subactivityRequestDto reqSubActivity) {
-        Optional<Strategies> strategies = strategiesService.getStrategiesCode(reqSubActivity.getStrategyCode());
+        Optional<Activity> activitites = activityService.getActivityCode(reqSubActivity.getActivityCode());
 
-        if (!strategies.isPresent()) {
+        if (!activitites.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Strategies strategyObj = strategies.get();
+        Activity activityObj = activitites.get();
         SubActivity act = new SubActivity();
 
-        act.setActivityName(reqActivity.getActivityName());
-        act.setStrategies(strategyObj);
-        act.setStatus(reqActivity.getStatus());
+        act.setSubactivityName(reqSubActivity.getSubactivityName());
+        act.setActivity(activityObj);
+        act.setGfsCode(reqSubActivity.getGfsCode());
+        act.setEstimates(reqSubActivity.getEstimates());
+        act.setNo_of_unit(reqSubActivity.getNo_of_unit());
+        act.setUnit_cost_per_unit(reqSubActivity.getUnit_cost_per_unit());
+        act.setStatus(reqSubActivity.getStatus());
         subactivityRepo.save(act);
 
-        activityResponseDto actDto = new activityResponseDto();
-        actDto.setActivityCode(act.getActivityCode());
-        actDto.setActivityName(act.getActivityName());
-        actDto.setStrategyCode(act.getStrategies().getStrategyCode());
+        subactivityResponseDto actDto = new subactivityResponseDto();
+        actDto.setSubactivityName(act.getSubactivityName());
+        actDto.setActivity(act.getActivity().getActivityCode());
+        actDto.setGfsCode(act.getGfsCode());
+        actDto.setEstimates(act.getEstimates());
+        actDto.setNo_of_unit(act.getNo_of_unit());
+        actDto.setUnit_cost_per_unit(act.getUnit_cost_per_unit());
         actDto.setStatus(act.getStatus());
         actDto.setCreatedDate(act.getCreatedDate());
         actDto.setCreatedBy(act.getCreatedBy());
@@ -70,18 +84,18 @@ public class subactivityService {
     public void updateSubActivity(String subactivityCode, SubActivity reqSubActivity) {
         subactivityRepo.findById(subactivityCode)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Office  with ID " + subactivityCode + " does not exist"));
+                        "Sub Activity  with Code " + subactivityCode + " does not exist"));
 
         reqSubActivity.setSubactivityCode(subactivityCode);
         SubActivity acti = new SubActivity();
-        acti.setCreatedBy(reqActivity.getCreatedBy());
-        acti.setCreatedDate(reqActivity.getCreatedDate());
-        acti.setModifiedBy(reqActivity.getModifiedBy());
-        subactivityRepo.save(reqActivity);
+        acti.setCreatedBy(reqSubActivity.getCreatedBy());
+        acti.setCreatedDate(reqSubActivity.getCreatedDate());
+        acti.setModifiedBy(reqSubActivity.getModifiedBy());
+        subactivityRepo.save(reqSubActivity);
     }
 
-    public Optional<Activity> getActivityCode(String activityCode) {
-        return subactivityRepo.findById(activityCode);
+    public Optional<SubActivity> getActivityCode(String subactivityCode) {
+        return subactivityRepo.findById(subactivityCode);
     }
 
 }
