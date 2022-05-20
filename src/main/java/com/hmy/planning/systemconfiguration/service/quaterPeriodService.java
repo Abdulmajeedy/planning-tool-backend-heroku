@@ -70,4 +70,8 @@ public class quaterPeriodService {
 
     }
 
+    public Optional<QuaterPeriod> getQuaterPeriodCode(String QuaterPeriodCode) {
+        return quaterRepo.findById(QuaterPeriodCode);
+    }
+
 }
