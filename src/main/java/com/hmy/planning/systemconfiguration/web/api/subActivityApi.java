@@ -21,24 +21,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/subActivity")
 public interface subActivityApi {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<subactivityResponseDto>> getSubActivity(
-            @RequestParam(defaultValue = "0", required = false) int page,
-            @RequestParam(defaultValue = "10", required = false) int size);
+        @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<List<subactivityResponseDto>> getSubActivity(
+                        @RequestParam(defaultValue = "0", required = false) int page,
+                        @RequestParam(defaultValue = "10", required = false) int size);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<subactivityResponseDto> registerNewSubActivity(
-            @RequestBody subactivityRequestDto reqSubActivity);
+        @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+        public ResponseEntity<subactivityResponseDto> registerNewSubActivity(
+                        @RequestBody subactivityRequestDto reqSubActivity);
 
-    @RequestMapping(value = "/{subactivityCode}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<subactivityResponseDto> getSubActivityById(@PathVariable String subactivityCode);
+        @RequestMapping(value = "/{subactivityCode}", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<subactivityResponseDto> getSubActivityById(@PathVariable String subactivityCode);
 
-    @DeleteMapping(path = "/{subactivityCode}")
-    @ResponseStatus(code = HttpStatus.OK, reason = "Project Deleted")
-    public void deleteById(@PathVariable("roleCode") String subactivityCode);
+        @DeleteMapping(path = "/{subactivityCode}")
+        @ResponseStatus(code = HttpStatus.OK, reason = "Project Deleted")
+        public void deleteById(@PathVariable("roleCode") String subactivityCode);
 
-    @RequestMapping(value = "/{subactivityCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-    public ResponseEntity updateSubActivity(@PathVariable("projectCode") String subactivityCode,
-            @RequestBody SubActivity reqSubActivity);
+        @RequestMapping(value = "/{subactivityCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+        public ResponseEntity updateSubActivity(@PathVariable("projectCode") String subactivityCode,
+                        @RequestBody SubActivity reqSubActivity);
 
 }

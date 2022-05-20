@@ -38,4 +38,7 @@ public class Activity extends Auditable<String> implements Serializable {
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<ActivityPlanningPeriod> activityPlanningPeriod;
 
+    @OneToMany(mappedBy = "activity")
+    private List<ActivityQuaterPeriod> activityQuaterPeriod;
+
 }

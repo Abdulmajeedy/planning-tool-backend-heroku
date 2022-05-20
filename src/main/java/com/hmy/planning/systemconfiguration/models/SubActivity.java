@@ -23,6 +23,7 @@ public class SubActivity extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String subactivityCode;
     private String subactivityName;
+    private String quaterPeriodCode;
     private int gfsCode;
     private int Unit_cost_per_unit;
     private int no_of_unit;
