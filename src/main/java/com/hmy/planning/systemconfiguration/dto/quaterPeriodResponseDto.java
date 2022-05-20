@@ -9,6 +9,7 @@ public class quaterPeriodResponseDto extends Auditable<String> {
 
     private String quaterPeriodCode;
     private String quaterName;
+    private String alternativeName;
     private int status;
 
 }

@@ -22,6 +22,7 @@ public class QuaterPeriod extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String quaterPeriodCode;
     private String quaterName;
+    private String alternativeName;
     private int Status;
 
     @OneToMany(mappedBy = "quaterPeriod", fetch = FetchType.LAZY)

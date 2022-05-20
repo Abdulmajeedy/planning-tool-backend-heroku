@@ -31,12 +31,14 @@ public class quaterPeriodService {
     public ResponseEntity<quaterPeriodResponseDto> addNewQuaterPeriod(quaterPeriodRequestDto reqQuaterPeriodCode) {
         QuaterPeriod quater = new QuaterPeriod();
         quater.setQuaterName(reqQuaterPeriodCode.getQuaterName());
+        quater.setAlternativeName(reqQuaterPeriodCode.getAlternativeName());
         quater.setStatus(reqQuaterPeriodCode.getStatus());
         quaterRepo.save(quater);
 
         quaterPeriodResponseDto quaterDto = new quaterPeriodResponseDto();
         quaterDto.setQuaterPeriodCode(quater.getQuaterPeriodCode());
         quaterDto.setQuaterName(quater.getQuaterName());
+        quaterDto.setAlternativeName(quater.getAlternativeName());
         quaterDto.setStatus(quater.getStatus());
         quaterDto.setCreatedDate(quater.getCreatedDate());
         quaterDto.setCreatedBy(quater.getCreatedBy());

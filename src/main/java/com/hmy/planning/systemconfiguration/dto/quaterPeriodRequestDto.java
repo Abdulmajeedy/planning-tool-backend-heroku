@@ -6,6 +6,7 @@ import lombok.Data;
 public class quaterPeriodRequestDto {
 
     private String quaterName;
+    private String alternativeName;
     private int status;
 
 }

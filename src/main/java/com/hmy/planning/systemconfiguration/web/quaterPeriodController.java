@@ -42,6 +42,7 @@ public class quaterPeriodController implements quaterPeriodApi {
             quaterPeriodResponseDto responseDto = new quaterPeriodResponseDto();
             responseDto.setQuaterPeriodCode(quat.getQuaterPeriodCode());
             responseDto.setQuaterName(quat.getQuaterName());
+            responseDto.setAlternativeName(quat.getAlternativeName());
             responseDto.setStatus(quat.getStatus());
             responseDto.setCreatedDate(quat.getCreatedDate());
             responseDto.setCreatedBy(quat.getCreatedBy());
@@ -67,6 +68,7 @@ public class quaterPeriodController implements quaterPeriodApi {
             quaterPeriodResponseDto responseDto = new quaterPeriodResponseDto();
             responseDto.setQuaterPeriodCode(quat.getQuaterPeriodCode());
             responseDto.setQuaterName(quat.getQuaterName());
+            responseDto.setAlternativeName(quat.getAlternativeName());
             responseDto.setStatus(quat.getStatus());
             responseDto.setCreatedDate(quat.getCreatedDate());
             responseDto.setCreatedBy(quat.getCreatedBy());
@@ -89,6 +91,7 @@ public class quaterPeriodController implements quaterPeriodApi {
         quaterPeriodResponseDto responseDto = new quaterPeriodResponseDto();
         responseDto.setQuaterPeriodCode(quat.getQuaterPeriodCode());
         responseDto.setQuaterName(quat.getQuaterName());
+        responseDto.setAlternativeName(quat.getAlternativeName());
         responseDto.setStatus(quat.getStatus());
         responseDto.setCreatedDate(quat.getCreatedDate());
         responseDto.setCreatedBy(quat.getCreatedBy());
