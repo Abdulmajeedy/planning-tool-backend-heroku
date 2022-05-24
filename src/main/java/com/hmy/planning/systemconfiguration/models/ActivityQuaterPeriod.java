@@ -20,6 +20,7 @@ public class ActivityQuaterPeriod extends Auditable<String> implements Serializa
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String activityQuaterPeriodCode;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "quaterPeriodCode")

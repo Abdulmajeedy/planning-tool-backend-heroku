@@ -8,7 +8,7 @@ import com.hmy.planning.systemconfiguration.dto.quaterPeriodRequestDto;
 import com.hmy.planning.systemconfiguration.dto.quaterPeriodResponseDto;
 import com.hmy.planning.systemconfiguration.models.QuaterPeriod;
 import com.hmy.planning.systemconfiguration.repository.QuaterPeriodRepository;
-import com.hmy.planning.systemconfiguration.service.quaterPeriodService;
+import com.hmy.planning.systemconfiguration.service.QuaterPeriodService;
 import com.hmy.planning.systemconfiguration.utils.ApiResponse;
 import com.hmy.planning.systemconfiguration.web.api.quaterPeriodApi;
 
@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class quaterPeriodController implements quaterPeriodApi {
 
-    private quaterPeriodService quaterServices;
+    private QuaterPeriodService quaterServices;
     private QuaterPeriodRepository quaterRepo;
     private ModelMapper modelMapper;
 
     @Autowired
-    public quaterPeriodController(quaterPeriodService quaterServices, ModelMapper modelMapper) {
+    public quaterPeriodController(QuaterPeriodService quaterServices, ModelMapper modelMapper) {
 
         this.quaterServices = quaterServices;
         this.modelMapper = modelMapper;

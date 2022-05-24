@@ -21,24 +21,24 @@ public class subactivityService {
     private SubActivityRepository subactivityRepo;
 
     @Autowired
-    private strategiesService strategiesService;
+    private StrategiesService strategiesService;
 
     @Autowired
     private activityService activityService;
 
     @Autowired
-    public subactivityService(SubActivityRepository subactivityRepo, strategiesService strategiesService,
+    public subactivityService(SubActivityRepository subactivityRepo, StrategiesService strategiesService,
             activityService activityService) {
         this.subactivityRepo = subactivityRepo;
         this.activityService = activityService;
         this.strategiesService = strategiesService;
     }
 
-    public List<SubActivity> findAllActivities(PageRequest pageRequest) {
+    public List<SubActivity> findAllSubActivities(PageRequest pageRequest) {
         return subactivityRepo.findAll(pageRequest).getContent();
     }
 
-    public ResponseEntity<subactivityResponseDto> addNewActivity(subactivityRequestDto reqSubActivity) {
+    public ResponseEntity<subactivityResponseDto> addNewSubActivity(subactivityRequestDto reqSubActivity) {
         Optional<Activity> activitites = activityService.getActivityCode(reqSubActivity.getActivityCode());
 
         if (!activitites.isPresent()) {
@@ -58,6 +58,7 @@ public class subactivityService {
         subactivityRepo.save(act);
 
         subactivityResponseDto actDto = new subactivityResponseDto();
+        actDto.setSubactivityCode(act.getSubactivityCode());
         actDto.setSubactivityName(act.getSubactivityName());
         actDto.setActivity(act.getActivity().getActivityCode());
         actDto.setGfsCode(act.getGfsCode());
@@ -77,7 +78,7 @@ public class subactivityService {
         subactivityRepo.deleteById(subactivityCode);
     }
 
-    public Optional<SubActivity> getActivityById(String activityCode) {
+    public Optional<SubActivity> getSubActivityById(String activityCode) {
         return subactivityRepo.findById(activityCode);
     }
 
@@ -94,7 +95,7 @@ public class subactivityService {
         subactivityRepo.save(reqSubActivity);
     }
 
-    public Optional<SubActivity> getActivityCode(String subactivityCode) {
+    public Optional<SubActivity> getSubActivityCode(String subactivityCode) {
         return subactivityRepo.findById(subactivityCode);
     }
 

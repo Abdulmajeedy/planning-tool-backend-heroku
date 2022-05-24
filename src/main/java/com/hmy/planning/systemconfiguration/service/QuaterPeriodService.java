@@ -13,13 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class quaterPeriodService {
+public class QuaterPeriodService {
 
     @Autowired
     private QuaterPeriodRepository quaterRepo;
 
     @Autowired
-    public quaterPeriodService(QuaterPeriodRepository quaterRepo) {
+    public QuaterPeriodService(QuaterPeriodRepository quaterRepo) {
         this.quaterRepo = quaterRepo;
 
     }

@@ -8,7 +8,7 @@ import com.hmy.planning.systemconfiguration.dto.strategiesRequestDto;
 import com.hmy.planning.systemconfiguration.dto.strategiesResponseDto;
 import com.hmy.planning.systemconfiguration.models.Strategies;
 import com.hmy.planning.systemconfiguration.repository.ObjectiveRepository;
-import com.hmy.planning.systemconfiguration.service.strategiesService;
+import com.hmy.planning.systemconfiguration.service.StrategiesService;
 import com.hmy.planning.systemconfiguration.utils.ApiResponse;
 import com.hmy.planning.systemconfiguration.web.api.strategiesApi;
 
@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class strategiesController implements strategiesApi {
 
-    private strategiesService strategiesService;
+    private StrategiesService strategiesService;
     private ObjectiveRepository objectiveRepo;
     private ModelMapper modelMapper;
 
     @Autowired
-    public strategiesController(strategiesService strategiesService, ModelMapper modelMapper,
+    public strategiesController(StrategiesService strategiesService, ModelMapper modelMapper,
             ObjectiveRepository objectiveRepo) {
         this.objectiveRepo = objectiveRepo;
         this.strategiesService = strategiesService;

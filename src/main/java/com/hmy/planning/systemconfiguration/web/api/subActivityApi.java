@@ -34,11 +34,11 @@ public interface subActivityApi {
         public ResponseEntity<subactivityResponseDto> getSubActivityById(@PathVariable String subactivityCode);
 
         @DeleteMapping(path = "/{subactivityCode}")
-        @ResponseStatus(code = HttpStatus.OK, reason = "Project Deleted")
+        @ResponseStatus(code = HttpStatus.OK, reason = "subactivity Deleted")
         public void deleteById(@PathVariable("roleCode") String subactivityCode);
 
         @RequestMapping(value = "/{subactivityCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-        public ResponseEntity updateSubActivity(@PathVariable("projectCode") String subactivityCode,
+        public ResponseEntity updateSubActivity(@PathVariable("subactivityCode") String subactivityCode,
                         @RequestBody SubActivity reqSubActivity);
 
 }

@@ -19,28 +19,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import lombok.Data;
 import net.bytebuddy.asm.Advice.Return;
 
 @Service
+@Data
 public class activityService {
 
     @Autowired
     private ActivityRepository activityRepo;
-    private ActivityQuaterPeriodRepository activityQuaterPeriodRepository;
+    private final ActivityQuaterPeriodRepository activityQuaterPeriodRepository;
 
     @Autowired
-    private strategiesService strategiesService;
-    private quaterPeriodService quaterPd;
+    private final StrategiesService strategiesService;
+    private final QuaterPeriodService quaterPd;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    public activityService(ActivityRepository activityRepo, strategiesService strategiesService,
-            ModelMapper modelMapper) {
-        this.activityRepo = activityRepo;
-        this.strategiesService = strategiesService;
-        this.modelMapper = modelMapper;
-    }
+    // @Autowired
+    // public activityService(ActivityRepository activityRepo, strategiesService
+    // strategiesService,
+    // quaterPeriodService quaterPd,
+    // ModelMapper modelMapper) {
+    // this.activityRepo = activityRepo;
+    // this.strategiesService = strategiesService;
+    // this.quaterPd = quaterPd;
+    // this.modelMapper = modelMapper;
+    // }
 
     public List<Activity> findAllActivities(PageRequest pageRequest) {
         return activityRepo.findAll(pageRequest).getContent();
@@ -48,46 +53,48 @@ public class activityService {
 
     public ResponseEntity<activityResponseDto> addNewActivity(activityRequestDto reqActivity) {
         Optional<Strategies> strategies = strategiesService.getStrategiesCode(reqActivity.getStrategyCode());
-        // Optional<QuaterPeriod> qPeriod =
-        // quaterPd.getQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
+        Optional<QuaterPeriod> qPeriod = quaterPd.getQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
 
         if (!strategies.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // if (!qPeriod.isPresent()) {
-        // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        // }
+        if (!qPeriod.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        Strategies strategyObj = strategies.get();
+        Strategies strategyObj = new Strategies();
+        strategyObj.setStrategyCode(reqActivity.getStrategyCode());
         // QuaterPeriod quaterPeriodObj = qPeriod.get();
         Activity act = new Activity();
-        // Activity act = modelMapper.map(reqActivity, Activity.class);
 
         act.setActivityName(reqActivity.getActivityName());
         act.setStrategies(strategyObj);
         act.setStatus(reqActivity.getStatus());
         activityRepo.save(act);
+
         ActivityQuaterPeriod quaterperiods = new ActivityQuaterPeriod();
         Activity actvty = new Activity();
         actvty.setActivityCode(act.getActivityCode());
+
         quaterperiods.setActivityQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
         QuaterPeriod quaterPeriodObject = new QuaterPeriod();
+        quaterPeriodObject.setQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
         quaterperiods.setQuaterPeriod(quaterPeriodObject);
+        quaterperiods.setStatus(reqActivity.getStatus());
         quaterperiods.setActivity(actvty);
         activityQuaterPeriodRepository.save(quaterperiods);
-
-        // activityResponseDto actDto = new activityResponseDto();
-        activityResponseDto actDto = modelMapper.map(act, activityResponseDto.class);
-        // actDto.setActivityCode(act.getActivityCode());
-        // actDto.setActivityName(act.getActivityName());
-        // actDto.setStrategyCode(act.getStrategies().getStrategyCode());
+        activityResponseDto actDto = new activityResponseDto();
+        actDto.setActivityCode(act.getActivityCode());
+        actDto.setActivityName(act.getActivityName());
+        actDto.setStatus(act.getStatus());
+        actDto.setStrategyCode(act.getStrategies().getStrategyCode());
         // actDto.setQuaterPeriodCode();
-        // actDto.setStatus(act.getStatus());
-        // actDto.setCreatedDate(act.getCreatedDate());
-        // actDto.setCreatedBy(act.getCreatedBy());
-        // actDto.setModifiedDate(act.getModifiedDate());
-        // actDto.setModifiedBy(act.getModifiedBy());
+        actDto.setStatus(act.getStatus());
+        actDto.setCreatedDate(act.getCreatedDate());
+        actDto.setCreatedBy(act.getCreatedBy());
+        actDto.setModifiedDate(act.getModifiedDate());
+        actDto.setModifiedBy(act.getModifiedBy());
         return ResponseEntity.ok(actDto);
     }
 

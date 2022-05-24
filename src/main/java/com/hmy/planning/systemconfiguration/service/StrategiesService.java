@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class strategiesService {
+public class StrategiesService {
 
     @Autowired
     private StrategiesRepository strategyRepo;
@@ -24,7 +24,7 @@ public class strategiesService {
     private objectiveService objectiveService;
 
     @Autowired
-    public strategiesService(StrategiesRepository strategyRepo, objectiveService objectiveService) {
+    public StrategiesService(StrategiesRepository strategyRepo, objectiveService objectiveService) {
         this.strategyRepo = strategyRepo;
         this.objectiveService = objectiveService;
     }
