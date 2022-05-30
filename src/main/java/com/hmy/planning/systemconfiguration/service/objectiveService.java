@@ -50,6 +50,7 @@ public class objectiveService {
         objectiveRepo.save(objective);
 
         objectiveResponseDto objectiveDto = new objectiveResponseDto();
+        objectiveDto.setObjectiveCode(objective.getObjectiveCode());
         objectiveDto.setObjective(objective.getObjective());
         objective.setBudgetingPeriod(objective.getBudgetingPeriod());
         objectiveDto.setStatus(objective.getStatus());

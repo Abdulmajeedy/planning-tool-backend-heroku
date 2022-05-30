@@ -21,24 +21,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/objective")
 public interface objectiveApi {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<objectiveResponseDto>> getObjective(
-            @RequestParam(defaultValue = "0", required = false) int page,
-            @RequestParam(defaultValue = "10", required = false) int size);
+        @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<List<objectiveResponseDto>> getObjective(
+                        @RequestParam(defaultValue = "0", required = false) int page,
+                        @RequestParam(defaultValue = "10", required = false) int size);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<objectiveResponseDto> registerNewObjective(
-            @RequestBody objectiveRequestDto objectives);
+        @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+        public ResponseEntity<objectiveResponseDto> registerNewObjective(
+                        @RequestBody objectiveRequestDto objectives);
 
-    @RequestMapping(value = "/{objectiveCode}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<objectiveResponseDto> getObjectiveById(@PathVariable String objectiveCode);
+        @RequestMapping(value = "/{objectiveCode}", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<objectiveResponseDto> getObjectiveById(@PathVariable String objectiveCode);
 
-    @DeleteMapping(path = "/{objectiveCode}")
-    @ResponseStatus(code = HttpStatus.OK, reason = "Academic year Deleted")
-    public void deleteById(@PathVariable("objectiveCode") String objectiveCode);
+        @DeleteMapping(path = "/{objectiveCode}")
+        @ResponseStatus(code = HttpStatus.OK, reason = "Objective   Deleted")
+        public void deleteById(@PathVariable("objectiveCode") String objectiveCode);
 
-    @RequestMapping(value = "/{objectiveCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-    public ResponseEntity updateObjective(@PathVariable("objectiveCode") String objectiveCode,
-            @RequestBody Objectives objectives);
+        @RequestMapping(value = "/{objectiveCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+        public ResponseEntity updateObjective(@PathVariable("objectiveCode") String objectiveCode,
+                        @RequestBody Objectives objectives);
 
 }

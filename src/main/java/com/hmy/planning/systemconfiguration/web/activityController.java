@@ -39,7 +39,7 @@ public class activityController implements activityApi {
             activityResponseDto responseDto = new activityResponseDto();
             responseDto.setActivityCode(act.getActivityCode());
             responseDto.setActivityName(act.getActivityName());
-            responseDto.setStrategyCode(act.getStrategies().getStrategyCode());
+            responseDto.setTargetCode(act.getTargets().getTargetCode());
             responseDto.setStatus(act.getStatus());
             responseDto.setCreatedDate(act.getCreatedDate());
             responseDto.setCreatedBy(act.getCreatedBy());
@@ -66,7 +66,7 @@ public class activityController implements activityApi {
 
             responseDto.setActivityCode(bg.getActivityCode());
             responseDto.setActivityName(bg.getActivityName());
-            responseDto.setStrategyCode(bg.getStrategies().getStrategyCode());
+            responseDto.setTargetCode(bg.getTargets().getTargetCode());
             responseDto.setStatus(bg.getStatus());
             responseDto.setCreatedDate(bg.getCreatedDate());
             responseDto.setCreatedBy(bg.getCreatedBy());
@@ -84,7 +84,7 @@ public class activityController implements activityApi {
         Activity acty = budPer.get();
         activityResponseDto responseDto = new activityResponseDto();
         responseDto.setActivityName(acty.getActivityName());
-        responseDto.setStrategyCode(acty.getStrategies().getStrategyCode());
+        responseDto.setTargetCode(acty.getTargets().getTargetCode());
         responseDto.setStatus(acty.getStatus());
         responseDto.setStatus(acty.getStatus());
         responseDto.setCreatedDate(acty.getCreatedDate());

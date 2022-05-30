@@ -29,8 +29,8 @@ public class Activity extends Auditable<String> implements Serializable {
     private int status;
 
     @ManyToOne
-    @JoinColumn(name = "strategyCode")
-    private Strategies strategies;
+    @JoinColumn(name = "targetCode")
+    private Target targets;
 
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<SubActivity> subactivity;

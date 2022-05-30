@@ -22,24 +22,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/projects")
 public interface projectApi {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<projectResponseDto>> getProject(
-            @RequestParam(defaultValue = "0", required = false) int page,
-            @RequestParam(defaultValue = "10", required = false) int size);
+        @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<List<projectResponseDto>> getProject(
+                        @RequestParam(defaultValue = "0", required = false) int page,
+                        @RequestParam(defaultValue = "10", required = false) int size);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<projectResponseDto> registerNewProject(
-            @RequestBody projectRequestDto reqProject);
+        @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+        public ResponseEntity<projectResponseDto> registerNewProject(
+                        @RequestBody projectRequestDto reqProject);
 
-    @RequestMapping(value = "/{projectCode}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<projectResponseDto> getProjectById(@PathVariable String projectCode);
+        @RequestMapping(value = "/{projectCode}", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<projectResponseDto> getProjectById(@PathVariable String projectCode);
 
-    @DeleteMapping(path = "/{projectCode}")
-    @ResponseStatus(code = HttpStatus.OK, reason = "Project Deleted")
-    public void deleteById(@PathVariable("roleCode") String projectCode);
+        @DeleteMapping(path = "/{projectCode}")
+        @ResponseStatus(code = HttpStatus.OK, reason = "Project Deleted")
+        public void deleteById(@PathVariable("projectCode") String projectCode);
 
-    @RequestMapping(value = "/{projectCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-    public ResponseEntity updateProject(@PathVariable("projectCode") String projectCode,
-            @RequestBody projects reqProject);
+        @RequestMapping(value = "/{projectCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+        public ResponseEntity updateProject(@PathVariable("projectCode") String projectCode,
+                        @RequestBody projects reqProject);
 
 }

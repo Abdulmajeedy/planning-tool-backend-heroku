@@ -17,22 +17,22 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Strategies extends Auditable<String> implements Serializable {
+public class Target extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String strategyCode;
-    private String strategy;
+    private String targetCode;
+    private String targetName;
     private int status;
 
     @ManyToOne
-    @JoinColumn(name = "objectiveCode")
-    private Objectives objectives;
+    @JoinColumn(name = "strategyCode")
+    private Strategies strategies;
 
-    @OneToMany(mappedBy = "strategies", fetch = FetchType.LAZY)
-    private List<Target> target;
+    // @OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
+    // private List<Activity> activity;
 
 }

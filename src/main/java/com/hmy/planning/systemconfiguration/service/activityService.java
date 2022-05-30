@@ -8,6 +8,7 @@ import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.models.ActivityQuaterPeriod;
 import com.hmy.planning.systemconfiguration.models.QuaterPeriod;
 import com.hmy.planning.systemconfiguration.models.Strategies;
+import com.hmy.planning.systemconfiguration.models.Target;
 import com.hmy.planning.systemconfiguration.repository.ActivityQuaterPeriodRepository;
 import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
 
@@ -31,7 +32,7 @@ public class activityService {
     private final ActivityQuaterPeriodRepository activityQuaterPeriodRepository;
 
     @Autowired
-    private final StrategiesService strategiesService;
+    private final targetService targService;
     private final QuaterPeriodService quaterPd;
 
     private final ModelMapper modelMapper;
@@ -52,10 +53,10 @@ public class activityService {
     }
 
     public ResponseEntity<activityResponseDto> addNewActivity(activityRequestDto reqActivity) {
-        Optional<Strategies> strategies = strategiesService.getStrategiesCode(reqActivity.getStrategyCode());
+        Optional<Target> target = targService.getTargetCode(reqActivity.getTargetCode());
         Optional<QuaterPeriod> qPeriod = quaterPd.getQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
 
-        if (!strategies.isPresent()) {
+        if (!target.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -63,13 +64,13 @@ public class activityService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Strategies strategyObj = new Strategies();
-        strategyObj.setStrategyCode(reqActivity.getStrategyCode());
+        Target targyObj = new Target();
+        targyObj.setTargetCode(reqActivity.getTargetCode());
         // QuaterPeriod quaterPeriodObj = qPeriod.get();
         Activity act = new Activity();
 
         act.setActivityName(reqActivity.getActivityName());
-        act.setStrategies(strategyObj);
+        act.setTargets(targyObj);
         act.setStatus(reqActivity.getStatus());
         activityRepo.save(act);
 
@@ -88,7 +89,7 @@ public class activityService {
         actDto.setActivityCode(act.getActivityCode());
         actDto.setActivityName(act.getActivityName());
         actDto.setStatus(act.getStatus());
-        actDto.setStrategyCode(act.getStrategies().getStrategyCode());
+        actDto.setTargetCode(act.getTargets().getTargetCode());
         // actDto.setQuaterPeriodCode();
         actDto.setStatus(act.getStatus());
         actDto.setCreatedDate(act.getCreatedDate());

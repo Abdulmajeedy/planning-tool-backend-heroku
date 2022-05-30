@@ -6,7 +6,7 @@ import lombok.Data;
 public class activityRequestDto {
 
     private String activityName;
-    private String strategyCode;
+    private String targetCode;
     private String quaterPeriodCode;
     private int Status;
 

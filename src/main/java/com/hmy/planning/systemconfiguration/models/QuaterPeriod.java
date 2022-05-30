@@ -23,7 +23,7 @@ public class QuaterPeriod extends Auditable<String> implements Serializable {
     private String quaterPeriodCode;
     private String quaterName;
     private String alternativeName;
-    private int Status;
+    private int status;
 
     @OneToMany(mappedBy = "quaterPeriod", fetch = FetchType.LAZY)
     private List<ActivityQuaterPeriod> activityQuaterPeriod;
