@@ -24,7 +24,7 @@ public class ActivityPlanningPeriod extends Auditable<String> implements Seriali
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String budgetCode;
+    private String ActivityPlanningCode;
     private String year;
     private int status;
 

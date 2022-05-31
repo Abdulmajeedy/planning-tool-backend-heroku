@@ -29,7 +29,7 @@ public interface strategiesApi {
 
         @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
         public ResponseEntity<strategiesResponseDto> registerNewStartegy(
-                        @RequestBody strategiesRequestDto reqProject);
+                        @RequestBody strategiesRequestDto reqStrutegies);
 
         @RequestMapping(value = "/{strategyCode}", method = RequestMethod.GET, produces = "application/json")
         public ResponseEntity<strategiesResponseDto> getStartegyById(@PathVariable String strategyCode);

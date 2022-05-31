@@ -6,7 +6,7 @@ import lombok.Data;
 public class strategiesRequestDto {
 
     private String strategy;
-    private String ObjectiveCode;
+    private String ObjectiveCodes;
     private int status;
 
 }

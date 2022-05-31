@@ -28,9 +28,13 @@ public class Strategies extends Auditable<String> implements Serializable {
     private String strategy;
     private int status;
 
+    // @ManyToOne
+    // @JoinColumn(name = "objectiveCode")
+    // private Objectives objectives;
+
     @ManyToOne
     @JoinColumn(name = "objectiveCode")
-    private Objectives objectives;
+    private Objectives Objectives;
 
     @OneToMany(mappedBy = "strategies", fetch = FetchType.LAZY)
     private List<Target> target;

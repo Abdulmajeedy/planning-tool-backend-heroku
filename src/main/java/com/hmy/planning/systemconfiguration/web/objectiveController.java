@@ -60,7 +60,7 @@ public class objectiveController implements objectiveApi {
     public ResponseEntity<objectiveResponseDto> getObjectiveById(String objectiveCode) {
         Optional<Objectives> objective = objectiveService.getObjectiveById(objectiveCode);
         if (!objective.isPresent()) {
-            return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(ApiResponse.error("Invalid Objective Code", null), HttpStatus.NOT_FOUND);
         } else {
             Objectives obje = objective.get();
             objectiveResponseDto responseDto = new objectiveResponseDto();

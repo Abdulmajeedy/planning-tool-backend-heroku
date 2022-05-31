@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.ManyToAny;
 
 import lombok.Data;
 
@@ -30,14 +29,10 @@ public class Objectives extends Auditable<String> implements Serializable {
     private int status;
 
     @OneToMany(mappedBy = "objectives", fetch = FetchType.LAZY)
-    private List<Strategies> strategies;
+    // private List<Strategies> strategies;
 
     @ManyToOne
     @JoinColumn(name = "budgetYearCode")
     private budgetingPeriod budgetingPeriod;
-
-    // @ManyToOne
-    // @JoinColumn(name = "objectiveCode")
-    // private Objectives objectives;
 
 }
