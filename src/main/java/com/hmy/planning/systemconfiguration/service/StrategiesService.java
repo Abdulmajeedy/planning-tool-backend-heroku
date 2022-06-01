@@ -43,7 +43,6 @@ public class StrategiesService {
 
         Objectives objectives = objective.get();
         Strategies str = new Strategies();
-        // objective.get().setS
         str.setStrategy(reqStrategies.getStrategy());
         str.setObjectives(objectives);
         str.setStatus(reqStrategies.getStatus());
@@ -72,7 +71,7 @@ public class StrategiesService {
     public void updateStrategies(String strategyCode, Strategies reqStrategies) {
         strategyRepo.findById(strategyCode)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Office  with ID " + strategyCode + " does not exist"));
+                        "Strategies  with Code " + strategyCode + " does not exist"));
 
         reqStrategies.setStrategyCode(strategyCode);
         Strategies budgetPer = new Strategies();

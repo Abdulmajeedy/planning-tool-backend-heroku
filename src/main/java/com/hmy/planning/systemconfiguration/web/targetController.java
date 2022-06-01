@@ -40,6 +40,7 @@ public class targetController implements targetApi {
             targetResponseDto responseDto = new targetResponseDto();
             responseDto.setTargetCode(object.getTargetCode());
             responseDto.setTargetName(object.getTargetName());
+            responseDto.setStrategyCode(object.getStrategies().getStrategyCode());
             responseDto.setStatus(object.getStatus());
             responseDto.setCreatedDate(object.getCreatedDate());
             responseDto.setCreatedBy(object.getCreatedBy());
@@ -65,7 +66,7 @@ public class targetController implements targetApi {
             targetResponseDto responseDto = new targetResponseDto();
             responseDto.setTargetCode(obje.getTargetCode());
             responseDto.setTargetName(obje.getTargetName());
-            // responseDto.setStrategyCode(strategyCode);
+            responseDto.setStrategyCode(obje.getStrategies().getStrategyCode());
             responseDto.setStatus(obje.getStatus());
             responseDto.setCreatedDate(obje.getCreatedDate());
             responseDto.setCreatedBy(obje.getCreatedBy());

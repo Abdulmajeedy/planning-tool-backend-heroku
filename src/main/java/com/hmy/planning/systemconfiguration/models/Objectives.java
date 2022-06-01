@@ -35,8 +35,8 @@ public class Objectives extends Auditable<String> implements Serializable {
     @JoinColumn(name = "budgetYearCode")
     private budgetingPeriod budgetingPeriod;
 
-    public Objectives() {
-        this.objectiveCode = objectiveCode;
-    }
+    // public Objectives() {
+    // this.objectiveCode = objectiveCode;
+    // }
 
 }

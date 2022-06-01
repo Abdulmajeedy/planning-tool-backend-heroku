@@ -73,7 +73,7 @@ public class objectiveService {
     public void updateObjective(String objectiveCode, Objectives reqObjective) {
         objectiveRepo.findById(objectiveCode)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Office  with ID " + objectiveCode + " does not exist"));
+                        "Bojective  with Code " + objectiveCode + " does not exist"));
 
         reqObjective.setObjectiveCode(objectiveCode);
         Objectives objectives = new Objectives();
