@@ -34,20 +34,19 @@ public class StrategiesService {
     }
 
     public ResponseEntity<strategiesResponseDto> addNewStrategies(strategiesRequestDto reqStrategies) {
-        System.out.println(reqStrategies.getObjectiveCodes());
+        // System.out.println(reqStrategies.getObjectiveCodes());
         Optional<Objectives> objective = objectiveService.getObjectiveCode(reqStrategies.getObjectiveCodes());
-
+        System.out.println(objective.isPresent());
         if (!objective.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Objectives ObjectivesObj = objective.get();
+        Objectives objectives = objective.get();
         Strategies str = new Strategies();
-
+        // objective.get().setS
         str.setStrategy(reqStrategies.getStrategy());
-        str.setObjectives(ObjectivesObj);
+        str.setObjectives(objectives);
         str.setStatus(reqStrategies.getStatus());
-        System.out.print(ObjectivesObj);
         strategyRepo.save(str);
 
         strategiesResponseDto strategyDto = new strategiesResponseDto();
