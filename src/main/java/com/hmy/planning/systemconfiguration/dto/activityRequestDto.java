@@ -8,6 +8,7 @@ public class activityRequestDto {
     private String activityName;
     private String targetCode;
     private String quaterPeriodCode;
+    private String officeID;
     private int Status;
 
 }

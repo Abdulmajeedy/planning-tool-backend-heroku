@@ -74,4 +74,8 @@ public class orgStructureService {
         orgStructureRepo.save(reqOrg);
 
     }
+
+    public Optional<orgStructure> getOrgStructureID(String officeID) {
+        return orgStructureRepo.findById(officeID);
+    }
 }

@@ -40,6 +40,7 @@ public class activityController implements activityApi {
             responseDto.setActivityCode(act.getActivityCode());
             responseDto.setActivityName(act.getActivityName());
             responseDto.setTargetCode(act.getTargets().getTargetCode());
+            responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
             responseDto.setStatus(act.getStatus());
             responseDto.setCreatedDate(act.getCreatedDate());
             responseDto.setCreatedBy(act.getCreatedBy());
@@ -60,21 +61,21 @@ public class activityController implements activityApi {
         Optional<Activity> orgStr = activityServices.getActivityById(activityCode);
         if (!orgStr.isPresent()) {
             return new ResponseEntity(ApiResponse.error("Invalid Activity Code", null), HttpStatus.NOT_FOUND);
-        } else {
-            Activity bg = orgStr.get();
-            activityResponseDto responseDto = new activityResponseDto();
-
-            responseDto.setActivityCode(bg.getActivityCode());
-            responseDto.setActivityName(bg.getActivityName());
-            responseDto.setTargetCode(bg.getTargets().getTargetCode());
-            responseDto.setStatus(bg.getStatus());
-            responseDto.setCreatedDate(bg.getCreatedDate());
-            responseDto.setCreatedBy(bg.getCreatedBy());
-            responseDto.setModifiedDate(bg.getModifiedDate());
-            responseDto.setModifiedBy(bg.getModifiedBy());
-
-            return ResponseEntity.ok(responseDto);
         }
+        Activity bg = orgStr.get();
+        activityResponseDto responseDto = new activityResponseDto();
+
+        responseDto.setActivityCode(bg.getActivityCode());
+        responseDto.setActivityName(bg.getActivityName());
+        responseDto.setTargetCode(bg.getTargets().getTargetCode());
+        responseDto.setOfficeID(bg.getOrgStructures().getOfficeID());
+        responseDto.setStatus(bg.getStatus());
+        responseDto.setCreatedDate(bg.getCreatedDate());
+        responseDto.setCreatedBy(bg.getCreatedBy());
+        responseDto.setModifiedDate(bg.getModifiedDate());
+        responseDto.setModifiedBy(bg.getModifiedBy());
+
+        return ResponseEntity.ok(responseDto);
     }
 
     @Override
@@ -86,6 +87,7 @@ public class activityController implements activityApi {
         responseDto.setActivityName(acty.getActivityName());
         responseDto.setTargetCode(acty.getTargets().getTargetCode());
         responseDto.setStatus(acty.getStatus());
+        responseDto.setOfficeID(acty.getOrgStructures().getOfficeID());
         responseDto.setStatus(acty.getStatus());
         responseDto.setCreatedDate(acty.getCreatedDate());
         responseDto.setCreatedBy(acty.getCreatedBy());

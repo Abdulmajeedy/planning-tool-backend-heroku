@@ -9,6 +9,7 @@ import com.hmy.planning.systemconfiguration.models.ActivityQuaterPeriod;
 import com.hmy.planning.systemconfiguration.models.QuaterPeriod;
 import com.hmy.planning.systemconfiguration.models.Strategies;
 import com.hmy.planning.systemconfiguration.models.Target;
+import com.hmy.planning.systemconfiguration.models.orgStructure;
 import com.hmy.planning.systemconfiguration.repository.ActivityQuaterPeriodRepository;
 import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
 
@@ -34,6 +35,7 @@ public class activityService {
     @Autowired
     private final targetService targService;
     private final QuaterPeriodService quaterPd;
+    private final orgStructureService orgServices;
 
     private final ModelMapper modelMapper;
 
@@ -55,6 +57,7 @@ public class activityService {
     public ResponseEntity<activityResponseDto> addNewActivity(activityRequestDto reqActivity) {
         Optional<Target> target = targService.getTargetCode(reqActivity.getTargetCode());
         Optional<QuaterPeriod> qPeriod = quaterPd.getQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
+        Optional<orgStructure> orgStructure = orgServices.getOrgStructureID(reqActivity.getOfficeID());
 
         if (!target.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -64,13 +67,21 @@ public class activityService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        if (!orgStructure.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         Target targyObj = new Target();
         targyObj.setTargetCode(reqActivity.getTargetCode());
-        // QuaterPeriod quaterPeriodObj = qPeriod.get();
+
+        orgStructure orgObj = new orgStructure();
+        orgObj.setOfficeID(reqActivity.getOfficeID());
+
         Activity act = new Activity();
 
         act.setActivityName(reqActivity.getActivityName());
         act.setTargets(targyObj);
+        act.setOrgStructures(orgObj);
         act.setStatus(reqActivity.getStatus());
         activityRepo.save(act);
 
@@ -85,9 +96,11 @@ public class activityService {
         quaterperiods.setStatus(reqActivity.getStatus());
         quaterperiods.setActivity(actvty);
         activityQuaterPeriodRepository.save(quaterperiods);
+
         activityResponseDto actDto = new activityResponseDto();
         actDto.setActivityCode(act.getActivityCode());
         actDto.setActivityName(act.getActivityName());
+        actDto.setOfficeID(act.getOrgStructures().getOfficeID());
         actDto.setStatus(act.getStatus());
         actDto.setTargetCode(act.getTargets().getTargetCode());
         // actDto.setQuaterPeriodCode();
