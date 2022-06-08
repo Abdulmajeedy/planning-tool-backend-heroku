@@ -99,4 +99,9 @@ public class quaterPeriodController implements quaterPeriodApi {
         responseDto.setModifiedBy(quat.getModifiedBy());
         return ResponseEntity.ok(responseDto);
     }
+
+    @Override
+    public ResponseEntity updateStatus(String quaterPeriodCode) {
+        return ResponseEntity.ok().body(quaterServices.updateStatus(quaterPeriodCode));
+    }
 }

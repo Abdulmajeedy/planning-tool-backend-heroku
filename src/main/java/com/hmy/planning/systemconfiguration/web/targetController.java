@@ -86,16 +86,22 @@ public class targetController implements targetApi {
     public ResponseEntity updateTarget(String targetCode, Target reqTarget) {
         Optional<Target> objective = terService.getTargetById(targetCode);
         terService.updateTarget(targetCode, reqTarget);
+        System.out.print(reqTarget);
         Target obje = objective.get();
         targetResponseDto responseDto = new targetResponseDto();
         responseDto.setTargetCode(obje.getTargetCode());
         responseDto.setTargetName(obje.getTargetName());
-        // responseDto.setStrategyCode(strategyCode);
+        responseDto.setStrategyCode(obje.getStrategies().getStrategyCode());
         responseDto.setStatus(obje.getStatus());
         responseDto.setCreatedDate(obje.getCreatedDate());
         responseDto.setCreatedBy(obje.getCreatedBy());
         responseDto.setModifiedDate(obje.getModifiedDate());
         responseDto.setModifiedBy(obje.getModifiedBy());
         return ResponseEntity.ok(responseDto);
+    }
+
+    @Override
+    public ResponseEntity updateStatus(String targetCode) {
+        return ResponseEntity.ok().body(terService.updateStatus(targetCode));
     }
 }

@@ -88,4 +88,10 @@ public class activityQuaterPeriodController implements ActivityQuaterPeriodApi {
         return null;
     }
 
+    @Override
+    public ResponseEntity updateStatus(String activityQuaterPeriod) {
+        return ResponseEntity.ok().body(actQuaterServices.updateStatus(activityQuaterPeriod));
+
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.hmy.planning.systemconfiguration.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.hmy.planning.systemconfiguration.dto.budgetPeriodRequestDto;
@@ -10,8 +12,10 @@ import com.hmy.planning.systemconfiguration.repository.BudgetPeriodRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class budgetPeriodService {
@@ -71,6 +75,21 @@ public class budgetPeriodService {
 
     public Optional<budgetingPeriod> getBudgetYearCode(String BudgetYearCode) {
         return budgetRepo.findById(BudgetYearCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String BudgetYearCode) {
+        Optional<budgetingPeriod> bp = budgetRepo.findById(BudgetYearCode);
+        if (!bp.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (bp.get().getStatus() == 1)
+            bp.get().setStatus(0);
+        else
+            bp.get().setStatus(1);
+        budgetRepo.save(bp.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

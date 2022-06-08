@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class StrategiesService {
@@ -34,7 +35,6 @@ public class StrategiesService {
     }
 
     public ResponseEntity<strategiesResponseDto> addNewStrategies(strategiesRequestDto reqStrategies) {
-        // System.out.println(reqStrategies.getObjectiveCodes());
         Optional<Objectives> objective = objectiveService.getObjectiveCode(reqStrategies.getObjectiveCodes());
         System.out.println(objective.isPresent());
         if (!objective.isPresent()) {
@@ -83,6 +83,21 @@ public class StrategiesService {
 
     public Optional<Strategies> getStrategiesCode(String strategyCode) {
         return strategyRepo.findById(strategyCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String officeID) {
+        Optional<Strategies> bp = strategyRepo.findById(officeID);
+        if (!bp.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (bp.get().getStatus() == 1)
+            bp.get().setStatus(0);
+        else
+            bp.get().setStatus(1);
+        strategyRepo.save(bp.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

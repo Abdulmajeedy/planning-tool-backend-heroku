@@ -41,4 +41,7 @@ public interface rolesApi {
         public ResponseEntity updateRole(@PathVariable("roleCode") String roleCode,
                         @RequestBody roles reqRoles);
 
+        @RequestMapping(value = "updateStatus/{roleCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("roleCode") String roleCode);
+
 }

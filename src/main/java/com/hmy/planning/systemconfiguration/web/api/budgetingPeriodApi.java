@@ -42,4 +42,7 @@ public interface budgetingPeriodApi {
         public ResponseEntity updateBudgetPeriod(@PathVariable("budgetYearCode") String budgetYearCode,
                         @RequestBody budgetingPeriod budgetPeriod);
 
+        @RequestMapping(value = "updateStatus/{budgetYearCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("budgetYearCode") String budgetYearCode);
+
 }

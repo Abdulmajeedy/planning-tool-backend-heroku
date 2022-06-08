@@ -32,8 +32,8 @@ public class ActivityPlanningPeriod extends Auditable<String> implements Seriali
     @JoinColumn(name = "activityCode")
     private Activity activity;
 
-    @ManyToOne
-    @JoinColumn(name = "budgetYearCode")
-    private budgetingPeriod budgetingPeriod;
+    // @ManyToOne
+    // @JoinColumn(name = "budgetYearCode")
+    // private budgetingPeriod budgetingPeriod;
 
 }

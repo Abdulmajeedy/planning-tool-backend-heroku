@@ -42,4 +42,7 @@ public interface strategiesApi {
         public ResponseEntity updateStartegy(@PathVariable("strategyCode") String strategyCode,
                         @RequestBody Strategies reqStrategies);
 
+        @RequestMapping(value = "updateStatus/{strategyCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("strategyCode") String strategyCode);
+
 }

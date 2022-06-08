@@ -26,8 +26,11 @@ public class budgetingPeriod extends Auditable<String> implements Serializable {
     private String year;
     private int status;
 
+    // @OneToMany(mappedBy = "budgetingPeriod", fetch = FetchType.LAZY)
+    // private List<ActivityPlanningPeriod> activityPlanningPeriod;
+
     @OneToMany(mappedBy = "budgetingPeriod", fetch = FetchType.LAZY)
-    private List<ActivityPlanningPeriod> activityPlanningPeriod;
+    private List<ActivityQuaterPeriod> activityQuaterPeriod;
 
     @OneToMany(mappedBy = "budgetingPeriod", fetch = FetchType.LAZY)
     private List<Objectives> objective;

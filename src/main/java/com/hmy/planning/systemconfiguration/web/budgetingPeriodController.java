@@ -101,4 +101,10 @@ public class budgetingPeriodController implements budgetingPeriodApi {
         return ResponseEntity.ok(responseDto);
     }
 
+    @Override
+    public ResponseEntity updateStatus(String budgetYearCode) {
+        return ResponseEntity.ok().body(budgetPeriodServices.updateStatus(budgetYearCode));
+
+    }
+
 }

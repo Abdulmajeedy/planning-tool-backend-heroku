@@ -9,8 +9,10 @@ import com.hmy.planning.systemconfiguration.repository.QuaterPeriodRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class QuaterPeriodService {
@@ -72,6 +74,21 @@ public class QuaterPeriodService {
 
     public Optional<QuaterPeriod> getQuaterPeriodCode(String QuaterPeriodCode) {
         return quaterRepo.findById(QuaterPeriodCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String officeID) {
+        Optional<QuaterPeriod> bp = quaterRepo.findById(officeID);
+        if (!bp.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (bp.get().getStatus() == 1)
+            bp.get().setStatus(0);
+        else
+            bp.get().setStatus(1);
+        quaterRepo.save(bp.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

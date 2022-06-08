@@ -41,4 +41,7 @@ public interface subActivityApi {
         public ResponseEntity updateSubActivity(@PathVariable("subactivityCode") String subactivityCode,
                         @RequestBody SubActivity reqSubActivity);
 
+        @RequestMapping(value = "updateStatus/{subactivityCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("subactivityCode") String subactivityCode);
+
 }

@@ -104,4 +104,9 @@ public class strategiesController implements strategiesApi {
         responseDto.setModifiedBy(obje.getModifiedBy());
         return ResponseEntity.ok(responseDto);
     }
+
+    @Override
+    public ResponseEntity updateStatus(String strategyCode) {
+        return ResponseEntity.ok().body(strategiesService.updateStatus(strategyCode));
+    }
 }

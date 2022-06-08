@@ -96,4 +96,9 @@ public class objectiveController implements objectiveApi {
         return ResponseEntity.ok(responseDto);
     }
 
+    @Override
+    public ResponseEntity updateStatus(String objectiveCode) {
+        return ResponseEntity.ok().body(objectiveService.updateStatus(objectiveCode));
+    }
+
 }

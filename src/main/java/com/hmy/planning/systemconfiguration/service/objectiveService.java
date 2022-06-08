@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class objectiveService {
@@ -85,6 +86,21 @@ public class objectiveService {
 
     public Optional<Objectives> getObjectiveCode(String ObjectiveCode) {
         return objectiveRepo.findById(ObjectiveCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String ObjectiveCode) {
+        Optional<Objectives> bp = objectiveRepo.findById(ObjectiveCode);
+        if (!bp.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (bp.get().getStatus() == 1)
+            bp.get().setStatus(0);
+        else
+            bp.get().setStatus(1);
+        objectiveRepo.save(bp.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

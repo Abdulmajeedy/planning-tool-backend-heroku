@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.hmy.planning.systemconfiguration.dto.activityRequestDto;
 import com.hmy.planning.systemconfiguration.dto.activityResponseDto;
+import com.hmy.planning.systemconfiguration.dto.activityzResponseDto;
 import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
 import com.hmy.planning.systemconfiguration.service.activityService;
@@ -41,6 +42,7 @@ public class activityController implements activityApi {
             responseDto.setActivityName(act.getActivityName());
             responseDto.setTargetCode(act.getTargets().getTargetCode());
             responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
+            responseDto.setApprovalStatus(act.getApprovalStatus());
             responseDto.setStatus(act.getStatus());
             responseDto.setCreatedDate(act.getCreatedDate());
             responseDto.setCreatedBy(act.getCreatedBy());
@@ -69,6 +71,7 @@ public class activityController implements activityApi {
         responseDto.setActivityName(bg.getActivityName());
         responseDto.setTargetCode(bg.getTargets().getTargetCode());
         responseDto.setOfficeID(bg.getOrgStructures().getOfficeID());
+        responseDto.setApprovalStatus(bg.getApprovalStatus());
         responseDto.setStatus(bg.getStatus());
         responseDto.setCreatedDate(bg.getCreatedDate());
         responseDto.setCreatedBy(bg.getCreatedBy());
@@ -89,6 +92,7 @@ public class activityController implements activityApi {
         responseDto.setStatus(acty.getStatus());
         responseDto.setOfficeID(acty.getOrgStructures().getOfficeID());
         responseDto.setStatus(acty.getStatus());
+        responseDto.setApprovalStatus(acty.getApprovalStatus());
         responseDto.setCreatedDate(acty.getCreatedDate());
         responseDto.setCreatedBy(acty.getCreatedBy());
         responseDto.setModifiedDate(acty.getModifiedDate());
@@ -101,4 +105,43 @@ public class activityController implements activityApi {
         activityServices.deleteActivity(activityCode);
 
     }
+
+    @Override
+    public ResponseEntity updateStatus(String activityCode) {
+        return ResponseEntity.ok().body(activityServices.updateStatus(activityCode));
+    }
+
+    @Override
+    public ResponseEntity Count() {
+        return ResponseEntity.ok().body(activityServices.CountActivities());
+    }
+
+    @Override
+    public ResponseEntity getActivities() {
+        // return ResponseEntity.ok().body(activityServices.GetActivities());
+        // PageRequest pageRequest = PageRequest.of(page, size);
+        List<Activity> activity = activityServices.GetActivities();
+        List<activityzResponseDto> actDto = new ArrayList<>();
+        for (Activity act : activity) {
+            activityzResponseDto responseDto = new activityzResponseDto();
+            responseDto.setActivityCode(act.getActivityCode());
+            responseDto.setActivityName(act.getActivityName());
+            responseDto.setTargetCode(act.getTargets().getTargetCode());
+            responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
+            responseDto
+                    .setQuaterPeriodCode(act.getActivityQuaterPeriod().iterator().next().getActivityQuaterPeriodCode());
+            responseDto.setStatus(act.getStatus());
+            responseDto.setBudgetYearCode(
+                    act.getActivityQuaterPeriod().iterator().next().getBudgetingPeriod().getBudgetYearCode());
+            responseDto.setApprovedStatus(act.getApprovalStatus());
+            // responseDto.setActivityPlanningCode(act.getActivityPlanningPeriod());
+            responseDto.setCreatedDate(act.getCreatedDate());
+            responseDto.setCreatedBy(act.getCreatedBy());
+            responseDto.setModifiedDate(act.getModifiedDate());
+            responseDto.setModifiedBy(act.getModifiedBy());
+            actDto.add(responseDto);
+        }
+        return ResponseEntity.ok(actDto);
+    }
+
 }

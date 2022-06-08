@@ -21,24 +21,27 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/orgStructure")
 public interface orgStructureApi {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<orgStructureResponseDto>> getOrgStructure(
-            @RequestParam(defaultValue = "0", required = false) int page,
-            @RequestParam(defaultValue = "10", required = false) int size);
+        @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<List<orgStructureResponseDto>> getOrgStructure(
+                        @RequestParam(defaultValue = "0", required = false) int page,
+                        @RequestParam(defaultValue = "10", required = false) int size);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<orgStructureResponseDto> registerNewOrgStructure(
-            @RequestBody orgStructureRequestDto orgStructure);
+        @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+        public ResponseEntity<orgStructureResponseDto> registerNewOrgStructure(
+                        @RequestBody orgStructureRequestDto orgStructure);
 
-    @RequestMapping(value = "/{officeID}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<orgStructureResponseDto> getOrgStructureById(@PathVariable String officeID);
+        @RequestMapping(value = "/{officeID}", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<orgStructureResponseDto> getOrgStructureById(@PathVariable String officeID);
 
-    @DeleteMapping(path = "/{officeID}")
-    @ResponseStatus(code = HttpStatus.OK, reason = "Academic year Deleted")
-    public void deleteById(@PathVariable("officeID") String roleCode);
+        @DeleteMapping(path = "/{officeID}")
+        @ResponseStatus(code = HttpStatus.OK, reason = "Academic year Deleted")
+        public void deleteById(@PathVariable("officeID") String officeID);
 
-    @RequestMapping(value = "/{officeID}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-    public ResponseEntity updateOrgStructure(@PathVariable("officeID") String officeID,
-            @RequestBody orgStructure orgStructure);
+        @RequestMapping(value = "updateStatus/{officeID}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("officeID") String officeID);
+
+        @RequestMapping(value = "/{officeID}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+        public ResponseEntity updateOrgStructure(@PathVariable("officeID") String officeID,
+                        @RequestBody orgStructure orgStructure);
 
 }

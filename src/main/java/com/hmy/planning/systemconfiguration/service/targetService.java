@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.Data;
 
@@ -80,13 +81,27 @@ public class targetService {
         Target acti = new Target();
         acti.setCreatedBy(reqTarget.getCreatedBy());
         acti.setCreatedDate(reqTarget.getCreatedDate());
-        acti.setStrategies(reqTarget.getStrategies());
         acti.setModifiedBy(reqTarget.getModifiedBy());
         targetRepo.save(reqTarget);
     }
 
     public Optional<Target> getTargetCode(String targetCode) {
         return targetRepo.findById(targetCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String targetCode) {
+        Optional<Target> bp = targetRepo.findById(targetCode);
+        if (!bp.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (bp.get().getStatus() == 1)
+            bp.get().setStatus(0);
+        else
+            bp.get().setStatus(1);
+        targetRepo.save(bp.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

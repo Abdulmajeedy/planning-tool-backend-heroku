@@ -9,9 +9,11 @@ import com.hmy.planning.systemconfiguration.models.ActivityQuaterPeriod;
 import com.hmy.planning.systemconfiguration.models.QuaterPeriod;
 import com.hmy.planning.systemconfiguration.models.Strategies;
 import com.hmy.planning.systemconfiguration.models.Target;
+import com.hmy.planning.systemconfiguration.models.budgetingPeriod;
 import com.hmy.planning.systemconfiguration.models.orgStructure;
 import com.hmy.planning.systemconfiguration.repository.ActivityQuaterPeriodRepository;
 import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
+import com.hmy.planning.systemconfiguration.web.api.quaterPeriodApi;
 
 import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.Data;
 import net.bytebuddy.asm.Advice.Return;
@@ -36,6 +39,7 @@ public class activityService {
     private final targetService targService;
     private final QuaterPeriodService quaterPd;
     private final orgStructureService orgServices;
+    private final budgetPeriodService budgetPeriodServices;
 
     private final ModelMapper modelMapper;
 
@@ -58,8 +62,13 @@ public class activityService {
         Optional<Target> target = targService.getTargetCode(reqActivity.getTargetCode());
         Optional<QuaterPeriod> qPeriod = quaterPd.getQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
         Optional<orgStructure> orgStructure = orgServices.getOrgStructureID(reqActivity.getOfficeID());
+        Optional<budgetingPeriod> budp = budgetPeriodServices.getBudgetYearCode(reqActivity.getBudgetYearCode());
 
         if (!target.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (!budp.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -77,12 +86,16 @@ public class activityService {
         orgStructure orgObj = new orgStructure();
         orgObj.setOfficeID(reqActivity.getOfficeID());
 
+        budgetingPeriod budObj = new budgetingPeriod();
+        budObj.setBudgetYearCode(reqActivity.getBudgetYearCode());
+
         Activity act = new Activity();
 
         act.setActivityName(reqActivity.getActivityName());
         act.setTargets(targyObj);
         act.setOrgStructures(orgObj);
         act.setStatus(reqActivity.getStatus());
+        act.setApprovalStatus(reqActivity.getApprovalStatus());
         activityRepo.save(act);
 
         ActivityQuaterPeriod quaterperiods = new ActivityQuaterPeriod();
@@ -90,6 +103,7 @@ public class activityService {
         actvty.setActivityCode(act.getActivityCode());
 
         quaterperiods.setActivityQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
+        quaterperiods.setBudgetingPeriod(budObj);
         QuaterPeriod quaterPeriodObject = new QuaterPeriod();
         quaterPeriodObject.setQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
         quaterperiods.setQuaterPeriod(quaterPeriodObject);
@@ -102,7 +116,9 @@ public class activityService {
         actDto.setActivityName(act.getActivityName());
         actDto.setOfficeID(act.getOrgStructures().getOfficeID());
         actDto.setStatus(act.getStatus());
+        actDto.setBudgetYearCode(quaterperiods.getBudgetingPeriod().getBudgetYearCode());
         actDto.setTargetCode(act.getTargets().getTargetCode());
+        actDto.setApprovalStatus(act.getApprovalStatus());
         // actDto.setQuaterPeriodCode();
         actDto.setStatus(act.getStatus());
         actDto.setCreatedDate(act.getCreatedDate());
@@ -136,6 +152,29 @@ public class activityService {
 
     public Optional<Activity> getActivityCode(String activityCode) {
         return activityRepo.findById(activityCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String activityCode) {
+        Optional<Activity> project = activityRepo.findById(activityCode);
+        if (!project.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (project.get().getStatus() == 1)
+            project.get().setStatus(0);
+        else
+            project.get().setStatus(1);
+        activityRepo.save(project.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
+    }
+
+    public Long CountActivities() {
+        return activityRepo.CountActivities();
+    }
+
+    public List<Activity> GetActivities() {
+        return activityRepo.GetActivities();
     }
 
 }

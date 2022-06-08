@@ -1,6 +1,8 @@
 package com.hmy.planning.systemconfiguration.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.hmy.planning.systemconfiguration.dto.projectRequestDto;
@@ -10,8 +12,10 @@ import com.hmy.planning.systemconfiguration.repository.ProjectsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class projectService {
@@ -71,6 +75,21 @@ public class projectService {
         org.setModifiedBy(reqProj.getModifiedBy());
         projectRepo.save(reqProj);
 
+    }
+
+    public Map<String, Boolean> updateStatus(String projectCode) {
+        Optional<projects> project = projectRepo.findById(projectCode);
+        if (!project.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (project.get().getStatus() == 1)
+            project.get().setStatus(0);
+        else
+            project.get().setStatus(1);
+        projectRepo.save(project.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

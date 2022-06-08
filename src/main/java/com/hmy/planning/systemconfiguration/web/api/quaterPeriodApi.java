@@ -42,4 +42,7 @@ public interface quaterPeriodApi {
         public ResponseEntity updateQuaterPeriod(@PathVariable("quaterPeriodCode") String quaterPeriodCode,
                         @RequestBody QuaterPeriod reqQuaterPeriod);
 
+        @RequestMapping(value = "updateStatus/{quaterPeriodCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("quaterPeriodCode") String quaterPeriodCode);
+
 }

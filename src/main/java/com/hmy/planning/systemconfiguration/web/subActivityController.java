@@ -117,4 +117,9 @@ public class subActivityController implements subActivityApi {
         return ResponseEntity.ok(responseDto);
     }
 
+    @Override
+    public ResponseEntity updateStatus(String subactivityCode) {
+        return ResponseEntity.ok().body(subActivityServices.updateStatus(subactivityCode));
+    }
+
 }

@@ -96,4 +96,9 @@ public class roleController implements rolesApi {
         responseDto.setModifiedBy(rol.getModifiedBy());
         return ResponseEntity.ok(responseDto);
     }
+
+    @Override
+    public ResponseEntity updateStatus(String roleCode) {
+        return ResponseEntity.ok().body(rolesService.updateStatus(roleCode));
+    }
 }

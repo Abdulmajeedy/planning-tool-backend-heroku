@@ -14,4 +14,10 @@ public interface ActivityRepository extends JpaRepository<Activity, String> {
             + " and planAct.grade_code=?1 and planAct.budget_year_code=?2 ", nativeQuery = true)
     List<Activity> filterActivities(String OfficeCode, String BudgetYearCode);
 
+    @Query(value = "select * from activity_quater_period planAct,activity Act where planAct.activity_code=Act.activity_code", nativeQuery = true)
+    List<Activity> GetActivities();
+
+    @Query(value = "select count(Act.*) from  activity Act", nativeQuery = true)
+    Long CountActivities();
+
 }

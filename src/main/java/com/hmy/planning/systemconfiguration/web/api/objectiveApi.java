@@ -41,4 +41,7 @@ public interface objectiveApi {
         public ResponseEntity updateObjective(@PathVariable("objectiveCode") String objectiveCode,
                         @RequestBody Objectives objectives);
 
+        @RequestMapping(value = "updateStatus/{objectiveCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("objectiveCode") String objectiveCode);
+
 }

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class subactivityService {
@@ -97,6 +98,21 @@ public class subactivityService {
 
     public Optional<SubActivity> getSubActivityCode(String subactivityCode) {
         return subactivityRepo.findById(subactivityCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String officeID) {
+        Optional<SubActivity> bp = subactivityRepo.findById(officeID);
+        if (!bp.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (bp.get().getStatus() == 1)
+            bp.get().setStatus(0);
+        else
+            bp.get().setStatus(1);
+        subactivityRepo.save(bp.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

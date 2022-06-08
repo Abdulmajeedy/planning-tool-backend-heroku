@@ -1,6 +1,8 @@
 package com.hmy.planning.systemconfiguration.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.hmy.planning.systemconfiguration.models.ActivityQuaterPeriod;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.Data;
 
@@ -20,8 +23,6 @@ import lombok.Data;
 public class ActivityQuterPeriodService {
     @Autowired
     private final ActivityQuaterPeriodRepository activityQuaterPeriodRepository;
-
-    @Autowired
     private final StrategiesService strategiesService;
     private final QuaterPeriodService quaterPd;
 
@@ -57,6 +58,21 @@ public class ActivityQuterPeriodService {
 
     public Optional<ActivityQuaterPeriod> getActivityCode(String activityCode) {
         return activityQuaterPeriodRepository.findById(activityCode);
+    }
+
+    public Map<String, Boolean> updateStatus(String ActivityQuaterPeriodCode) {
+        Optional<ActivityQuaterPeriod> quaterPeriod = activityQuaterPeriodRepository.findById(ActivityQuaterPeriodCode);
+        if (!quaterPeriod.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (quaterPeriod.get().getStatus() == 1)
+            quaterPeriod.get().setStatus(0);
+        else
+            quaterPeriod.get().setStatus(1);
+        activityQuaterPeriodRepository.save(quaterPeriod.get());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("response", Boolean.TRUE);
+        return response;
     }
 
 }

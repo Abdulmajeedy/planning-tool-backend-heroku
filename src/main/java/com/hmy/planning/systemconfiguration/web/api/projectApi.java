@@ -42,4 +42,7 @@ public interface projectApi {
         public ResponseEntity updateProject(@PathVariable("projectCode") String projectCode,
                         @RequestBody projects reqProject);
 
+        @RequestMapping(value = "updateStatus/{projectCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("projectCode") String projectCode);
+
 }

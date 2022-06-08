@@ -2,6 +2,7 @@ package com.hmy.planning.systemconfiguration.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.hmy.planning.systemconfiguration.dto.projectRequestDto;
@@ -100,6 +101,11 @@ public class projectController implements projectApi {
         responseDto.setModifiedDate(proj.getModifiedDate());
         responseDto.setModifiedBy(proj.getModifiedBy());
         return ResponseEntity.ok(responseDto);
+    }
+
+    @Override
+    public ResponseEntity updateStatus(String projectCode) {
+        return ResponseEntity.ok().body(projectService.updateStatus(projectCode));
     }
 
 }

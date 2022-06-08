@@ -107,4 +107,9 @@ public class orgStructureController implements orgStructureApi {
         return ResponseEntity.ok(responseDto);
     }
 
+    @Override
+    public ResponseEntity updateStatus(String officeID) {
+        return ResponseEntity.ok().body(orgStructureService.updateStatus(officeID));
+    }
+
 }

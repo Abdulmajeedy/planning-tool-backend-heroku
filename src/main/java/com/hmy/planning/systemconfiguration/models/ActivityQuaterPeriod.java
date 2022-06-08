@@ -30,4 +30,8 @@ public class ActivityQuaterPeriod extends Auditable<String> implements Serializa
     @JoinColumn(name = "activityCode")
     private Activity activity;
 
+    @ManyToOne
+    @JoinColumn(name = "budgetYearCode")
+    private budgetingPeriod budgetingPeriod;
+
 }

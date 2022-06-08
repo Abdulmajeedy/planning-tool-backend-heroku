@@ -26,6 +26,7 @@ public class Activity extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String activityCode;
     private String activityName;
+    private int approvalStatus;
     private int status;
 
     @ManyToOne
@@ -35,8 +36,8 @@ public class Activity extends Auditable<String> implements Serializable {
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<SubActivity> subactivity;
 
-    @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
-    private List<ActivityPlanningPeriod> activityPlanningPeriod;
+    // @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
+    // private List<ActivityPlanningPeriod> activityPlanningPeriod;
 
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<ActivityQuaterPeriod> activityQuaterPeriod;
