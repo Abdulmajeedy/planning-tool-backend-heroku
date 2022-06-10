@@ -16,7 +16,7 @@ import java.util.List;
 
 import com.hmy.planning.systemconfiguration.dto.roleRequestDto;
 import com.hmy.planning.systemconfiguration.dto.roleResponseDto;
-import com.hmy.planning.systemconfiguration.models.roles;
+import com.hmy.planning.systemconfiguration.models.Roles;
 
 @CrossOrigin
 @RequestMapping("/roles")
@@ -39,7 +39,7 @@ public interface rolesApi {
 
         @RequestMapping(value = "/{roleCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
         public ResponseEntity updateRole(@PathVariable("roleCode") String roleCode,
-                        @RequestBody roles reqRoles);
+                        @RequestBody Roles reqRoles);
 
         @RequestMapping(value = "updateStatus/{roleCode}", method = RequestMethod.GET)
         public ResponseEntity updateStatus(@PathVariable("roleCode") String roleCode);

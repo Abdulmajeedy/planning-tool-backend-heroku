@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class roles extends Auditable<String> implements Serializable {
+public class Roles extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -23,6 +24,7 @@ public class roles extends Auditable<String> implements Serializable {
     private String description;
     private int status;
 
-    // @OneToMany(mappedBy = "academicYear", fetch = FetchType.LAZY)
-    // private List<Grades> grades;
+    // @OneToOne(mappedBy = "roles")
+    // private login logn;
+
 }

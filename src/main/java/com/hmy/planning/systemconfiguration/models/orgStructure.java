@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,5 +29,8 @@ public class orgStructure extends Auditable<String> implements Serializable {
     private String officeName;
     private String reportTo;
     private int status;
+
+    @OneToOne(mappedBy = "orgStructure")
+    private staff staffs;
 
 }

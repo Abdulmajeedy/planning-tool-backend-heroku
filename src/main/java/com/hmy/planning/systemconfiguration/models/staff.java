@@ -32,4 +32,8 @@ public class staff extends Auditable<String> implements Serializable {
     @JoinColumn(name = "loginCode")
     private login login;
 
+    @OneToOne
+    @JoinColumn(name = "officeID")
+    private orgStructure orgStructure;
+
 }

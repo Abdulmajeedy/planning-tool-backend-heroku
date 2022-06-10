@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.hmy.planning.systemconfiguration.dto.roleRequestDto;
 import com.hmy.planning.systemconfiguration.dto.roleResponseDto;
-import com.hmy.planning.systemconfiguration.models.roles;
+import com.hmy.planning.systemconfiguration.models.Roles;
 import com.hmy.planning.systemconfiguration.repository.RoleRepository;
 import com.hmy.planning.systemconfiguration.service.rolesService;
 import com.hmy.planning.systemconfiguration.utils.ApiResponse;
@@ -35,9 +35,9 @@ public class roleController implements rolesApi {
 
     public ResponseEntity<List<roleResponseDto>> getRole(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        List<roles> role = rolesService.findAllRoles(pageRequest);
+        List<Roles> role = rolesService.findAllRoles(pageRequest);
         List<roleResponseDto> roleDto = new ArrayList<>();
-        for (roles rol : role) {
+        for (Roles rol : role) {
             roleResponseDto responseDto = new roleResponseDto();
             responseDto.setRoleCode(rol.getRoleCode());
             responseDto.setRole(rol.getRole());
@@ -58,11 +58,11 @@ public class roleController implements rolesApi {
 
     @Override
     public ResponseEntity<roleResponseDto> getRoleById(String roleCode) {
-        Optional<roles> role = rolesService.getRoleById(roleCode);
+        Optional<Roles> role = rolesService.getRoleById(roleCode);
         if (!role.isPresent()) {
             return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
         } else {
-            roles rol = role.get();
+            Roles rol = role.get();
             roleResponseDto responseDto = new roleResponseDto();
             responseDto.setRoleCode(rol.getRoleCode());
             responseDto.setRole(rol.getRole());
@@ -81,10 +81,10 @@ public class roleController implements rolesApi {
     }
 
     @Override
-    public ResponseEntity updateRole(String roleCode, roles reqRoles) {
-        Optional<roles> roles = rolesService.getRoleById(roleCode);
+    public ResponseEntity updateRole(String roleCode, Roles reqRoles) {
+        Optional<Roles> roles = rolesService.getRoleById(roleCode);
         rolesService.updateRole(roleCode, reqRoles);
-        roles rol = roles.get();
+        Roles rol = roles.get();
         roleResponseDto responseDto = new roleResponseDto();
         responseDto.setRoleCode(rol.getRoleCode());
         responseDto.setRole(rol.getRole());

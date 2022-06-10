@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import com.hmy.planning.systemconfiguration.dto.roleRequestDto;
 import com.hmy.planning.systemconfiguration.dto.roleResponseDto;
-import com.hmy.planning.systemconfiguration.models.roles;
+import com.hmy.planning.systemconfiguration.models.Roles;
 import com.hmy.planning.systemconfiguration.repository.RoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +28,12 @@ public class rolesService {
 
     }
 
-    public List<roles> findAllRoles(PageRequest pageRequest) {
+    public List<Roles> findAllRoles(PageRequest pageRequest) {
         return rolesRepo.findAll(pageRequest).getContent();
     }
 
     public ResponseEntity<roleResponseDto> addNewRole(roleRequestDto reqRoles) {
-        roles role = new roles();
+        Roles role = new Roles();
         role.setRole(reqRoles.getRole());
         role.setDescription(reqRoles.getDescription());
         role.setStatus(reqRoles.getStatus());
@@ -56,17 +56,17 @@ public class rolesService {
         rolesRepo.deleteById(roleCode);
     }
 
-    public Optional<roles> getRoleById(String roleCode) {
+    public Optional<Roles> getRoleById(String roleCode) {
         return rolesRepo.findById(roleCode);
     }
 
-    public void updateRole(String roleCode, roles reqRoles) {
+    public void updateRole(String roleCode, Roles reqRoles) {
         rolesRepo.findById(roleCode)
                 .orElseThrow(() -> new IllegalStateException(
                         "Role  with Code " + roleCode + " does not exist"));
 
         reqRoles.setRoleCode(roleCode);
-        roles role = new roles();
+        Roles role = new Roles();
         role.setCreatedBy(reqRoles.getCreatedBy());
         role.setCreatedDate(reqRoles.getCreatedDate());
         role.setModifiedBy(reqRoles.getModifiedBy());
@@ -75,7 +75,7 @@ public class rolesService {
     }
 
     public Map<String, Boolean> updateStatus(String roleCode) {
-        Optional<roles> bp = rolesRepo.findById(roleCode);
+        Optional<Roles> bp = rolesRepo.findById(roleCode);
         if (!bp.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -89,7 +89,7 @@ public class rolesService {
         return response;
     }
 
-    public Optional<roles> getRolCode(String roleCode) {
+    public Optional<Roles> getRolCode(String roleCode) {
         return rolesRepo.findById(roleCode);
     }
 

@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -28,5 +29,9 @@ public class login extends Auditable<String> implements Serializable {
 
     @OneToOne(mappedBy = "login")
     private staff staff;
+
+    @OneToOne
+    @JoinColumn(name = "roleCode")
+    private Roles role;
 
 }

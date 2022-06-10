@@ -14,7 +14,7 @@ import com.hmy.planning.systemconfiguration.dto.staffRequestDto;
 import com.hmy.planning.systemconfiguration.dto.staffResponseDto;
 import com.hmy.planning.systemconfiguration.models.login;
 import com.hmy.planning.systemconfiguration.models.orgStructure;
-import com.hmy.planning.systemconfiguration.models.roles;
+import com.hmy.planning.systemconfiguration.models.Roles;
 import com.hmy.planning.systemconfiguration.models.staff;
 import com.hmy.planning.systemconfiguration.repository.LoginRepository;
 import com.hmy.planning.systemconfiguration.repository.StaffRepository;
@@ -42,7 +42,7 @@ public class staffService {
 
     public ResponseEntity<staffResponseDto> addNewStaff(staffRequestDto reqStaff) {
         Optional<orgStructure> orgStructure = orgServices.getOrgStructureID(reqStaff.getOfficeID());
-        Optional<roles> role = roleServices.getRolCode(reqStaff.getRoleCode());
+        Optional<Roles> role = roleServices.getRolCode(reqStaff.getRoleCode());
 
         if (!role.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -52,7 +52,7 @@ public class staffService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        roles roleObj = new roles();
+        Roles roleObj = new Roles();
         roleObj.setRoleCode(reqStaff.getRoleCode());
         ;
 
