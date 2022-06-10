@@ -38,16 +38,21 @@ public class staffController implements staffApi {
         List<staffResponseDto> actDto = new ArrayList<>();
         for (staff st : staff) {
             staffResponseDto responseDto = new staffResponseDto();
-            responseDto.setActivityCode(act.getActivityCode());
-            responseDto.setActivityName(act.getActivityName());
-            responseDto.setTargetCode(act.getTargets().getTargetCode());
-            responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
-            responseDto.setApprovalStatus(act.getApprovalStatus());
-            responseDto.setStatus(act.getStatus());
-            responseDto.setCreatedDate(act.getCreatedDate());
-            responseDto.setCreatedBy(act.getCreatedBy());
-            responseDto.setModifiedDate(act.getModifiedDate());
-            responseDto.setModifiedBy(act.getModifiedBy());
+
+            responseDto.setStaffID(st.getStaffID());
+            responseDto.setFirstname(st.getFirstName());
+            responseDto.setMiddlename(st.getMiddleName());
+            responseDto.setLastname(st.getLastName());
+            responseDto.setEmail(st.getEmail());
+            responseDto.setPhone(st.getPhone());
+            responseDto.setStaffCode(st.getStaffCode());
+            // responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
+            responseDto.setStatus(st.getStatus());
+            responseDto.setStatus(st.getStatus());
+            responseDto.setCreatedDate(st.getCreatedDate());
+            responseDto.setCreatedBy(st.getCreatedBy());
+            responseDto.setModifiedDate(st.getModifiedDate());
+            responseDto.setModifiedBy(st.getModifiedBy());
             actDto.add(responseDto);
         }
         return ResponseEntity.ok(actDto);
@@ -67,11 +72,13 @@ public class staffController implements staffApi {
         staff bg = orgStr.get();
         staffResponseDto responseDto = new staffResponseDto();
 
-        responseDto.setActivityCode(bg.getActivityCode());
-        responseDto.setActivityName(bg.getActivityName());
-        responseDto.setTargetCode(bg.getTargets().getTargetCode());
-        responseDto.setOfficeID(bg.getOrgStructures().getOfficeID());
-        responseDto.setApprovalStatus(bg.getApprovalStatus());
+        responseDto.setStaffID(bg.getStaffID());
+        responseDto.setFirstname(bg.getFirstName());
+        responseDto.setMiddlename(bg.getMiddleName());
+        responseDto.setLastname(bg.getLastName());
+        responseDto.setEmail(bg.getEmail());
+        responseDto.setPhone(bg.getPhone());
+        responseDto.setStaffCode(bg.getStaffCode());
         responseDto.setStatus(bg.getStatus());
         responseDto.setCreatedDate(bg.getCreatedDate());
         responseDto.setCreatedBy(bg.getCreatedBy());
@@ -93,12 +100,13 @@ public class staffController implements staffApi {
         staffServices.updateStaff(staffID, reqStaff);
         staff stf = budPer.get();
         staffResponseDto responseDto = new staffResponseDto();
-        responseDto.setActivityName(acty.getActivityName());
-        responseDto.setTargetCode(acty.getTargets().getTargetCode());
-        responseDto.setStatus(acty.getStatus());
-        responseDto.setOfficeID(acty.getOrgStructures().getOfficeID());
-        responseDto.setStatus(acty.getStatus());
-        responseDto.setApprovalStatus(acty.getApprovalStatus());
+        responseDto.setStaffID(stf.getStaffID());
+        responseDto.setFirstname(stf.getFirstName());
+        responseDto.setMiddlename(stf.getMiddleName());
+        responseDto.setLastname(stf.getLastName());
+        responseDto.setEmail(stf.getEmail());
+        responseDto.setPhone(stf.getPhone());
+        responseDto.setStaffCode(stf.getStaffCode());
         responseDto.setCreatedDate(stf.getCreatedDate());
         responseDto.setCreatedBy(stf.getCreatedBy());
         responseDto.setModifiedDate(stf.getModifiedDate());
