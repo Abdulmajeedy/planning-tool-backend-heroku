@@ -89,4 +89,8 @@ public class rolesService {
         return response;
     }
 
+    public Optional<roles> getRolCode(String roleCode) {
+        return rolesRepo.findById(roleCode);
+    }
+
 }
