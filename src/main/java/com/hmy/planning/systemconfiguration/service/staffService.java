@@ -74,35 +74,25 @@ public class staffService {
         act.setMiddleName(reqStaff.getMiddlename());
         act.setLastName(reqStaff.getLastname());
         act.setEmail(reqStaff.getEmail());
+        act.setOrgStructure(orgObj);
         act.setLogin(lo);
+        act.setPhone(reqStaff.getPhone());
         act.setStaffCode(reqStaff.getStaffCode());
         // act.setOrgStructures(orgObj);
         act.setStatus(reqStaff.getStatus());
         staffRepo.save(act);
 
-        // Activity actvty = new Activity();
-        // actvty.setActivityCode(act.getActivityCode());
-
-        // quaterperiods.setActivityQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
-        // quaterperiods.setBudgetingPeriod(budObj);
-        // QuaterPeriod quaterPeriodObject = new QuaterPeriod();
-        // quaterPeriodObject.setQuaterPeriodCode(reqActivity.getQuaterPeriodCode());
-        // quaterperiods.setQuaterPeriod(quaterPeriodObject);
-        // quaterperiods.setStatus(reqActivity.getStatus());
-        // quaterperiods.setActivity(actvty);
-        // activityQuaterPeriodRepository.save(quaterperiods);
-
         staffResponseDto actDto = new staffResponseDto();
         actDto.setStaffID(act.getStaffID());
+        actDto.setStaffCode(act.getStaffCode());
         actDto.setFirstname(act.getFirstName());
-        actDto.setMiddlename(reqStaff.getMiddlename());
-        actDto.setLastname(reqStaff.getLastname());
-        actDto.setEmail(reqStaff.getEmail());
+        actDto.setMiddlename(act.getMiddleName());
+        actDto.setLastname(act.getLastName());
+        actDto.setEmail(logn.getEmail());
+        actDto.setStaffCode(act.getStaffCode());
         act.setPhone(act.getPhone());
-        actDto.setStaffID(reqStaff.getOfficeID());
-        // actDto.setOfficeID(act.getOrgStructures().getOfficeID());
+        actDto.setOfficeID(act.getOrgStructure().getOfficeID());
         actDto.setStatus(act.getStatus());
-        // actDto.setQuaterPeriodCode();
         actDto.setStatus(act.getStatus());
         actDto.setCreatedDate(act.getCreatedDate());
         actDto.setCreatedBy(act.getCreatedBy());

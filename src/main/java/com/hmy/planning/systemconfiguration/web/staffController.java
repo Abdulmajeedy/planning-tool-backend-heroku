@@ -46,7 +46,7 @@ public class staffController implements staffApi {
             responseDto.setEmail(st.getEmail());
             responseDto.setPhone(st.getPhone());
             responseDto.setStaffCode(st.getStaffCode());
-            // responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
+            responseDto.setOfficeID(st.getOrgStructure().getOfficeID());
             responseDto.setStatus(st.getStatus());
             responseDto.setStatus(st.getStatus());
             responseDto.setCreatedDate(st.getCreatedDate());
@@ -81,6 +81,7 @@ public class staffController implements staffApi {
         responseDto.setStaffCode(bg.getStaffCode());
         responseDto.setStatus(bg.getStatus());
         responseDto.setCreatedDate(bg.getCreatedDate());
+        responseDto.setOfficeID(bg.getOrgStructure().getOfficeID());
         responseDto.setCreatedBy(bg.getCreatedBy());
         responseDto.setModifiedDate(bg.getModifiedDate());
         responseDto.setModifiedBy(bg.getModifiedBy());
