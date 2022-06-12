@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, String> {
@@ -19,5 +20,8 @@ public interface ActivityRepository extends JpaRepository<Activity, String> {
 
     @Query(value = "select count(Act.*) from  activity Act", nativeQuery = true)
     Long CountActivities();
+
+    @Query(value = "select count(Act.*), Act.officeID ofc from  activity Act ,org_structure ofc where Act.officeID=ofc.officeID group by Act.officeID", nativeQuery = true)
+    List<Map<String, Object>> GraphActivityByOffice();
 
 }

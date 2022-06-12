@@ -177,4 +177,9 @@ public class activityService {
         return activityRepo.GetActivities();
     }
 
+    public List<Map<String, Object>> GraphActivityByOffice() {
+        return activityRepo.GraphActivityByOffice();
+
+    }
+
 }

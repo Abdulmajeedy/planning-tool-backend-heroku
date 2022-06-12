@@ -5,6 +5,7 @@ import java.util.*;
 import com.hmy.planning.systemconfiguration.dto.activityRequestDto;
 import com.hmy.planning.systemconfiguration.dto.activityResponseDto;
 import com.hmy.planning.systemconfiguration.dto.activityzResponseDto;
+import com.hmy.planning.systemconfiguration.dto.graphByActivityResponseDto;
 import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
 import com.hmy.planning.systemconfiguration.service.activityService;
@@ -134,7 +135,6 @@ public class activityController implements activityApi {
             responseDto.setBudgetYearCode(
                     act.getActivityQuaterPeriod().iterator().next().getBudgetingPeriod().getBudgetYearCode());
             responseDto.setApprovedStatus(act.getApprovalStatus());
-            // responseDto.setActivityPlanningCode(act.getActivityPlanningPeriod());
             responseDto.setCreatedDate(act.getCreatedDate());
             responseDto.setCreatedBy(act.getCreatedBy());
             responseDto.setModifiedDate(act.getModifiedDate());
@@ -143,5 +143,24 @@ public class activityController implements activityApi {
         }
         return ResponseEntity.ok(actDto);
     }
+
+    @Override
+    public ResponseEntity GraphActivityByOffices() {
+
+        return ResponseEntity.ok().body(activityServices.GraphActivityByOffice());
+
+    }
+    // public ResponseEntity GraphActivityByOffices() {
+    // List<Activity> activity = activityServices.GraphActivityByOffice();
+    // List<graphByActivityResponseDto> actDto = new ArrayList<>();
+    // for (Activity act : activity) {
+    // graphByActivityResponseDto responseDto = new graphByActivityResponseDto();
+
+    // responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
+
+    // actDto.add(responseDto);
+    // }
+    // return ResponseEntity.ok(actDto);
+    // }
 
 }

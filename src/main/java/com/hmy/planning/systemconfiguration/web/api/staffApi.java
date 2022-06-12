@@ -44,8 +44,8 @@ public interface staffApi {
         @RequestMapping(value = "updateStatus/{staffID}", method = RequestMethod.GET)
         public ResponseEntity updateStatus(@PathVariable("staffID") String staffID);
 
-        // @RequestMapping(value = "count/", method = RequestMethod.GET)
-        // public ResponseEntity Count();
+        @RequestMapping(value = "count/", method = RequestMethod.GET)
+        public ResponseEntity Count();
 
         // @RequestMapping(value = "getActivities/", method = RequestMethod.GET)
         // public ResponseEntity getActivities();

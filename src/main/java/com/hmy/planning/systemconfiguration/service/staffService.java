@@ -34,6 +34,9 @@ public class staffService {
     private JavaMailSender mailSender;
 
     @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder PasswordEncoder;
+
+    @Autowired
     private final rolesService roleServices;
     private final QuaterPeriodService quaterPd;
     private final orgStructureService orgServices;
@@ -66,7 +69,7 @@ public class staffService {
         staff act = new staff();
         login logn = new login();
         logn.setEmail(reqStaff.getEmail());
-        logn.setPassword(reqStaff.getLastname());
+        logn.setPassword(PasswordEncoder.encode(reqStaff.getLastname()));
         logn.setLogins(0);
         logn.setStatus(1);
         logn.setRole(roleObj);
@@ -86,7 +89,7 @@ public class staffService {
         // act.setOrgStructures(orgObj);
         act.setStatus(reqStaff.getStatus());
         staffRepo.save(act);
-        sendEmail(reqStaff);
+        // sendEmail(reqStaff);
 
         staffResponseDto actDto = new staffResponseDto();
         actDto.setStaffID(act.getStaffID());
@@ -175,9 +178,9 @@ public class staffService {
         return response;
     }
 
-    // public Long CountStaff() {
-    // return staffRepo.CountStaff();
-    // }
+    public Long CountStaff() {
+        return staffRepo.CountUsers();
+    }
 
     // public List<Activity> GetActivities() {
     // return activityRepo.GetActivities();

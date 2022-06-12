@@ -120,4 +120,9 @@ public class staffController implements staffApi {
         return ResponseEntity.ok().body(staffServices.updateStatus(staffID));
     }
 
+    @Override
+    public ResponseEntity Count() {
+        return ResponseEntity.ok().body(staffServices.CountStaff());
+    }
+
 }
