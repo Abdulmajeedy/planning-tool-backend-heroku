@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -28,6 +30,8 @@ public class staffService {
     @Autowired
     private final StaffRepository staffRepo;
     private final LoginRepository loginRepo;
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Autowired
     private final rolesService roleServices;
@@ -64,7 +68,8 @@ public class staffService {
         logn.setEmail(reqStaff.getEmail());
         logn.setPassword(reqStaff.getLastname());
         logn.setLogins(0);
-        logn.setStatus(0);
+        logn.setStatus(1);
+        logn.setRole(roleObj);
         loginRepo.save(logn);
 
         login lo = new login();
@@ -81,6 +86,7 @@ public class staffService {
         // act.setOrgStructures(orgObj);
         act.setStatus(reqStaff.getStatus());
         staffRepo.save(act);
+        sendEmail(reqStaff);
 
         staffResponseDto actDto = new staffResponseDto();
         actDto.setStaffID(act.getStaffID());
@@ -99,6 +105,33 @@ public class staffService {
         actDto.setModifiedDate(act.getModifiedDate());
         actDto.setModifiedBy(act.getModifiedBy());
         return ResponseEntity.ok(actDto);
+    }
+
+    public void sendEmail(staffRequestDto staff) {
+        String from = "abdulmajeedhajji@gmail.com";
+        String to = staff.getEmail();
+        String FullName = staff.getFirstname() + " " + staff.getMiddlename() + " " + staff.getLastname();
+        String Email = staff.getEmail();
+        String Password = staff.getLastname();
+        String Subject = "Successfully User Registration";
+        String messageText = "Dear " + FullName + "<br>"
+                + "Congratulations! You have been registered into Planning Tool Platform"
+                + "The following are your platform credentails.Dont forget to change the Password"
+                + "once you have successfully login for the first Time"
+                + "Email: " + Email + "<br>"
+                + "Password: " + Password + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "Department of Planning"
+                + "State University of Zanzibar";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(to);
+        message.setSubject(Subject);
+        message.setText(messageText);
+        mailSender.send(message);
     }
 
     public void deleteStaff(String staffID) {

@@ -24,7 +24,6 @@ public class login extends Auditable<String> implements Serializable {
     private String email;
     private String password;
     private int logins;
-    private String phone;
     private int status;
 
     @OneToOne(mappedBy = "login")
