@@ -7,10 +7,12 @@ public class loginResponseDto {
 
     private String loginCode;
     private String firstname;
+    private String middlename;
     private String lastname;
     private String email;
     private String roleCode;
-    private String status;
-    private String logins;
+    private String roleName;
+    private int status;
+    private int logins;
 
 }

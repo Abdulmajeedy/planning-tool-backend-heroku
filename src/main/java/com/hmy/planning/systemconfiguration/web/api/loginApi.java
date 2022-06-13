@@ -13,9 +13,8 @@ import com.hmy.planning.systemconfiguration.dto.loginResponseDto;
 @RequestMapping("/auth")
 public interface loginApi {
 
-    // @RequestMapping(value = "login/", method = RequestMethod.POST, produces =
-    // "application/json")
-    // public ResponseEntity<loginResponseDto> login(
-    // @RequestBody loginRequestDto loginData);
+    @RequestMapping(value = "login/", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<loginResponseDto> login(
+            @RequestBody loginRequestDto loginData);
 
 }
