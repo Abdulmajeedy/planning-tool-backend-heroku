@@ -43,15 +43,16 @@ public class orgStructureService {
         orgStructureRepo.save(org);
 
         orgStructureResponseDto orgDto = new orgStructureResponseDto();
-        orgDto.setOfficeName(reqOrg.getOfficeName());
-        orgDto.setOfficeShortName(reqOrg.getOfficeShortName());
-        orgDto.setOfficeCode(reqOrg.getOfficeCode());
-        orgDto.setReportTo(reqOrg.getReportTo());
-        orgDto.setStatus(reqOrg.getStatus());
-        orgDto.setCreatedDate(reqOrg.getCreatedDate());
-        orgDto.setCreatedBy(reqOrg.getCreatedBy());
-        orgDto.setModifiedDate(reqOrg.getModifiedDate());
-        orgDto.setModifiedBy(reqOrg.getModifiedBy());
+        orgDto.setOfficeID(org.getOfficeID());
+        orgDto.setOfficeName(org.getOfficeName());
+        orgDto.setOfficeShortName(org.getOfficeShortName());
+        orgDto.setOfficeCode(org.getOfficeCode());
+        orgDto.setReportTo(org.getReportTo());
+        orgDto.setStatus(org.getStatus());
+        orgDto.setCreatedDate(org.getCreatedDate());
+        orgDto.setCreatedBy(org.getCreatedBy());
+        orgDto.setModifiedDate(org.getModifiedDate());
+        orgDto.setModifiedBy(org.getModifiedBy());
         return ResponseEntity.ok(orgDto);
     }
 
