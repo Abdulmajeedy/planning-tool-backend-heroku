@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableSwagger2
+// @EnableSwagger2
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class SystemConfigurationApplication {
 	@Bean
