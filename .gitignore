@@ -3,7 +3,8 @@ HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# src/main/resources/*.*
+src/main/resources/*.*
+pom.xml
 
 Dockerfile
 docker-compose.yml
