@@ -55,6 +55,7 @@ public class loginController implements loginApi {
         responseDto.setLastname(lo.getStaff().getLastName());
         responseDto.setRoleCode(lo.getRole().getRoleCode());
         responseDto.setRoleName(lo.getRole().getRole());
+        responseDto.setOfficeName(lo.getOrgStructure().getOfficeName());
         responseDto.setLogins(lo.getLogins());
         responseDto.setStatus(lo.getStatus());
         responseDto.setMessage("Login SuccessFully");

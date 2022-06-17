@@ -33,4 +33,7 @@ public class orgStructure extends Auditable<String> implements Serializable {
     @OneToOne(mappedBy = "orgStructure")
     private staff staffs;
 
+    @OneToOne(mappedBy = "orgStructure")
+    private login login;
+
 }

@@ -33,4 +33,8 @@ public class login extends Auditable<String> implements Serializable {
     @JoinColumn(name = "roleCode")
     private Roles role;
 
+    @OneToOne
+    @JoinColumn(name = "officeID")
+    private orgStructure orgStructure;
+
 }

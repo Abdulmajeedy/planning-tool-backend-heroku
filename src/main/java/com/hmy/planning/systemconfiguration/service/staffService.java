@@ -72,6 +72,7 @@ public class staffService {
         logn.setPassword(PasswordEncoder.encode(reqStaff.getLastname()));
         logn.setLogins(0);
         logn.setStatus(1);
+        logn.setOrgStructure(orgObj);
         logn.setRole(roleObj);
         loginRepo.save(logn);
 
@@ -99,7 +100,7 @@ public class staffService {
         actDto.setLastname(act.getLastName());
         actDto.setEmail(logn.getEmail());
         actDto.setStaffCode(act.getStaffCode());
-        act.setPhone(act.getPhone());
+        actDto.setPhone(act.getPhone());
         actDto.setOfficeID(act.getOrgStructure().getOfficeID());
         actDto.setStatus(act.getStatus());
         actDto.setStatus(act.getStatus());

@@ -14,6 +14,7 @@ public class loginResponseDto {
     private String email;
     private String roleCode;
     private String roleName;
+    private String officeName;
     private int status;
     private String message;
     private int logins;
