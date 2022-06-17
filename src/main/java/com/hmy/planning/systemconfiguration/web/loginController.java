@@ -57,6 +57,7 @@ public class loginController implements loginApi {
         responseDto.setRoleName(lo.getRole().getRole());
         responseDto.setLogins(lo.getLogins());
         responseDto.setStatus(lo.getStatus());
+        responseDto.setMessage("Login SuccessFully");
 
         return ResponseEntity.ok(responseDto);
     }

@@ -1,5 +1,7 @@
 package com.hmy.planning.systemconfiguration.dto;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.Data;
 
 @Data
@@ -13,6 +15,7 @@ public class loginResponseDto {
     private String roleCode;
     private String roleName;
     private int status;
+    private String message;
     private int logins;
 
 }
