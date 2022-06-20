@@ -1,5 +1,6 @@
 package com.hmy.planning.systemconfiguration.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,9 @@ import com.hmy.planning.systemconfiguration.dto.projectResponseDto;
 import com.hmy.planning.systemconfiguration.models.projects;
 import com.hmy.planning.systemconfiguration.repository.ProjectsRepository;
 
+import lombok.Data;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,38 +22,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Data
 public class projectService {
 
     @Autowired
     private ProjectsRepository projectRepo;
+    private final ModelMapper modelmapper;
 
-    @Autowired
-    public projectService(ProjectsRepository orgStructureRepo) {
-        this.projectRepo = projectRepo;
-
-    }
-
-    public List<projects> findAllProjects(PageRequest pageRequest) {
-        return projectRepo.findAll(pageRequest).getContent();
+    public List<projectResponseDto> findAllProjects(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<projects> project = projectRepo.findAll(pageRequest).getContent();
+        List<projectResponseDto> projDto = new ArrayList<>();
+        for (projects proj : project) {
+            projectResponseDto responseDto = modelmapper.map(proj, projectResponseDto.class);
+            projDto.add(responseDto);
+        }
+        return projDto;
     }
 
     public ResponseEntity<projectResponseDto> addNewProject(projectRequestDto reqproj) {
-        projects org = new projects();
+        projects project = modelmapper.map(reqproj, projects.class);
+        projectRepo.save(project);
 
-        org.setProjectName(reqproj.getProjectName());
-        org.setDescription(reqproj.getDescription());
-        org.setStatus(reqproj.getStatus());
-        projectRepo.save(org);
-
-        projectResponseDto projectDto = new projectResponseDto();
-        projectDto.setProjectCode(org.getProjectCode());
-        projectDto.setProjectName(org.getProjectName());
-        projectDto.setDescription(org.getDescription());
-        projectDto.setStatus(org.getStatus());
-        projectDto.setCreatedDate(org.getCreatedDate());
-        projectDto.setCreatedBy(org.getCreatedBy());
-        projectDto.setModifiedDate(org.getModifiedDate());
-        projectDto.setModifiedBy(org.getModifiedBy());
+        projectResponseDto projectDto = modelmapper.map(project, projectResponseDto.class);
         return ResponseEntity.ok(projectDto);
     }
 
@@ -58,23 +53,31 @@ public class projectService {
         projectRepo.deleteById(projectCode);
     }
 
-    public Optional<projects> getProjectById(String projectCode) {
-        return projectRepo.findById(projectCode);
+    public projectResponseDto getProjectById(String projectCode) {
+        Optional<projects> project = projectRepo.findById(projectCode);
+        if (!project.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + projectCode + "is not Found");
+        } else {
+            projects proj = project.get();
+            projectResponseDto responseDto = modelmapper.map(proj, projectResponseDto.class);
+            return responseDto;
+        }
+
     }
 
-    public void updateProject(String projectCode, projects reqProj) {
-        projectRepo.findById(
-                projectCode)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Project  with Code " + projectCode + " does not exist"));
+    public ResponseEntity<projectResponseDto> updateProject(String projectCode, projectRequestDto reqProj) {
+        Optional<projects> project = projectRepo.findById(projectCode);
+        if (!project.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + projectCode + "is not Found");
+        }
+        projects proj = modelmapper.map(reqProj, projects.class);
+        proj.setProjectCode(projectCode);
+        projectRepo.save(proj);
 
-        reqProj.setProjectCode(projectCode);
-        projects org = new projects();
-        org.setCreatedBy(reqProj.getCreatedBy());
-        org.setCreatedDate(reqProj.getCreatedDate());
-        org.setModifiedBy(reqProj.getModifiedBy());
-        projectRepo.save(reqProj);
-
+        projectResponseDto projectDto = modelmapper.map(proj, projectResponseDto.class);
+        return ResponseEntity.ok(projectDto);
     }
 
     public Map<String, Boolean> updateStatus(String projectCode) {

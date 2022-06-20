@@ -36,22 +36,8 @@ public class projectController implements projectApi {
 
     @Override
     public ResponseEntity<List<projectResponseDto>> getProject(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        List<projects> project = projectService.findAllProjects(pageRequest);
-        List<projectResponseDto> roleDto = new ArrayList<>();
-        for (projects proj : project) {
-            projectResponseDto responseDto = new projectResponseDto();
-            responseDto.setProjectCode(proj.getProjectCode());
-            responseDto.setProjectName(proj.getProjectName());
-            responseDto.setDescription(proj.getDescription());
-            responseDto.setStatus(proj.getStatus());
-            responseDto.setCreatedDate(proj.getCreatedDate());
-            responseDto.setCreatedBy(proj.getCreatedBy());
-            responseDto.setModifiedDate(proj.getModifiedDate());
-            responseDto.setModifiedBy(proj.getModifiedBy());
-            roleDto.add(responseDto);
-        }
-        return ResponseEntity.ok(roleDto);
+
+        return ResponseEntity.ok(projectService.findAllProjects(page, size));
     }
 
     @Override
@@ -61,22 +47,8 @@ public class projectController implements projectApi {
 
     @Override
     public ResponseEntity<projectResponseDto> getProjectById(String projectCode) {
-        Optional<projects> project = projectService.getProjectById(projectCode);
-        if (!project.isPresent()) {
-            return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
-        } else {
-            projects proj = project.get();
-            projectResponseDto responseDto = new projectResponseDto();
-            responseDto.setProjectCode(proj.getProjectCode());
-            responseDto.setProjectName(proj.getProjectName());
-            responseDto.setDescription(proj.getDescription());
-            responseDto.setStatus(proj.getStatus());
-            responseDto.setCreatedDate(proj.getCreatedDate());
-            responseDto.setCreatedBy(proj.getCreatedBy());
-            responseDto.setModifiedDate(proj.getModifiedDate());
-            responseDto.setModifiedBy(proj.getModifiedBy());
-            return ResponseEntity.ok(responseDto);
-        }
+
+        return ResponseEntity.ok(projectService.getProjectById(projectCode));
     }
 
     @Override
@@ -86,21 +58,9 @@ public class projectController implements projectApi {
     }
 
     @Override
-    public ResponseEntity updateProject(String projectCode, projects reqProject) {
-        Optional<projects> project = projectService.getProjectById(projectCode);
-        projectService.updateProject(projectCode, reqProject);
-        projects proj = project.get();
-        projectResponseDto responseDto = new projectResponseDto();
+    public ResponseEntity updateProject(String projectCode, projectRequestDto reqProject) {
 
-        responseDto.setProjectCode(proj.getProjectCode());
-        responseDto.setProjectName(proj.getProjectName());
-        responseDto.setDescription(proj.getDescription());
-        responseDto.setStatus(proj.getStatus());
-        responseDto.setCreatedDate(proj.getCreatedDate());
-        responseDto.setCreatedBy(proj.getCreatedBy());
-        responseDto.setModifiedDate(proj.getModifiedDate());
-        responseDto.setModifiedBy(proj.getModifiedBy());
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(projectService.updateProject(projectCode, reqProject));
     }
 
     @Override

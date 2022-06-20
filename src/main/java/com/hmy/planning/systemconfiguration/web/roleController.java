@@ -34,22 +34,8 @@ public class roleController implements rolesApi {
     }
 
     public ResponseEntity<List<roleResponseDto>> getRole(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        List<Roles> role = rolesService.findAllRoles(pageRequest);
-        List<roleResponseDto> roleDto = new ArrayList<>();
-        for (Roles rol : role) {
-            roleResponseDto responseDto = new roleResponseDto();
-            responseDto.setRoleCode(rol.getRoleCode());
-            responseDto.setRole(rol.getRole());
-            responseDto.setDescription(rol.getDescription());
-            responseDto.setStatus(rol.getStatus());
-            responseDto.setCreatedDate(rol.getCreatedDate());
-            responseDto.setCreatedBy(rol.getCreatedBy());
-            responseDto.setModifiedDate(rol.getModifiedDate());
-            responseDto.setModifiedBy(rol.getModifiedBy());
-            roleDto.add(responseDto);
-        }
-        return ResponseEntity.ok(roleDto);
+
+        return ResponseEntity.ok(rolesService.findAllRoles(page, size));
     }
 
     public ResponseEntity<roleResponseDto> registerNewRole(roleRequestDto reqRoles) {
@@ -58,22 +44,7 @@ public class roleController implements rolesApi {
 
     @Override
     public ResponseEntity<roleResponseDto> getRoleById(String roleCode) {
-        Optional<Roles> role = rolesService.getRoleById(roleCode);
-        if (!role.isPresent()) {
-            return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
-        } else {
-            Roles rol = role.get();
-            roleResponseDto responseDto = new roleResponseDto();
-            responseDto.setRoleCode(rol.getRoleCode());
-            responseDto.setRole(rol.getRole());
-            responseDto.setDescription(rol.getDescription());
-            responseDto.setStatus(rol.getStatus());
-            responseDto.setCreatedDate(rol.getCreatedDate());
-            responseDto.setCreatedBy(rol.getCreatedBy());
-            responseDto.setModifiedDate(rol.getModifiedDate());
-            responseDto.setModifiedBy(rol.getModifiedBy());
-            return ResponseEntity.ok(responseDto);
-        }
+        return ResponseEntity.ok(rolesService.getRoleById(roleCode));
     }
 
     public void deleteById(String roleCode) {
@@ -82,19 +53,7 @@ public class roleController implements rolesApi {
 
     @Override
     public ResponseEntity updateRole(String roleCode, Roles reqRoles) {
-        Optional<Roles> roles = rolesService.getRoleById(roleCode);
-        rolesService.updateRole(roleCode, reqRoles);
-        Roles rol = roles.get();
-        roleResponseDto responseDto = new roleResponseDto();
-        responseDto.setRoleCode(rol.getRoleCode());
-        responseDto.setRole(rol.getRole());
-        responseDto.setDescription(rol.getDescription());
-        responseDto.setStatus(rol.getStatus());
-        responseDto.setCreatedDate(rol.getCreatedDate());
-        responseDto.setCreatedBy(rol.getCreatedBy());
-        responseDto.setModifiedDate(rol.getModifiedDate());
-        responseDto.setModifiedBy(rol.getModifiedBy());
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(rolesService.updateRole(roleCode, reqRoles));
     }
 
     @Override

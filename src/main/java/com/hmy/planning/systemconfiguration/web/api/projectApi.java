@@ -40,7 +40,7 @@ public interface projectApi {
 
         @RequestMapping(value = "/{projectCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
         public ResponseEntity updateProject(@PathVariable("projectCode") String projectCode,
-                        @RequestBody projects reqProject);
+                        @RequestBody projectRequestDto reqProject);
 
         @RequestMapping(value = "updateStatus/{projectCode}", method = RequestMethod.GET)
         public ResponseEntity updateStatus(@PathVariable("projectCode") String projectCode);
