@@ -1,15 +1,21 @@
 package com.hmy.planning.systemconfiguration.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.management.relation.Role;
 
 import com.hmy.planning.systemconfiguration.dto.roleRequestDto;
 import com.hmy.planning.systemconfiguration.dto.roleResponseDto;
 import com.hmy.planning.systemconfiguration.models.Roles;
 import com.hmy.planning.systemconfiguration.repository.RoleRepository;
 
+import lombok.Data;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,37 +24,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Data
 public class rolesService {
     @Autowired
     private RoleRepository rolesRepo;
+    private final ModelMapper modelmapper;
 
-    @Autowired
-    public rolesService(RoleRepository roleRepo) {
-        this.rolesRepo = rolesRepo;
-
-    }
-
-    public List<Roles> findAllRoles(PageRequest pageRequest) {
-        return rolesRepo.findAll(pageRequest).getContent();
+    public List<roleResponseDto> findAllRoles(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<Roles> role = rolesRepo.findAll(pageRequest).getContent();
+        List<roleResponseDto> roleDto = new ArrayList<>();
+        for (Roles rol : role) {
+            roleResponseDto responseDto = modelmapper.map(rol, roleResponseDto.class);
+            roleDto.add(responseDto);
+        }
+        return roleDto;
     }
 
     public ResponseEntity<roleResponseDto> addNewRole(roleRequestDto reqRoles) {
-        Roles role = new Roles();
-        role.setRole(reqRoles.getRole());
-        role.setDescription(reqRoles.getDescription());
-        role.setStatus(reqRoles.getStatus());
+        Roles role = modelmapper.map(reqRoles, Roles.class);
         rolesRepo.save(role);
 
-        roleResponseDto roleDto = new roleResponseDto();
-        roleDto.setRoleCode(role.getRoleCode());
-        roleDto.setRole(role.getRole());
-        roleDto.setDescription(role.getDescription());
-        roleDto.setStatus(role.getStatus());
-        roleDto.setCreatedDate(role.getCreatedDate());
-        roleDto.setCreatedBy(role.getCreatedBy());
-        roleDto.setModifiedDate(role.getModifiedDate());
-        roleDto.setModifiedBy(role.getModifiedBy());
-        return ResponseEntity.ok(roleDto);
+        roleResponseDto rol = modelmapper.map(role, roleResponseDto.class);
+        return ResponseEntity.ok(rol);
+
     }
 
     public void deleteRoles(String roleCode) {
@@ -56,21 +55,31 @@ public class rolesService {
         rolesRepo.deleteById(roleCode);
     }
 
-    public Optional<Roles> getRoleById(String roleCode) {
-        return rolesRepo.findById(roleCode);
+    public roleResponseDto getRoleById(String roleCode) {
+        Optional<Roles> roles = rolesRepo.findById(roleCode);
+        if (!roles.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + roleCode + "is not Found");
+        } else {
+            Roles rol = roles.get();
+            roleResponseDto responseDto = modelmapper.map(rol, roleResponseDto.class);
+            return responseDto;
+        }
     }
 
-    public void updateRole(String roleCode, Roles reqRoles) {
-        rolesRepo.findById(roleCode)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Role  with Code " + roleCode + " does not exist"));
+    public ResponseEntity<roleResponseDto> updateRole(String roleCode, Roles reqRoles) {
 
-        reqRoles.setRoleCode(roleCode);
-        Roles role = new Roles();
-        role.setCreatedBy(reqRoles.getCreatedBy());
-        role.setCreatedDate(reqRoles.getCreatedDate());
-        role.setModifiedBy(reqRoles.getModifiedBy());
-        rolesRepo.save(reqRoles);
+        Optional<Roles> roles = rolesRepo.findById(roleCode);
+        if (!roles.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + roleCode + "is not Found");
+        }
+        Roles rol = modelmapper.map(reqRoles, Roles.class);
+        rol.setRoleCode(roleCode);
+        rolesRepo.save(rol);
+
+        roleResponseDto roltDto = modelmapper.map(rol, roleResponseDto.class);
+        return ResponseEntity.ok(roltDto);
 
     }
 
