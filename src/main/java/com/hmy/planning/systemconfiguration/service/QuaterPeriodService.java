@@ -7,6 +7,9 @@ import com.hmy.planning.systemconfiguration.dto.quaterPeriodResponseDto;
 import com.hmy.planning.systemconfiguration.models.QuaterPeriod;
 import com.hmy.planning.systemconfiguration.repository.QuaterPeriodRepository;
 
+import lombok.Data;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -15,38 +18,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Data
 public class QuaterPeriodService {
 
     @Autowired
     private QuaterPeriodRepository quaterRepo;
+    private final ModelMapper modelmapper;
 
-    @Autowired
-    public QuaterPeriodService(QuaterPeriodRepository quaterRepo) {
-        this.quaterRepo = quaterRepo;
-
-    }
-
-    public List<QuaterPeriod> findAllQuaterPeriod(PageRequest pageRequest) {
-        return quaterRepo.findAll(pageRequest).getContent();
+    public List<quaterPeriodResponseDto> findAllQuaterPeriod(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<QuaterPeriod> quaterPeriods = quaterRepo.findAll(pageRequest).getContent();
+        List<quaterPeriodResponseDto> QtaerPeriodDto = new ArrayList<>();
+        for (QuaterPeriod qp : quaterPeriods) {
+            quaterPeriodResponseDto responseDto = modelmapper.map(qp, quaterPeriodResponseDto.class);
+            QtaerPeriodDto.add(responseDto);
+        }
+        return QtaerPeriodDto;
     }
 
     public ResponseEntity<quaterPeriodResponseDto> addNewQuaterPeriod(quaterPeriodRequestDto reqQuaterPeriodCode) {
-        QuaterPeriod quater = new QuaterPeriod();
-        quater.setQuaterName(reqQuaterPeriodCode.getQuaterName());
-        quater.setAlternativeName(reqQuaterPeriodCode.getAlternativeName());
-        quater.setStatus(reqQuaterPeriodCode.getStatus());
-        quaterRepo.save(quater);
+        QuaterPeriod quaterPeriods = modelmapper.map(reqQuaterPeriodCode, QuaterPeriod.class);
+        quaterRepo.save(quaterPeriods);
 
-        quaterPeriodResponseDto quaterDto = new quaterPeriodResponseDto();
-        quaterDto.setQuaterPeriodCode(quater.getQuaterPeriodCode());
-        quaterDto.setQuaterName(quater.getQuaterName());
-        quaterDto.setAlternativeName(quater.getAlternativeName());
-        quaterDto.setStatus(quater.getStatus());
-        quaterDto.setCreatedDate(quater.getCreatedDate());
-        quaterDto.setCreatedBy(quater.getCreatedBy());
-        quaterDto.setModifiedDate(quater.getModifiedDate());
-        quaterDto.setModifiedBy(quater.getModifiedBy());
-        return ResponseEntity.ok(quaterDto);
+        quaterPeriodResponseDto qperiod = modelmapper.map(reqQuaterPeriodCode, quaterPeriodResponseDto.class);
+        return ResponseEntity.ok(qperiod);
+
     }
 
     public void deleteQuaterPeriod(String quaterPeriodCode) {
@@ -54,21 +50,32 @@ public class QuaterPeriodService {
         quaterRepo.deleteById(quaterPeriodCode);
     }
 
-    public Optional<QuaterPeriod> getQuaterPeriodById(String quaterPeriodCode) {
-        return quaterRepo.findById(quaterPeriodCode);
+    public quaterPeriodResponseDto getQuaterPeriodById(String quaterPeriodCode) {
+        Optional<QuaterPeriod> roles = quaterRepo.findById(quaterPeriodCode);
+        if (!roles.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + quaterPeriodCode + "is not Found");
+        } else {
+            QuaterPeriod qp = roles.get();
+            quaterPeriodResponseDto responseDto = modelmapper.map(qp, quaterPeriodResponseDto.class);
+            return responseDto;
+        }
     }
 
-    public void updateQuaterPeriod(String quaterPeriodCode, QuaterPeriod reqQuaterPeriod) {
-        quaterRepo.findById(quaterPeriodCode)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Quater Period  with Code " + quaterPeriodCode + " does not exist"));
+    public ResponseEntity<quaterPeriodResponseDto> updateQuaterPeriod(String quaterPeriodCode,
+            QuaterPeriod reqQuaterPeriod) {
 
-        reqQuaterPeriod.setQuaterPeriodCode(quaterPeriodCode);
-        QuaterPeriod org = new QuaterPeriod();
-        org.setCreatedBy(reqQuaterPeriod.getCreatedBy());
-        org.setCreatedDate(reqQuaterPeriod.getCreatedDate());
-        org.setModifiedBy(reqQuaterPeriod.getModifiedBy());
-        quaterRepo.save(reqQuaterPeriod);
+        Optional<QuaterPeriod> roles = quaterRepo.findById(quaterPeriodCode);
+        if (!roles.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + quaterPeriodCode + "is not Found");
+        }
+        QuaterPeriod qp = modelmapper.map(reqQuaterPeriod, QuaterPeriod.class);
+        qp.setQuaterPeriodCode(quaterPeriodCode);
+        quaterRepo.save(qp);
+
+        quaterPeriodResponseDto roltDto = modelmapper.map(qp, quaterPeriodResponseDto.class);
+        return ResponseEntity.ok(roltDto);
 
     }
 

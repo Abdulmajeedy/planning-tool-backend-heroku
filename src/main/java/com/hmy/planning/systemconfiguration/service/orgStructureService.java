@@ -1,5 +1,6 @@
 package com.hmy.planning.systemconfiguration.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,9 @@ import com.hmy.planning.systemconfiguration.dto.orgStructureResponseDto;
 import com.hmy.planning.systemconfiguration.models.orgStructure;
 import com.hmy.planning.systemconfiguration.repository.OrgStructureRepository;
 
+import lombok.Data;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,42 +22,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Data
 public class orgStructureService {
 
     @Autowired
     private OrgStructureRepository orgStructureRepo;
+    private final ModelMapper modelmapper;
 
-    @Autowired
-    public orgStructureService(OrgStructureRepository orgStructureRepo) {
-        this.orgStructureRepo = orgStructureRepo;
-
-    }
-
-    public List<orgStructure> findAllOrgStructures(PageRequest pageRequest) {
-        return orgStructureRepo.findAll(pageRequest).getContent();
+    public List<orgStructureResponseDto> findAllOrgStructures(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<orgStructure> orgStructures = orgStructureRepo.findAll(pageRequest).getContent();
+        List<orgStructureResponseDto> roleDto = new ArrayList<>();
+        for (orgStructure orgStructure : orgStructures) {
+            orgStructureResponseDto responseDto = modelmapper.map(orgStructure, orgStructureResponseDto.class);
+            roleDto.add(responseDto);
+        }
+        return roleDto;
     }
 
     public ResponseEntity<orgStructureResponseDto> addNewOrgStructure(orgStructureRequestDto reqOrg) {
-        orgStructure org = new orgStructure();
-        org.setOfficeName(reqOrg.getOfficeName());
-        org.setOfficeShortName(reqOrg.getOfficeShortName());
-        org.setOfficeCode(reqOrg.getOfficeCode());
-        org.setReportTo(reqOrg.getReportTo());
-        org.setStatus(reqOrg.getStatus());
-        orgStructureRepo.save(org);
+        orgStructure orgStructures = modelmapper.map(reqOrg, orgStructure.class);
+        orgStructureRepo.save(orgStructures);
 
-        orgStructureResponseDto orgDto = new orgStructureResponseDto();
-        orgDto.setOfficeID(org.getOfficeID());
-        orgDto.setOfficeName(org.getOfficeName());
-        orgDto.setOfficeShortName(org.getOfficeShortName());
-        orgDto.setOfficeCode(org.getOfficeCode());
-        orgDto.setReportTo(org.getReportTo());
-        orgDto.setStatus(org.getStatus());
-        orgDto.setCreatedDate(org.getCreatedDate());
-        orgDto.setCreatedBy(org.getCreatedBy());
-        orgDto.setModifiedDate(org.getModifiedDate());
-        orgDto.setModifiedBy(org.getModifiedBy());
-        return ResponseEntity.ok(orgDto);
+        orgStructureResponseDto orgStr = modelmapper.map(orgStructures, orgStructureResponseDto.class);
+        return ResponseEntity.ok(orgStr);
     }
 
     public void deleteOrgStructure(String officeID) {
@@ -61,22 +53,31 @@ public class orgStructureService {
         orgStructureRepo.deleteById(officeID);
     }
 
-    public Optional<orgStructure> getOrgStaructureById(String officeID) {
-        return orgStructureRepo.findById(officeID);
+    public orgStructureResponseDto getOrgStaructureById(String officeID) {
+        Optional<orgStructure> office = orgStructureRepo.findById(officeID);
+        if (!office.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + officeID + "is not Found");
+        } else {
+            orgStructure rol = office.get();
+            orgStructureResponseDto responseDto = modelmapper.map(rol, orgStructureResponseDto.class);
+            return responseDto;
+        }
+
     }
 
-    public void updateOrgStructure(String officeID, orgStructure reqOrg) {
-        orgStructureRepo.findById(
-                officeID)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Office  with ID " + officeID + " does not exist"));
+    public ResponseEntity<orgStructureResponseDto> updateOrgStructure(String officeID, orgStructure reqOrg) {
+        Optional<orgStructure> office = orgStructureRepo.findById(officeID);
+        if (!office.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + officeID + "is not Found");
+        }
+        orgStructure ofc = modelmapper.map(reqOrg, orgStructure.class);
+        ofc.setOfficeID(officeID);
+        orgStructureRepo.save(ofc);
 
-        reqOrg.setOfficeID(officeID);
-        orgStructure org = new orgStructure();
-        org.setCreatedBy(reqOrg.getCreatedBy());
-        org.setCreatedDate(reqOrg.getCreatedDate());
-        org.setModifiedBy(reqOrg.getModifiedBy());
-        orgStructureRepo.save(reqOrg);
+        orgStructureResponseDto roltDto = modelmapper.map(ofc, orgStructureResponseDto.class);
+        return ResponseEntity.ok(roltDto);
 
     }
 

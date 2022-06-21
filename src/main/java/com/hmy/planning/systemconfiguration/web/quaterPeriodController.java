@@ -35,22 +35,8 @@ public class quaterPeriodController implements quaterPeriodApi {
 
     @Override
     public ResponseEntity<List<quaterPeriodResponseDto>> getQuaterPeriod(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        List<QuaterPeriod> activity = quaterServices.findAllQuaterPeriod(pageRequest);
-        List<quaterPeriodResponseDto> actDto = new ArrayList<>();
-        for (QuaterPeriod quat : activity) {
-            quaterPeriodResponseDto responseDto = new quaterPeriodResponseDto();
-            responseDto.setQuaterPeriodCode(quat.getQuaterPeriodCode());
-            responseDto.setQuaterName(quat.getQuaterName());
-            responseDto.setAlternativeName(quat.getAlternativeName());
-            responseDto.setStatus(quat.getStatus());
-            responseDto.setCreatedDate(quat.getCreatedDate());
-            responseDto.setCreatedBy(quat.getCreatedBy());
-            responseDto.setModifiedDate(quat.getModifiedDate());
-            responseDto.setModifiedBy(quat.getModifiedBy());
-            actDto.add(responseDto);
-        }
-        return ResponseEntity.ok(actDto);
+        return ResponseEntity.ok(quaterServices.findAllQuaterPeriod(page, size));
+
     }
 
     @Override
@@ -60,22 +46,7 @@ public class quaterPeriodController implements quaterPeriodApi {
 
     @Override
     public ResponseEntity<quaterPeriodResponseDto> getQuaterPeriodById(String reqQuaterPeriod) {
-        Optional<QuaterPeriod> quater = quaterServices.getQuaterPeriodById(reqQuaterPeriod);
-        if (!quater.isPresent()) {
-            return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
-        } else {
-            QuaterPeriod quat = quater.get();
-            quaterPeriodResponseDto responseDto = new quaterPeriodResponseDto();
-            responseDto.setQuaterPeriodCode(quat.getQuaterPeriodCode());
-            responseDto.setQuaterName(quat.getQuaterName());
-            responseDto.setAlternativeName(quat.getAlternativeName());
-            responseDto.setStatus(quat.getStatus());
-            responseDto.setCreatedDate(quat.getCreatedDate());
-            responseDto.setCreatedBy(quat.getCreatedBy());
-            responseDto.setModifiedDate(quat.getModifiedDate());
-            responseDto.setModifiedBy(quat.getModifiedBy());
-            return ResponseEntity.ok(responseDto);
-        }
+        return ResponseEntity.ok(quaterServices.getQuaterPeriodById(reqQuaterPeriod));
     }
 
     @Override
@@ -85,19 +56,7 @@ public class quaterPeriodController implements quaterPeriodApi {
 
     @Override
     public ResponseEntity updateQuaterPeriod(String quaterPeriodCode, QuaterPeriod reqQuaterPeriod) {
-        Optional<QuaterPeriod> quater = quaterServices.getQuaterPeriodById(quaterPeriodCode);
-        quaterServices.updateQuaterPeriod(quaterPeriodCode, reqQuaterPeriod);
-        QuaterPeriod quat = quater.get();
-        quaterPeriodResponseDto responseDto = new quaterPeriodResponseDto();
-        responseDto.setQuaterPeriodCode(quat.getQuaterPeriodCode());
-        responseDto.setQuaterName(quat.getQuaterName());
-        responseDto.setAlternativeName(quat.getAlternativeName());
-        responseDto.setStatus(quat.getStatus());
-        responseDto.setCreatedDate(quat.getCreatedDate());
-        responseDto.setCreatedBy(quat.getCreatedBy());
-        responseDto.setModifiedDate(quat.getModifiedDate());
-        responseDto.setModifiedBy(quat.getModifiedBy());
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(quaterServices.updateQuaterPeriod(quaterPeriodCode, reqQuaterPeriod));
     }
 
     @Override

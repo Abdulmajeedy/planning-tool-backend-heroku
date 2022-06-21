@@ -6,8 +6,12 @@ import com.hmy.planning.systemconfiguration.dto.objectiveRequestDto;
 import com.hmy.planning.systemconfiguration.dto.objectiveResponseDto;
 import com.hmy.planning.systemconfiguration.models.Objectives;
 import com.hmy.planning.systemconfiguration.models.budgetingPeriod;
+import com.hmy.planning.systemconfiguration.repository.BudgetPeriodRepository;
 import com.hmy.planning.systemconfiguration.repository.ObjectiveRepository;
 
+import lombok.Data;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -16,50 +20,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Data
 public class objectiveService {
 
+    private static final Object Objectives = null;
     @Autowired
     private ObjectiveRepository objectiveRepo;
-
+    private final BudgetPeriodRepository budgetPeriodRepo;
+    private final ModelMapper modelmapper;
     private budgetPeriodService budgetPeriodService;
 
-    @Autowired
-    public objectiveService(ObjectiveRepository objectiveRepo, budgetPeriodService budgetPeriodService) {
-        this.objectiveRepo = objectiveRepo;
-        this.budgetPeriodService = budgetPeriodService;
-
-    }
-
-    public List<Objectives> findAllObjectives(PageRequest pageRequest) {
-        return objectiveRepo.findAll(pageRequest).getContent();
+    public List<objectiveResponseDto> findAllObjectives(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<Objectives> obj = objectiveRepo.findAll(pageRequest).getContent();
+        List<objectiveResponseDto> objDto = new ArrayList<>();
+        for (Objectives objective : obj) {
+            objectiveResponseDto responseDto = modelmapper.map(objective, objectiveResponseDto.class);
+            objDto.add(responseDto);
+        }
+        return objDto;
     }
 
     public ResponseEntity<objectiveResponseDto> addNewObjective(objectiveRequestDto reqObjective) {
-        Optional<budgetingPeriod> budgetPeriod = budgetPeriodService
-                .getBudgetYearCode(reqObjective.getBudgetYearCode());
+        Optional<budgetingPeriod> budgetPeriod = budgetPeriodRepo.findById(reqObjective.getBudgetYearCode());
 
-        if (!budgetPeriod.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        budgetingPeriod budgetObj = new budgetingPeriod();
+        budgetObj.setBudgetYearCode(reqObjective.getBudgetYearCode());
 
-        budgetingPeriod budPeriod = budgetPeriod.get();
-        Objectives objective = new Objectives();
+        Objectives objtvs = modelmapper.map(reqObjective, Objectives.class);
+        objtvs.setBudgetingPeriod(budgetObj);
+        objectiveRepo.save(objtvs);
 
-        objective.setObjective(reqObjective.getObjective());
-        objective.setBudgetingPeriod(budPeriod);
-        objective.setStatus(reqObjective.getStatus());
-        objectiveRepo.save(objective);
-
-        objectiveResponseDto objectiveDto = new objectiveResponseDto();
-        objectiveDto.setObjectiveCode(objective.getObjectiveCode());
-        objectiveDto.setObjective(objective.getObjective());
-        objective.setBudgetingPeriod(objective.getBudgetingPeriod());
-        objectiveDto.setStatus(objective.getStatus());
-        objectiveDto.setCreatedDate(objective.getCreatedDate());
-        objectiveDto.setCreatedBy(objective.getCreatedBy());
-        objectiveDto.setModifiedDate(objective.getModifiedDate());
-        objectiveDto.setModifiedBy(objective.getModifiedBy());
-        return ResponseEntity.ok(objectiveDto);
+        objectiveResponseDto obj = modelmapper.map(Objectives, objectiveResponseDto.class);
+        return ResponseEntity.ok(obj);
     }
 
     public void deleteObjective(String objectiveCode) {
@@ -67,21 +60,31 @@ public class objectiveService {
         objectiveRepo.deleteById(objectiveCode);
     }
 
-    public Optional<Objectives> getObjectiveById(String objectiveCode) {
-        return objectiveRepo.findById(objectiveCode);
+    public objectiveResponseDto getObjectiveById(String objectiveCode) {
+        Optional<Objectives> office = objectiveRepo.findById(objectiveCode);
+        if (!office.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + objectiveCode + "is not Found");
+        } else {
+            Objectives obj = office.get();
+            objectiveResponseDto responseDto = modelmapper.map(obj, objectiveResponseDto.class);
+            return responseDto;
+        }
     }
 
-    public void updateObjective(String objectiveCode, Objectives reqObjective) {
-        objectiveRepo.findById(objectiveCode)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Bojective  with Code " + objectiveCode + " does not exist"));
+    public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode, Objectives reqObjective) {
+        Optional<Objectives> office = objectiveRepo.findById(objectiveCode);
+        if (!office.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + objectiveCode + "is not Found");
+        }
+        Objectives obctc = modelmapper.map(reqObjective, Objectives.class);
+        obctc.setObjectiveCode(objectiveCode);
+        objectiveRepo.save(obctc);
 
-        reqObjective.setObjectiveCode(objectiveCode);
-        Objectives objectives = new Objectives();
-        objectives.setCreatedBy(reqObjective.getCreatedBy());
-        objectives.setCreatedDate(reqObjective.getCreatedDate());
-        objectives.setModifiedBy(reqObjective.getModifiedBy());
-        objectiveRepo.save(reqObjective);
+        objectiveResponseDto roltDto = modelmapper.map(obctc, objectiveResponseDto.class);
+        return ResponseEntity.ok(roltDto);
+
     }
 
     public Optional<Objectives> getObjectiveCode(String ObjectiveCode) {
