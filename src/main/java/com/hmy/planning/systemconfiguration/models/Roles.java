@@ -1,10 +1,13 @@
 package com.hmy.planning.systemconfiguration.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +27,8 @@ public class Roles extends Auditable<String> implements Serializable {
     private String description;
     private int status;
 
+    // @OneToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    // private List<login> login;
     // @OneToOne(mappedBy = "roles")
     // private login logn;
 
