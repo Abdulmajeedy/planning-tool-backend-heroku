@@ -81,4 +81,9 @@ public class loginController implements loginApi {
 
     }
 
+    @Override
+    public ResponseEntity<List<loginResponseDto>> getAlllogin(int page, int size) {
+        return ResponseEntity.ok(lognServices.findAllLogin(page, size));
+    }
+
 }
