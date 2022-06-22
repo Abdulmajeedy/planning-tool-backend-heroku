@@ -36,6 +36,7 @@ public class objectiveService {
         List<objectiveResponseDto> objDto = new ArrayList<>();
         for (Objectives objective : obj) {
             objectiveResponseDto responseDto = modelmapper.map(objective, objectiveResponseDto.class);
+            responseDto.setBudgetYearCode(objective.getBudgetingPeriod().getBudgetYearCode());
             objDto.add(responseDto);
         }
         return objDto;
@@ -45,13 +46,13 @@ public class objectiveService {
         Optional<budgetingPeriod> budgetPeriod = budgetPeriodRepo.findById(reqObjective.getBudgetYearCode());
 
         budgetingPeriod budgetObj = new budgetingPeriod();
-        budgetObj.setBudgetYearCode(reqObjective.getBudgetYearCode());
+        budgetObj.setBudgetYearCode(budgetPeriod.get().getBudgetYearCode());
 
         Objectives objtvs = modelmapper.map(reqObjective, Objectives.class);
         objtvs.setBudgetingPeriod(budgetObj);
         objectiveRepo.save(objtvs);
 
-        objectiveResponseDto obj = modelmapper.map(Objectives, objectiveResponseDto.class);
+        objectiveResponseDto obj = modelmapper.map(objtvs, objectiveResponseDto.class);
         return ResponseEntity.ok(obj);
     }
 
@@ -68,13 +69,14 @@ public class objectiveService {
         } else {
             Objectives obj = office.get();
             objectiveResponseDto responseDto = modelmapper.map(obj, objectiveResponseDto.class);
+            responseDto.setBudgetYearCode(obj.getBudgetingPeriod().getBudgetYearCode());
             return responseDto;
         }
     }
 
     public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode, Objectives reqObjective) {
-        Optional<Objectives> office = objectiveRepo.findById(objectiveCode);
-        if (!office.isPresent()) {
+        Optional<Objectives> objective = objectiveRepo.findById(objectiveCode);
+        if (!objective.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "project  with this code" + objectiveCode + "is not Found");
         }

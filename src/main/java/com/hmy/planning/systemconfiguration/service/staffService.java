@@ -90,7 +90,7 @@ public class staffService {
         // act.setOrgStructures(orgObj);
         act.setStatus(reqStaff.getStatus());
         staffRepo.save(act);
-        // sendEmail(reqStaff);
+        sendEmail(reqStaff);
 
         staffResponseDto actDto = new staffResponseDto();
         actDto.setStaffID(act.getStaffID());
@@ -118,15 +118,15 @@ public class staffService {
         String Email = staff.getEmail();
         String Password = staff.getLastname();
         String Subject = "Successfully User Registration";
-        String messageText = "Dear " + FullName + "<br>"
+        String messageText = "Dear " + FullName
                 + "Congratulations! You have been registered into Planning Tool Platform"
+
                 + "The following are your platform credentails.Dont forget to change the Password"
                 + "once you have successfully login for the first Time"
-                + "Email: " + Email + "<br>"
-                + "Password: " + Password + "<br>"
-                + "<br>"
-                + "<br>"
-                + "<br>"
+
+                + "Email: " + Email
+                + "Password: " + Password
+
                 + "Department of Planning"
                 + "State University of Zanzibar";
 

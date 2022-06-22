@@ -33,22 +33,7 @@ public class targetController implements targetApi {
 
     @Override
     public ResponseEntity<List<targetResponseDto>> getTarget(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        List<Target> terg = terService.findAllTarget(pageRequest);
-        List<targetResponseDto> terDto = new ArrayList<>();
-        for (Target object : terg) {
-            targetResponseDto responseDto = new targetResponseDto();
-            responseDto.setTargetCode(object.getTargetCode());
-            responseDto.setTargetName(object.getTargetName());
-            responseDto.setStrategyCode(object.getStrategies().getStrategyCode());
-            responseDto.setStatus(object.getStatus());
-            responseDto.setCreatedDate(object.getCreatedDate());
-            responseDto.setCreatedBy(object.getCreatedBy());
-            responseDto.setModifiedDate(object.getModifiedDate());
-            responseDto.setModifiedBy(object.getModifiedBy());
-            terDto.add(responseDto);
-        }
-        return ResponseEntity.ok(terDto);
+        return ResponseEntity.ok(terService.findAllTarget(page, size));
     }
 
     @Override
@@ -58,22 +43,7 @@ public class targetController implements targetApi {
 
     @Override
     public ResponseEntity<targetResponseDto> getTargetById(String targetCode) {
-        Optional<Target> objective = terService.getTargetById(targetCode);
-        if (!objective.isPresent()) {
-            return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
-        } else {
-            Target obje = objective.get();
-            targetResponseDto responseDto = new targetResponseDto();
-            responseDto.setTargetCode(obje.getTargetCode());
-            responseDto.setTargetName(obje.getTargetName());
-            responseDto.setStrategyCode(obje.getStrategies().getStrategyCode());
-            responseDto.setStatus(obje.getStatus());
-            responseDto.setCreatedDate(obje.getCreatedDate());
-            responseDto.setCreatedBy(obje.getCreatedBy());
-            responseDto.setModifiedDate(obje.getModifiedDate());
-            responseDto.setModifiedBy(obje.getModifiedBy());
-            return ResponseEntity.ok(responseDto);
-        }
+        return ResponseEntity.ok(terService.getTargetById(targetCode));
     }
 
     @Override
@@ -84,20 +54,7 @@ public class targetController implements targetApi {
 
     @Override
     public ResponseEntity updateTarget(String targetCode, Target reqTarget) {
-        Optional<Target> objective = terService.getTargetById(targetCode);
-        terService.updateTarget(targetCode, reqTarget);
-        System.out.print(reqTarget);
-        Target obje = objective.get();
-        targetResponseDto responseDto = new targetResponseDto();
-        responseDto.setTargetCode(obje.getTargetCode());
-        responseDto.setTargetName(obje.getTargetName());
-        responseDto.setStrategyCode(obje.getStrategies().getStrategyCode());
-        responseDto.setStatus(obje.getStatus());
-        responseDto.setCreatedDate(obje.getCreatedDate());
-        responseDto.setCreatedBy(obje.getCreatedBy());
-        responseDto.setModifiedDate(obje.getModifiedDate());
-        responseDto.setModifiedBy(obje.getModifiedBy());
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(terService.updateTarget(targetCode, reqTarget));
     }
 
     @Override

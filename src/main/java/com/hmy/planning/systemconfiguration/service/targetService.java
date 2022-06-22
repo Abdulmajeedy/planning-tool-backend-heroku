@@ -6,6 +6,7 @@ import com.hmy.planning.systemconfiguration.dto.targetRequestDto;
 import com.hmy.planning.systemconfiguration.dto.targetResponseDto;
 import com.hmy.planning.systemconfiguration.models.Strategies;
 import com.hmy.planning.systemconfiguration.models.Target;
+import com.hmy.planning.systemconfiguration.repository.StrategiesRepository;
 import com.hmy.planning.systemconfiguration.repository.TargetRepository;
 
 import org.modelmapper.ModelMapper;
@@ -26,12 +27,21 @@ public class targetService {
 
     @Autowired
     private final StrategiesService strategiesService;
+    private final StrategiesRepository strategiesRepo;
     private final QuaterPeriodService quaterPd;
 
-    private final ModelMapper modelMapper;
+    private final ModelMapper modelmapper;
 
-    public List<Target> findAllTarget(PageRequest pageRequest) {
-        return targetRepo.findAll(pageRequest).getContent();
+    public List<targetResponseDto> findAllTarget(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<Target> obj = targetRepo.findAll(pageRequest).getContent();
+        List<targetResponseDto> trgDto = new ArrayList<>();
+        for (Target target : obj) {
+            targetResponseDto responseDto = modelmapper.map(target, targetResponseDto.class);
+            responseDto.setStrategyCode(target.getStrategies().getStrategyCode());
+            trgDto.add(responseDto);
+        }
+        return trgDto;
     }
 
     public void deleteTarget(String targetCode) {
@@ -40,49 +50,46 @@ public class targetService {
     }
 
     public ResponseEntity<targetResponseDto> addNewTarget(targetRequestDto reqTarget) {
-        Optional<Strategies> strategies = strategiesService.getStrategiesCode(reqTarget.getStrategyCode());
+        Optional<Strategies> str = strategiesRepo.findById(reqTarget.getStrategyCode());
 
-        if (!strategies.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Strategies strategyObj = new Strategies();
+        strategyObj.setStrategy(str.get().getStrategyCode());
+
+        Target target = modelmapper.map(reqTarget, Target.class);
+        target.setStrategies(strategyObj);
+        targetRepo.save(target);
+
+        targetResponseDto obj = modelmapper.map(target, targetResponseDto.class);
+        obj.setStrategyCode(target.getStrategies().getStrategyCode());
+        return ResponseEntity.ok(obj);
+        // havmleqzorovbsrl
+    }
+
+    public targetResponseDto getTargetById(String targetCode) {
+        Optional<Target> target = targetRepo.findById(targetCode);
+        if (!target.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Target  with this code" + targetCode + "is not Found");
+        } else {
+            Target trgobj = target.get();
+            targetResponseDto responseDto = modelmapper.map(trgobj, targetResponseDto.class);
+            responseDto.setStrategyCode(trgobj.getStrategies().getStrategyCode());
+            return responseDto;
         }
-
-        Strategies Str = strategies.get();
-        Target tar = new Target();
-
-        tar.setTargetName(reqTarget.getTargetName());
-        tar.setStrategies(Str);
-        tar.setStatus(reqTarget.getStatus());
-        targetRepo.save(tar);
-
-        targetResponseDto targetDto = new targetResponseDto();
-        targetDto.setTargetCode(tar.getTargetCode());
-        targetDto.setTargetName(tar.getTargetName());
-        targetDto.setStrategyCode(tar.getStrategies().getStrategyCode());
-        targetDto.setStatus(tar.getStatus());
-        targetDto.setCreatedDate(tar.getCreatedDate());
-        targetDto.setCreatedBy(tar.getCreatedBy());
-        targetDto.setModifiedDate(tar.getModifiedDate());
-        targetDto.setModifiedBy(tar.getModifiedBy());
-        return ResponseEntity.ok(targetDto);
     }
 
-    public Optional<Target> getTargetById(String targetCode) {
-        return targetRepo.findById(targetCode);
-    }
+    public ResponseEntity<targetResponseDto> updateTarget(String targetCode, Target reqTarget) {
+        Optional<Target> objective = targetRepo.findById(targetCode);
+        if (!objective.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Target  with this code" + targetCode + "is not Found");
+        }
+        Target target = modelmapper.map(reqTarget, Target.class);
+        target.setTargetCode(targetCode);
+        targetRepo.save(target);
 
-    public void updateTarget(String targetCode,
-            Target reqTarget) {
-        targetRepo.findById(
-                targetCode)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Target   with Code " + targetCode + " does not exist"));
-
-        reqTarget.setTargetCode(targetCode);
-        Target acti = new Target();
-        acti.setCreatedBy(reqTarget.getCreatedBy());
-        acti.setCreatedDate(reqTarget.getCreatedDate());
-        acti.setModifiedBy(reqTarget.getModifiedBy());
-        targetRepo.save(reqTarget);
+        targetResponseDto roltDto = modelmapper.map(target, targetResponseDto.class);
+        return ResponseEntity.ok(roltDto);
     }
 
     public Optional<Target> getTargetCode(String targetCode) {

@@ -6,6 +6,7 @@ import com.hmy.planning.systemconfiguration.dto.strategiesRequestDto;
 import com.hmy.planning.systemconfiguration.dto.strategiesResponseDto;
 import com.hmy.planning.systemconfiguration.models.Objectives;
 import com.hmy.planning.systemconfiguration.models.Strategies;
+import com.hmy.planning.systemconfiguration.repository.ObjectiveRepository;
 import com.hmy.planning.systemconfiguration.repository.StrategiesRepository;
 
 import lombok.Data;
@@ -24,6 +25,7 @@ public class StrategiesService {
 
     @Autowired
     private StrategiesRepository strategyRepo;
+    private final ObjectiveRepository objectiveRepo;
     private final ModelMapper modelmapper;
 
     public List<strategiesResponseDto> findAllStrategies(int page, int size) {
@@ -32,16 +34,24 @@ public class StrategiesService {
         List<strategiesResponseDto> objDto = new ArrayList<>();
         for (Strategies strg : strtz) {
             strategiesResponseDto responseDto = modelmapper.map(strg, strategiesResponseDto.class);
+            responseDto.setObjectiveCode(strg.getObjectives().getObjectiveCode());
             objDto.add(responseDto);
         }
         return objDto;
     }
 
     public ResponseEntity<strategiesResponseDto> addNewStrategies(strategiesRequestDto reqStrategies) {
+        Optional<Objectives> objective = objectiveRepo.findById(reqStrategies.getObjectiveCodes());
+
+        Objectives objectiveObj = new Objectives();
+        objectiveObj.setObjectiveCode(objective.get().getObjectiveCode());
+
         Strategies strategy = modelmapper.map(reqStrategies, Strategies.class);
+        strategy.setObjectives(objectiveObj);
         strategyRepo.save(strategy);
 
         strategiesResponseDto obj = modelmapper.map(strategy, strategiesResponseDto.class);
+        obj.setObjectiveCode(strategy.getObjectives().getObjectiveCode());
         return ResponseEntity.ok(obj);
     }
 
@@ -58,6 +68,7 @@ public class StrategiesService {
         } else {
             Strategies obj = strt.get();
             strategiesResponseDto responseDto = modelmapper.map(obj, strategiesResponseDto.class);
+            responseDto.setObjectiveCode(obj.getObjectives().getObjectiveCode());
             return responseDto;
         }
     }
