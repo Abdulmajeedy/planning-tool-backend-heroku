@@ -82,4 +82,16 @@ public class loginService {
         return response;
     }
 
+    public List<loginResponseDto> findAllLogin(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<login> obje = loginRepo.findAll(pageRequest).getContent();
+        List<loginResponseDto> objDto = new ArrayList<>();
+        for (login objective : obje) {
+            loginResponseDto responseDto = modelmapper.map(objective, loginResponseDto.class);
+            responseDto.setRoleCode(objective.getRole().getRoleCode());
+            objDto.add(responseDto);
+        }
+        return objDto;
+    }
+
 }
