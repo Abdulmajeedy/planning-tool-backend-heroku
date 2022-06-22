@@ -62,4 +62,23 @@ public class loginController implements loginApi {
 
         return ResponseEntity.ok(responseDto);
     }
+
+    @Override
+    public ResponseEntity<loginResponseDto> getLoginById(String loginCode) {
+        return ResponseEntity.ok(lognServices.getLoginById(loginCode));
+
+    }
+
+    @Override
+    public void deleteById(String loginCode) {
+        lognServices.deleteObjective(loginCode);
+
+    }
+
+    @Override
+    public ResponseEntity updateStatus(String loginCode) {
+        return ResponseEntity.ok().body(lognServices.updateStatus(loginCode));
+
+    }
+
 }
