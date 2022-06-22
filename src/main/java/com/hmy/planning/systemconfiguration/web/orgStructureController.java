@@ -35,24 +35,7 @@ public class orgStructureController implements orgStructureApi {
 
     @Override
     public ResponseEntity<List<orgStructureResponseDto>> getOrgStructure(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        List<orgStructure> role = orgStructureService.findAllOrgStructures(pageRequest);
-        List<orgStructureResponseDto> roleDto = new ArrayList<>();
-        for (orgStructure rol : role) {
-            orgStructureResponseDto responseDto = new orgStructureResponseDto();
-            responseDto.setOfficeID(rol.getOfficeID());
-            responseDto.setOfficeShortName(rol.getOfficeShortName());
-            responseDto.setOfficeName(rol.getOfficeName());
-            responseDto.setOfficeCode(rol.getOfficeCode());
-            responseDto.setReportTo(rol.getReportTo());
-            responseDto.setStatus(rol.getStatus());
-            responseDto.setCreatedDate(rol.getCreatedDate());
-            responseDto.setCreatedBy(rol.getCreatedBy());
-            responseDto.setModifiedDate(rol.getModifiedDate());
-            responseDto.setModifiedBy(rol.getModifiedBy());
-            roleDto.add(responseDto);
-        }
-        return ResponseEntity.ok(roleDto);
+        return ResponseEntity.ok(orgStructureService.findAllOrgStructures(page, size));
     }
 
     @Override
@@ -62,24 +45,7 @@ public class orgStructureController implements orgStructureApi {
 
     @Override
     public ResponseEntity<orgStructureResponseDto> getOrgStructureById(String officeID) {
-        Optional<orgStructure> orgStr = orgStructureService.getOrgStaructureById(officeID);
-        if (!orgStr.isPresent()) {
-            return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
-        } else {
-            orgStructure org = orgStr.get();
-            orgStructureResponseDto responseDto = new orgStructureResponseDto();
-            responseDto.setOfficeID(org.getOfficeID());
-            responseDto.setOfficeCode(org.getOfficeCode());
-            responseDto.setOfficeShortName(org.getOfficeShortName());
-            responseDto.setOfficeName(org.getOfficeName());
-            responseDto.setReportTo(org.getReportTo());
-            responseDto.setStatus(org.getStatus());
-            responseDto.setCreatedDate(org.getCreatedDate());
-            responseDto.setCreatedBy(org.getCreatedBy());
-            responseDto.setModifiedDate(org.getModifiedDate());
-            responseDto.setModifiedBy(org.getModifiedBy());
-            return ResponseEntity.ok(responseDto);
-        }
+        return ResponseEntity.ok(orgStructureService.getOrgStaructureById(officeID));
     }
 
     @Override
@@ -89,22 +55,7 @@ public class orgStructureController implements orgStructureApi {
 
     @Override
     public ResponseEntity updateOrgStructure(String officeID, orgStructure orgStructure) {
-        Optional<orgStructure> orgStr = orgStructureService.getOrgStaructureById(officeID);
-        orgStructureService.updateOrgStructure(officeID, orgStructure);
-        orgStructure org = orgStr.get();
-        orgStructureResponseDto responseDto = new orgStructureResponseDto();
-
-        responseDto.setOfficeID(org.getOfficeID());
-        responseDto.setOfficeCode(org.getOfficeCode());
-        responseDto.setOfficeShortName(org.getOfficeShortName());
-        responseDto.setOfficeName(org.getOfficeName());
-        responseDto.setReportTo(org.getReportTo());
-        responseDto.setStatus(org.getStatus());
-        responseDto.setCreatedDate(org.getCreatedDate());
-        responseDto.setCreatedBy(org.getCreatedBy());
-        responseDto.setModifiedDate(org.getModifiedDate());
-        responseDto.setModifiedBy(org.getModifiedBy());
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(orgStructureService.updateOrgStructure(officeID, orgStructure));
     }
 
     @Override

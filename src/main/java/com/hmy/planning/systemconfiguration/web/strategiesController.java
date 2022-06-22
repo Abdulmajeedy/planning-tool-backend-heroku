@@ -36,50 +36,18 @@ public class strategiesController implements strategiesApi {
 
     @Override
     public ResponseEntity<List<strategiesResponseDto>> getStartegy(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        List<Strategies> strategies = strategiesService.findAllStrategies(pageRequest);
-        List<strategiesResponseDto> straDto = new ArrayList<>();
-        for (Strategies str : strategies) {
-            strategiesResponseDto responseDto = new strategiesResponseDto();
-            responseDto.setStrategyCode(str.getStrategyCode());
-            responseDto.setStrategy(str.getStrategy());
-            responseDto.setObjectiveCode(str.getObjectives().getObjectiveCode());
-            responseDto.setStatus(str.getStatus());
-            responseDto.setStatus(str.getStatus());
-            responseDto.setCreatedDate(str.getCreatedDate());
-            responseDto.setCreatedBy(str.getCreatedBy());
-            responseDto.setModifiedDate(str.getModifiedDate());
-            responseDto.setModifiedBy(str.getModifiedBy());
-            straDto.add(responseDto);
-        }
-        return ResponseEntity.ok(straDto);
+        return ResponseEntity.ok(strategiesService.findAllStrategies(page, size));
+
     }
 
     @Override
     public ResponseEntity<strategiesResponseDto> registerNewStartegy(strategiesRequestDto reqStrategies) {
-        System.out.println(reqStrategies);
         return strategiesService.addNewStrategies(reqStrategies);
     }
 
     @Override
     public ResponseEntity<strategiesResponseDto> getStartegyById(String strategyCode) {
-        Optional<Strategies> strategies = strategiesService.getStrategiesById(strategyCode);
-        if (!strategies.isPresent()) {
-            return new ResponseEntity(ApiResponse.error("Invalid role Code", null), HttpStatus.NOT_FOUND);
-        } else {
-            Strategies str = strategies.get();
-            strategiesResponseDto responseDto = new strategiesResponseDto();
-
-            responseDto.setStrategyCode(str.getStrategyCode());
-            responseDto.setStrategy(str.getStrategy());
-            responseDto.setObjectiveCode(str.getObjectives().getObjectiveCode());
-            responseDto.setStatus(str.getStatus());
-            responseDto.setCreatedDate(str.getCreatedDate());
-            responseDto.setCreatedBy(str.getCreatedBy());
-            responseDto.setModifiedDate(str.getModifiedDate());
-            responseDto.setModifiedBy(str.getModifiedBy());
-            return ResponseEntity.ok(responseDto);
-        }
+        return ResponseEntity.ok(strategiesService.getStrategiesById(strategyCode));
     }
 
     @Override
@@ -90,19 +58,7 @@ public class strategiesController implements strategiesApi {
 
     @Override
     public ResponseEntity updateStartegy(String strategyCode, Strategies reqStrategies) {
-        Optional<Strategies> objective = strategiesService.getStrategiesById(strategyCode);
-        strategiesService.updateStrategies(strategyCode, reqStrategies);
-        Strategies obje = objective.get();
-        strategiesResponseDto responseDto = new strategiesResponseDto();
-        responseDto.setStrategyCode(obje.getStrategyCode());
-        responseDto.setStrategy(obje.getStrategy());
-        responseDto.setObjectiveCode(obje.getObjectives().getObjectiveCode());
-        responseDto.setStatus(obje.getStatus());
-        responseDto.setCreatedDate(obje.getCreatedDate());
-        responseDto.setCreatedBy(obje.getCreatedBy());
-        responseDto.setModifiedDate(obje.getModifiedDate());
-        responseDto.setModifiedBy(obje.getModifiedBy());
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(strategiesService.updateStrategies(strategyCode, reqStrategies));
     }
 
     @Override
