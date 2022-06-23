@@ -61,6 +61,11 @@ public class objectiveService {
         objectiveRepo.deleteById(objectiveCode);
     }
 
+    public void deleteAllObjectives() {
+
+        objectiveRepo.deleteAll();
+    }
+
     public objectiveResponseDto getObjectiveById(String objectiveCode) {
         Optional<Objectives> office = objectiveRepo.findById(objectiveCode);
         if (!office.isPresent()) {
@@ -74,7 +79,8 @@ public class objectiveService {
         }
     }
 
-    public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode, objectiveRequestDto reqObjective) {
+    public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode,
+            objectiveRequestDto reqObjective) {
         Optional<Objectives> objective = objectiveRepo.findById(objectiveCode);
         if (!objective.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,

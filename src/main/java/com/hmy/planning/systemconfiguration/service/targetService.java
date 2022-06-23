@@ -49,6 +49,11 @@ public class targetService {
         targetRepo.deleteById(targetCode);
     }
 
+    public void deleteAllStrategies() {
+
+        targetRepo.deleteAll();
+    }
+
     public ResponseEntity<targetResponseDto> addNewTarget(targetRequestDto reqTarget) {
         Optional<Strategies> str = strategiesRepo.findById(reqTarget.getStrategyCode());
 
