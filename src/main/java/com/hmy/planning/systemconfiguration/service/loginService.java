@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.validation.constraints.Email;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -93,6 +95,19 @@ public class loginService {
             objDto.add(responseDto);
         }
         return objDto;
+    }
+
+    public loginResponseDto checkEmail(String email) {
+        Optional<login> login = loginRepo.findByEmail(email);
+        if (!login.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "User with" + email + "is not Found");
+        } else {
+            login obj = login.get();
+            loginResponseDto responseDto = modelmapper.map(obj, loginResponseDto.class);
+            responseDto.setLoginCode(obj.getLoginCode());
+            return responseDto;
+        }
     }
 
 }
