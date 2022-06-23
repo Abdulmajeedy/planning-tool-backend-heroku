@@ -52,8 +52,8 @@ public class objectiveController implements objectiveApi {
     }
 
     @Override
-    public ResponseEntity updateObjective(String objectiveCode, Objectives objectives) {
-        return ResponseEntity.ok(objectiveService.updateObjective(objectiveCode, objectives));
+    public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode, objectiveRequestDto objectives) {
+        return objectiveService.updateObjective(objectiveCode, objectives);
     }
 
     @Override

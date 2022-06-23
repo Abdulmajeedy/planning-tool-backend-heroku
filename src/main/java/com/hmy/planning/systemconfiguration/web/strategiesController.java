@@ -57,8 +57,9 @@ public class strategiesController implements strategiesApi {
     }
 
     @Override
-    public ResponseEntity updateStartegy(String strategyCode, Strategies reqStrategies) {
-        return ResponseEntity.ok(strategiesService.updateStrategies(strategyCode, reqStrategies));
+    public ResponseEntity<strategiesResponseDto> updateStartegy(String strategyCode,
+            strategiesRequestDto reqStrategies) {
+        return strategiesService.updateStrategies(strategyCode, reqStrategies);
     }
 
     @Override

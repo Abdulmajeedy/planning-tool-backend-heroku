@@ -42,6 +42,6 @@ public interface orgStructureApi {
 
         @RequestMapping(value = "/{officeID}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
         public ResponseEntity updateOrgStructure(@PathVariable("officeID") String officeID,
-                        @RequestBody orgStructure orgStructure);
+                        @RequestBody orgStructureRequestDto orgStructure);
 
 }

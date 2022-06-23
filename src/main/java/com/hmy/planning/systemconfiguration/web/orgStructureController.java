@@ -54,8 +54,9 @@ public class orgStructureController implements orgStructureApi {
     }
 
     @Override
-    public ResponseEntity updateOrgStructure(String officeID, orgStructure orgStructure) {
-        return ResponseEntity.ok(orgStructureService.updateOrgStructure(officeID, orgStructure));
+    public ResponseEntity<orgStructureResponseDto> updateOrgStructure(String officeID,
+            orgStructureRequestDto orgStructure) {
+        return orgStructureService.updateOrgStructure(officeID, orgStructure);
     }
 
     @Override
