@@ -73,19 +73,27 @@ public class StrategiesService {
         }
     }
 
-    public ResponseEntity<strategiesResponseDto> updateStrategies(String strategyCode, Strategies reqStrategies) {
+    public ResponseEntity<strategiesResponseDto> updateStrategies(String strategyCode,
+            strategiesRequestDto reqStrategies) {
 
-        Optional<Strategies> stra = strategyRepo.findById(strategyCode);
-        if (!stra.isPresent()) {
+        Optional<Objectives> objective = objectiveRepo.findById(reqStrategies.getObjectiveCodes());
+        if (!objective.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "project  with this code" + strategyCode + "is not Found");
         }
-        Strategies obctc = modelmapper.map(reqStrategies, Strategies.class);
-        obctc.setStrategyCode(strategyCode);
-        strategyRepo.save(obctc);
 
-        strategiesResponseDto roltDto = modelmapper.map(obctc, strategiesResponseDto.class);
-        return ResponseEntity.ok(roltDto);
+        Objectives objectiveObj = new Objectives();
+        objectiveObj.setObjectiveCode(objective.get().getObjectiveCode());
+
+        Strategies strategy = modelmapper.map(reqStrategies, Strategies.class);
+        strategy.setStrategyCode(strategyCode);
+        strategy.setObjectives(objectiveObj);
+        strategyRepo.save(strategy);
+
+        strategiesResponseDto obj = modelmapper.map(strategy, strategiesResponseDto.class);
+        obj.setObjectiveCode(strategy.getObjectives().getObjectiveCode());
+        return ResponseEntity.ok(obj);
+
     }
 
     public Optional<Strategies> getStrategiesCode(String strategyCode) {

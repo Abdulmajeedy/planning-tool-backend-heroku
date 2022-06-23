@@ -66,7 +66,7 @@ public class orgStructureService {
 
     }
 
-    public ResponseEntity<orgStructureResponseDto> updateOrgStructure(String officeID, orgStructure reqOrg) {
+    public ResponseEntity<orgStructureResponseDto> updateOrgStructure(String officeID, orgStructureRequestDto reqOrg) {
         Optional<orgStructure> office = orgStructureRepo.findById(officeID);
         if (!office.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,

@@ -74,7 +74,7 @@ public class objectiveService {
         }
     }
 
-    public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode, Objectives reqObjective) {
+    public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode, objectiveRequestDto reqObjective) {
         Optional<Objectives> objective = objectiveRepo.findById(objectiveCode);
         if (!objective.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
