@@ -52,6 +52,11 @@ public class objectiveController implements objectiveApi {
     }
 
     @Override
+    public void deleteAll() {
+        objectiveService.deleteAllObjectives();
+    }
+
+    @Override
     public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode, objectiveRequestDto objectives) {
         return objectiveService.updateObjective(objectiveCode, objectives);
     }

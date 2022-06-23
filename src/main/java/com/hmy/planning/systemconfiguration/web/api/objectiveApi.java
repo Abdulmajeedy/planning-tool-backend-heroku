@@ -37,6 +37,10 @@ public interface objectiveApi {
         @ResponseStatus(code = HttpStatus.OK, reason = "Objective   Deleted")
         public void deleteById(@PathVariable("objectiveCode") String objectiveCode);
 
+        @DeleteMapping(path = "delete/")
+        @ResponseStatus(code = HttpStatus.OK, reason = "Objective   Deleted")
+        public void deleteAll();
+
         @RequestMapping(value = "/{objectiveCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
         public ResponseEntity updateObjective(@PathVariable("objectiveCode") String objectiveCode,
                         @RequestBody objectiveRequestDto objectives);
