@@ -89,4 +89,9 @@ public class loginController implements loginApi {
         return ResponseEntity.ok(lognServices.findAllLogin(page, size));
     }
 
+    @Override
+    public ResponseEntity checkEmail(String loginCode) {
+        return ResponseEntity.ok().body(lognServices.checkEmail(loginCode));
+    }
+
 }

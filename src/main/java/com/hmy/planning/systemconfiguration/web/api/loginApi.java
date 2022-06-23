@@ -34,6 +34,9 @@ public interface loginApi {
     @RequestMapping(value = "updateStatus/{loginCode}", method = RequestMethod.GET)
     public ResponseEntity updateStatus(@PathVariable("loginCode") String loginCode);
 
+    @RequestMapping(value = "checkEmail/{email}", method = RequestMethod.GET)
+    public ResponseEntity checkEmail(@PathVariable("email") String email);
+
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<loginResponseDto>> getAlllogin(
             @RequestParam(defaultValue = "0", required = false) int page,
