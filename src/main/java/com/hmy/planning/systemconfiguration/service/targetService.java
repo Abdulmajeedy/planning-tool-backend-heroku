@@ -18,9 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Service
+@Slf4j
 public class targetService {
     @Autowired
     private final TargetRepository targetRepo;
@@ -56,9 +58,9 @@ public class targetService {
 
     public ResponseEntity<targetResponseDto> addNewTarget(targetRequestDto reqTarget) {
         Optional<Strategies> str = strategiesRepo.findById(reqTarget.getStrategyCode());
-
+        log.info(reqTarget.getStrategyCode());
         Strategies strategyObj = new Strategies();
-        strategyObj.setStrategy(str.get().getStrategyCode());
+        strategyObj.setStrategy(reqTarget.getStrategyCode());
 
         Target target = modelmapper.map(reqTarget, Target.class);
         target.setStrategies(strategyObj);
