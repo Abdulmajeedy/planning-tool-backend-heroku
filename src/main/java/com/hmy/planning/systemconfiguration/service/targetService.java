@@ -59,6 +59,7 @@ public class targetService {
     public ResponseEntity<targetResponseDto> addNewTarget(targetRequestDto reqTarget) {
         Optional<Strategies> str = strategiesRepo.findById(reqTarget.getStrategyCode());
         log.info(reqTarget.getStrategyCode());
+
         Strategies strategyObj = new Strategies();
         strategyObj.setStrategy(reqTarget.getStrategyCode());
 
