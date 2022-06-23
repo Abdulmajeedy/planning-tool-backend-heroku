@@ -40,7 +40,7 @@ public interface strategiesApi {
 
         @RequestMapping(value = "/{strategyCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
         public ResponseEntity updateStartegy(@PathVariable("strategyCode") String strategyCode,
-                        @RequestBody Strategies reqStrategies);
+                        @RequestBody strategiesRequestDto reqStrategies);
 
         @RequestMapping(value = "updateStatus/{strategyCode}", method = RequestMethod.GET)
         public ResponseEntity updateStatus(@PathVariable("strategyCode") String strategyCode);

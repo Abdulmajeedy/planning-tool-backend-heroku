@@ -39,7 +39,7 @@ public interface objectiveApi {
 
         @RequestMapping(value = "/{objectiveCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
         public ResponseEntity updateObjective(@PathVariable("objectiveCode") String objectiveCode,
-                        @RequestBody Objectives objectives);
+                        @RequestBody objectiveRequestDto objectives);
 
         @RequestMapping(value = "updateStatus/{objectiveCode}", method = RequestMethod.GET)
         public ResponseEntity updateStatus(@PathVariable("objectiveCode") String objectiveCode);
