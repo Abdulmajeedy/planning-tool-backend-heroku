@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Service
-@Slf4j
+// @Slf4j
 public class targetService {
     @Autowired
     private final TargetRepository targetRepo;
@@ -58,10 +58,10 @@ public class targetService {
 
     public ResponseEntity<targetResponseDto> addNewTarget(targetRequestDto reqTarget) {
         Optional<Strategies> str = strategiesRepo.findById(reqTarget.getStrategyCode());
-        log.info(reqTarget.getStrategyCode());
+        // log.info(reqTarget.getStrategyCode());
 
         Strategies strategyObj = new Strategies();
-        strategyObj.setStrategy(reqTarget.getStrategyCode());
+        strategyObj.setStrategyCode(reqTarget.getStrategyCode());
 
         Target target = modelmapper.map(reqTarget, Target.class);
         target.setStrategies(strategyObj);
