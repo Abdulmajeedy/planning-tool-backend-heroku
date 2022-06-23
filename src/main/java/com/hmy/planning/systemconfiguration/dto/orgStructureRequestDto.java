@@ -5,7 +5,7 @@ import com.hmy.planning.systemconfiguration.models.Auditable;
 import lombok.Data;
 
 @Data
-public class orgStructureRequestDto extends Auditable<String> {
+public class orgStructureRequestDto {
 
     private String officeShortName;
     private String officeName;
