@@ -60,6 +60,11 @@ public class StrategiesService {
         strategyRepo.deleteById(strategyCode);
     }
 
+    public void deleteAllStrategies() {
+
+        strategyRepo.deleteAll();
+    }
+
     public strategiesResponseDto getStrategiesById(String strategyCode) {
         Optional<Strategies> strt = strategyRepo.findById(strategyCode);
         if (!strt.isPresent()) {
