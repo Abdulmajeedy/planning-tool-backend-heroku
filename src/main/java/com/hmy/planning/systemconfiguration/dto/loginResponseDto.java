@@ -12,6 +12,7 @@ public class loginResponseDto {
     private String middlename;
     private String lastname;
     private String email;
+    private String officeID;
     private String roleCode;
     private String roleName;
     private String officeName;
