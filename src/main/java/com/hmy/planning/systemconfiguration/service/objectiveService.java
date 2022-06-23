@@ -81,18 +81,25 @@ public class objectiveService {
 
     public ResponseEntity<objectiveResponseDto> updateObjective(String objectiveCode,
             objectiveRequestDto reqObjective) {
+
         Optional<Objectives> objective = objectiveRepo.findById(objectiveCode);
         if (!objective.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "project  with this code" + objectiveCode + "is not Found");
         }
-        Objectives obctc = modelmapper.map(reqObjective, Objectives.class);
-        obctc.setObjectiveCode(objectiveCode);
-        objectiveRepo.save(obctc);
 
-        objectiveResponseDto roltDto = modelmapper.map(obctc, objectiveResponseDto.class);
-        return ResponseEntity.ok(roltDto);
+        Optional<budgetingPeriod> budgetPeriod = budgetPeriodRepo.findById(reqObjective.getBudgetYearCode());
 
+        budgetingPeriod budgetObj = new budgetingPeriod();
+        budgetObj.setBudgetYearCode(budgetPeriod.get().getBudgetYearCode());
+
+        Objectives objtvs = modelmapper.map(reqObjective, Objectives.class);
+        objtvs.setBudgetingPeriod(budgetObj);
+        objtvs.setObjectiveCode(objectiveCode);
+        objectiveRepo.save(objtvs);
+
+        objectiveResponseDto obj = modelmapper.map(objtvs, objectiveResponseDto.class);
+        return ResponseEntity.ok(obj);
     }
 
     public Optional<Objectives> getObjectiveCode(String ObjectiveCode) {
