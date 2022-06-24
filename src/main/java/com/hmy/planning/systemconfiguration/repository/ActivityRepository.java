@@ -24,4 +24,7 @@ public interface ActivityRepository extends JpaRepository<Activity, String> {
     @Query(value = "select count(Act.*), Act.officeID ofc from  activity Act ,org_structure ofc where Act.officeID=ofc.officeID group by Act.officeID", nativeQuery = true)
     List<Map<String, Object>> GraphActivityByOffice();
 
+    @Query(value = "select * from activity_quater_period planAct,activity Act where planAct.activity_code=Act.activity_code AND Act.officeID =?1", nativeQuery = true)
+    List<Activity> findActivitiesByOffice(String officeID);
+
 }
