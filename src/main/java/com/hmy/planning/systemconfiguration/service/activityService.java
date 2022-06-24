@@ -68,6 +68,7 @@ public class activityService {
             responseDto.setOfficeID(Act.getOrgStructures().getOfficeID());
             responseDto.setBudgetYearCode(
                     Act.getActivityQuaterPeriod().iterator().next().getBudgetingPeriod().getBudgetYearCode());
+            responseDto.setTargetCode(Act.getTargets().getTargetCode());
             actDto.add(responseDto);
         }
         return actDto;
