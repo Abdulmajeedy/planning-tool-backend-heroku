@@ -51,8 +51,8 @@ public interface activityApi {
         @RequestMapping(value = "getActivities/", method = RequestMethod.GET)
         public ResponseEntity getActivities();
 
-        @RequestMapping(value = "getActivitiesByOffice/{activityCode}", method = RequestMethod.GET)
-        public ResponseEntity getActivitiesByOffice(@PathVariable("activityCode") String activityCode);
+        @RequestMapping(value = "getActivitiesByOffice/{officeID}", method = RequestMethod.GET)
+        public ResponseEntity getActivitiesByOffice(@PathVariable("officeID") String officeID);
 
         @RequestMapping(value = "GraphActivityByOffice/", method = RequestMethod.GET)
         public ResponseEntity GraphActivityByOffices();
