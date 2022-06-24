@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.hmy.planning.systemconfiguration.dto.activityRequestDto;
 import com.hmy.planning.systemconfiguration.dto.activityResponseDto;
+import com.hmy.planning.systemconfiguration.dto.activityzResponseDto;
 import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.models.ActivityQuaterPeriod;
 import com.hmy.planning.systemconfiguration.models.QuaterPeriod;
@@ -56,6 +57,16 @@ public class activityService {
 
     public List<Activity> findAllActivities(PageRequest pageRequest) {
         return activityRepo.findAll(pageRequest).getContent();
+    }
+
+    public List<activityzResponseDto> findActivitiesByOffice(String officeID) {
+        List<Activity> activities = activityRepo.findActivitiesByOffice(officeID);
+        List<activityzResponseDto> actDto = new ArrayList<>();
+        for (Activity Act : activities) {
+            activityzResponseDto responseDto = modelMapper.map(Act, activityzResponseDto.class);
+            actDto.add(responseDto);
+        }
+        return actDto;
     }
 
     public ResponseEntity<activityResponseDto> addNewActivity(activityRequestDto reqActivity) {

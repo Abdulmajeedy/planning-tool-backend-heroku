@@ -59,6 +59,13 @@ public class activityController implements activityApi {
         return activityServices.addNewActivity(reqActivity);
     }
 
+    // @Override
+    // public ResponseEntity<List<activityzResponseDto>>
+    // getActivitiesByOffice(String OfficeID) {
+
+    // return ResponseEntity.ok(activityServices.findActivitiesByOffice(OfficeID));
+    // }
+
     @Override
     public ResponseEntity<activityResponseDto> getActivityById(String activityCode) {
         Optional<Activity> orgStr = activityServices.getActivityById(activityCode);
@@ -155,6 +162,12 @@ public class activityController implements activityApi {
     // List<graphByActivityResponseDto> actDto = new ArrayList<>();
     // for (Activity act : activity) {
     // graphByActivityResponseDto responseDto = new graphByActivityResponseDto();
+
+    @Override
+    public ResponseEntity<List<activityzResponseDto>> getActivitiesByOffice(String officeID) {
+        return ResponseEntity.ok(activityServices.findActivitiesByOffice(officeID));
+
+    }
 
     // responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
 
