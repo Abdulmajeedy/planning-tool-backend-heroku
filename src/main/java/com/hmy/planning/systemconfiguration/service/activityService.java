@@ -69,6 +69,8 @@ public class activityService {
             responseDto.setBudgetYearCode(
                     Act.getActivityQuaterPeriod().iterator().next().getBudgetingPeriod().getBudgetYearCode());
             responseDto.setTargetCode(Act.getTargets().getTargetCode());
+            responseDto.setQuaterPeriodCode(
+                    Act.getActivityQuaterPeriod().iterator().next().getBudgetingPeriod().getBudgetYearCode());
             actDto.add(responseDto);
         }
         return actDto;
