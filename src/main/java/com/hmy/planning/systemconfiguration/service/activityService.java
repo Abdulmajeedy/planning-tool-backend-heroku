@@ -64,6 +64,10 @@ public class activityService {
         List<activityzResponseDto> actDto = new ArrayList<>();
         for (Activity Act : activities) {
             activityzResponseDto responseDto = modelMapper.map(Act, activityzResponseDto.class);
+            responseDto.setApprovedStatus(Act.getApprovalStatus());
+            responseDto.setOfficeID(Act.getOrgStructures().getOfficeID());
+            responseDto.setBudgetYearCode(
+                    Act.getActivityQuaterPeriod().iterator().next().getBudgetingPeriod().getBudgetYearCode());
             actDto.add(responseDto);
         }
         return actDto;
