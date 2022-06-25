@@ -2,10 +2,12 @@ package com.hmy.planning.systemconfiguration.dto;
 
 import org.springframework.http.HttpStatus;
 
+import com.hmy.planning.systemconfiguration.models.Auditable;
+
 import lombok.Data;
 
 @Data
-public class loginResponseDto {
+public class loginResponseDto extends Auditable<String> {
 
     private String loginCode;
     private String firstname;
