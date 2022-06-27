@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Data
-@Slf4j
+// @Slf4j
 public class impPeriodService {
 
     @Autowired
@@ -43,7 +43,7 @@ public class impPeriodService {
     }
 
     public ResponseEntity<impPeriodResponseDto> addNewImpPeriod(impPeriodRequestDto reqImp) {
-        log.info(reqImp.toString());
+        // log.info(reqImp.toString());
         Optional<QuaterPeriod> qPeriod = quaterPd.getQuaterPeriodCode(reqImp.getQuaterPeriodCode());
         Optional<budgetingPeriod> budp = budgetPeriodServices.getBudgetYearCode(reqImp.getBudgetYearCode());
 
