@@ -12,7 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.hmy.planning.systemconfiguration.dto.budgetRequestDto;
 import com.hmy.planning.systemconfiguration.dto.budgetResponseDto;
+import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.models.Budget;
+import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
 import com.hmy.planning.systemconfiguration.repository.BudgetRepository;
 
 import lombok.Data;
@@ -23,6 +25,8 @@ public class budgetService {
 
     @Autowired
     private BudgetRepository budgetRepo;
+    private ActivityRepository activityRepo;
+
     private final ModelMapper modelmapper;
 
     public List<budgetResponseDto> findAllBudget(int page, int size) {
@@ -31,13 +35,20 @@ public class budgetService {
         List<budgetResponseDto> roleDto = new ArrayList<>();
         for (Budget bu : budgets) {
             budgetResponseDto responseDto = modelmapper.map(bu, budgetResponseDto.class);
+            responseDto.setActivityCode(bu.getActivities().getActivityCode());
             roleDto.add(responseDto);
         }
         return roleDto;
     }
 
     public ResponseEntity<budgetResponseDto> addNewBudget(budgetRequestDto reqBudget) {
+        Optional<Activity> activity = activityRepo.findById(reqBudget.getActivityCode());
+
+        Activity activityObj = new Activity();
+        activityObj.setActivityCode(activity.get().getActivityCode());
+
         Budget budget = modelmapper.map(reqBudget, Budget.class);
+        budget.setActivities(activityObj);
         budgetRepo.save(budget);
 
         budgetResponseDto bu = modelmapper.map(budget, budgetResponseDto.class);
@@ -64,18 +75,22 @@ public class budgetService {
 
     public ResponseEntity<budgetResponseDto> updateBuget(String budgetCode, budgetRequestDto reqBudgets) {
 
-        Optional<Budget> budget = budgetRepo.findById(budgetCode);
-        if (!budget.isPresent()) {
+        Optional<Activity> activity = activityRepo.findById(reqBudgets.getActivityCode());
+        if (!activity.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "project  with this code" + budgetCode + "is not Found");
         }
-        Budget rol = modelmapper.map(reqBudgets, Budget.class);
-        rol.setBudgetCode(budgetCode);
-        budgetRepo.save(rol);
 
-        budgetResponseDto roltDto = modelmapper.map(rol, budgetResponseDto.class);
-        return ResponseEntity.ok(roltDto);
+        Activity activityObj = new Activity();
+        activityObj.setActivityCode(activity.get().getActivityCode());
 
+        Budget budget = modelmapper.map(reqBudgets, Budget.class);
+        budget.setBudgetCode(budgetCode);
+        budget.setActivities(activityObj);
+        budgetRepo.save(budget);
+
+        budgetResponseDto bu = modelmapper.map(budget, budgetResponseDto.class);
+        return ResponseEntity.ok(bu);
     }
 
     public Map<String, Boolean> updateStatus(String budgetCode) {
