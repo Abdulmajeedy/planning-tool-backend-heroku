@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubActivityRepository extends JpaRepository<SubActivity, String> {
 
-    public List<SubActivity> findByActivityCode(String activityCode);
+    // public List<SubActivity> findByActivityCode(String activityCode);
 
 }
