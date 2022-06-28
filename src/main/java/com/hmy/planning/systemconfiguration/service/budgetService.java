@@ -52,6 +52,7 @@ public class budgetService {
         budgetRepo.save(budget);
 
         budgetResponseDto bu = modelmapper.map(budget, budgetResponseDto.class);
+        bu.setActivityCode(budget.getActivities().getActivityCode())
         return ResponseEntity.ok(bu);
 
     }
