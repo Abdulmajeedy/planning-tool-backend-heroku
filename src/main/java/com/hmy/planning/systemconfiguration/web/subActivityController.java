@@ -42,7 +42,7 @@ public class subActivityController implements subActivityApi {
             subactivityResponseDto responseDto = new subactivityResponseDto();
             responseDto.setSubactivityCode(bg.getSubactivityCode());
             responseDto.setSubactivityName(bg.getSubactivityName());
-            // responseDto.setActivity(bg.getActivity().getActivityCode());
+            responseDto.setActivity(bg.getActivity().getActivityCode());
             responseDto.setGfsCode(bg.getGfsCode());
             responseDto.setEstimates(bg.getEstimates());
             responseDto.setNo_of_unit(bg.getNo_of_unit());
@@ -104,7 +104,7 @@ public class subActivityController implements subActivityApi {
 
         responseDto.setSubactivityCode(budgetPer.getSubactivityCode());
         responseDto.setSubactivityName(budgetPer.getSubactivityName());
-        // responseDto.setActivity(budgetPer.getActivity().getActivityCode());
+        responseDto.setActivity(budgetPer.getActivity().getActivityCode());
         responseDto.setGfsCode(budgetPer.getGfsCode());
         responseDto.setEstimates(budgetPer.getEstimates());
         responseDto.setNo_of_unit(budgetPer.getNo_of_unit());
