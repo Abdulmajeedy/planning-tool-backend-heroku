@@ -45,6 +45,7 @@ public class activityController implements activityApi {
             responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
             responseDto.setApprovalStatus(act.getApprovalStatus());
             responseDto.setStatus(act.getStatus());
+            responseDto.setEditStatus(act.getEditStatus());
             responseDto.setCreatedDate(act.getCreatedDate());
             responseDto.setCreatedBy(act.getCreatedBy());
             responseDto.setModifiedDate(act.getModifiedDate());
@@ -81,6 +82,7 @@ public class activityController implements activityApi {
         responseDto.setOfficeID(bg.getOrgStructures().getOfficeID());
         responseDto.setApprovalStatus(bg.getApprovalStatus());
         responseDto.setStatus(bg.getStatus());
+        responseDto.setEditStatus(bg.getEditStatus());
         responseDto.setCreatedDate(bg.getCreatedDate());
         responseDto.setCreatedBy(bg.getCreatedBy());
         responseDto.setModifiedDate(bg.getModifiedDate());
@@ -100,6 +102,7 @@ public class activityController implements activityApi {
         responseDto.setStatus(acty.getStatus());
         responseDto.setOfficeID(acty.getOrgStructures().getOfficeID());
         responseDto.setStatus(acty.getStatus());
+        responseDto.setEditStatus(acty.getEditStatus());
         responseDto.setApprovalStatus(acty.getApprovalStatus());
         responseDto.setCreatedDate(acty.getCreatedDate());
         responseDto.setCreatedBy(acty.getCreatedBy());
@@ -134,6 +137,7 @@ public class activityController implements activityApi {
             activityzResponseDto responseDto = new activityzResponseDto();
             responseDto.setActivityCode(act.getActivityCode());
             responseDto.setActivityName(act.getActivityName());
+            responseDto.setEditStatus(act.getEditStatus());
             responseDto.setTargetCode(act.getTargets().getTargetCode());
             responseDto.setOfficeID(act.getOrgStructures().getOfficeID());
             responseDto
