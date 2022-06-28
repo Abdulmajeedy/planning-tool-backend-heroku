@@ -18,14 +18,16 @@ import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
 import com.hmy.planning.systemconfiguration.repository.BudgetRepository;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Data
+@Slf4j
 public class budgetService {
 
     @Autowired
-    private BudgetRepository budgetRepo;
-    private ActivityRepository activityRepo;
+    private final BudgetRepository budgetRepo;
+    private final ActivityRepository activityRepo;
 
     private final ModelMapper modelmapper;
 
@@ -42,6 +44,7 @@ public class budgetService {
     }
 
     public ResponseEntity<budgetResponseDto> addNewBudget(budgetRequestDto reqBudget) {
+        log.info(reqBudget.toString());
         Optional<Activity> activity = activityRepo.findById(reqBudget.getActivityCode());
 
         Activity activityObj = new Activity();
