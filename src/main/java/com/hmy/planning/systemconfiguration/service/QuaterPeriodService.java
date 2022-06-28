@@ -31,6 +31,7 @@ public class QuaterPeriodService {
         List<quaterPeriodResponseDto> QtaerPeriodDto = new ArrayList<>();
         for (QuaterPeriod qp : quaterPeriods) {
             quaterPeriodResponseDto responseDto = modelmapper.map(qp, quaterPeriodResponseDto.class);
+            responseDto.setQuaterPeriodCode(qp.getQuaterPeriodCode());
             QtaerPeriodDto.add(responseDto);
         }
         return QtaerPeriodDto;
