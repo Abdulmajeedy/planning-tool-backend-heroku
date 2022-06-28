@@ -28,6 +28,7 @@ public class Activity extends Auditable<String> implements Serializable {
     private String activityName;
     private int approvalStatus;
     private int status;
+    private int editStatus;
 
     @ManyToOne
     @JoinColumn(name = "targetCode")
