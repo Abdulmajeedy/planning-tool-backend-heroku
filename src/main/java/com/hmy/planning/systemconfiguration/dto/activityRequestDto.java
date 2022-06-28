@@ -12,5 +12,6 @@ public class activityRequestDto {
     private String officeID;
     private int approvalStatus;
     private int Status;
+    private int editStatus;
 
 }
