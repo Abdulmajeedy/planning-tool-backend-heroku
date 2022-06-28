@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.type.TextType;
 
 import lombok.Data;
 
@@ -25,7 +26,7 @@ public class Strategies extends Auditable<String> implements Serializable {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String strategyCode;
-    private String strategy;
+    private TextType strategy;
     private int status;
 
     // @ManyToOne

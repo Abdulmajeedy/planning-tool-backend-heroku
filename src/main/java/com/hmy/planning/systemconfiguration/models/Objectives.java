@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.type.TextType;
 
 import lombok.Data;
 
@@ -25,7 +26,7 @@ public class Objectives extends Auditable<String> implements Serializable {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String objectiveCode;
-    private String objective;
+    private TextType objective;
     private int status;
 
     @OneToMany(mappedBy = "objectives", fetch = FetchType.LAZY)
