@@ -65,6 +65,7 @@ public class activityService {
         for (Activity Act : activities) {
             activityzResponseDto responseDto = modelMapper.map(Act, activityzResponseDto.class);
             responseDto.setApprovedStatus(Act.getApprovalStatus());
+            responseDto.setEditStatus(Act.getEditStatus());
             responseDto.setOfficeID(Act.getOrgStructures().getOfficeID());
             responseDto.setBudgetYearCode(
                     Act.getActivityQuaterPeriod().iterator().next().getBudgetingPeriod().getBudgetYearCode());
@@ -137,6 +138,8 @@ public class activityService {
         actDto.setBudgetYearCode(quaterperiods.getBudgetingPeriod().getBudgetYearCode());
         actDto.setTargetCode(act.getTargets().getTargetCode());
         actDto.setApprovalStatus(act.getApprovalStatus());
+        actDto.setEditStatus(act.getEditStatus());
+
         // actDto.setQuaterPeriodCode();
         actDto.setStatus(act.getStatus());
         actDto.setCreatedDate(act.getCreatedDate());

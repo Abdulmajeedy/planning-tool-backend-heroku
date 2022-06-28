@@ -15,6 +15,7 @@ public class activityResponseDto extends Auditable<String> {
     private String quaterPeriodCode;
     private String budgetYearCode;
     private String officeID;
+    private int editStatus;
     private int approvalStatus;
     private int Status;
 
