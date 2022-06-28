@@ -3,6 +3,7 @@ package com.hmy.planning.systemconfiguration.models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.type.TextType;
 
 import lombok.Data;
 
@@ -25,7 +25,9 @@ public class Roles extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String roleCode;
     private String role;
-    private TextType description;
+
+    @Column(length = 2048)
+    private String description;
     private int status;
 
     // @OneToMany(mappedBy = "roles", fetch = FetchType.LAZY)
