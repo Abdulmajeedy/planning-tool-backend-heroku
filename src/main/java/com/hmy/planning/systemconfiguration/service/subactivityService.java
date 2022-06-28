@@ -41,8 +41,9 @@ public class subactivityService {
         return subactivityRepo.findAll(pageRequest).getContent();
     }
 
-    public List<subactivityResponseDto> getSubActivityByActivityCode(Iterable<String> activityCode) {
-        List<SubActivity> subActivities = subactivityRepo.findAllById(activityCode);
+    public List<subactivityResponseDto> getSubActivityByActivityCode(String activityCode) {
+        List<SubActivity> subActivities = subactivityRepo.findByActivityCode(activityCode);
+        // List<SubActivity> subActivities = subactivityRepo.findAllById(activityCode);
         List<subactivityResponseDto> roleDto = new ArrayList<>();
         for (SubActivity sub : subActivities) {
             subactivityResponseDto responseDto = modelmapper.map(sub, subactivityResponseDto.class);
