@@ -8,6 +8,7 @@ import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.models.SubActivity;
 import com.hmy.planning.systemconfiguration.repository.SubActivityRepository;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class subactivityService {
 
     @Autowired
     private activityService activityService;
+    private ModelMapper modelmapper;
 
     @Autowired
     public subactivityService(SubActivityRepository subactivityRepo, StrategiesService strategiesService,
@@ -37,6 +39,17 @@ public class subactivityService {
 
     public List<SubActivity> findAllSubActivities(PageRequest pageRequest) {
         return subactivityRepo.findAll(pageRequest).getContent();
+    }
+
+    public List<subactivityResponseDto> getSubActivityByActivityCode(Iterable<String> activityCode) {
+        List<SubActivity> subActivities = subactivityRepo.findAllById(activityCode);
+        List<subactivityResponseDto> roleDto = new ArrayList<>();
+        for (SubActivity sub : subActivities) {
+            subactivityResponseDto responseDto = modelmapper.map(sub, subactivityResponseDto.class);
+            roleDto.add(responseDto);
+        }
+        return roleDto;
+
     }
 
     public ResponseEntity<subactivityResponseDto> addNewSubActivity(subactivityRequestDto reqSubActivity) {
