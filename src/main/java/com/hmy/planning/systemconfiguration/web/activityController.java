@@ -60,6 +60,11 @@ public class activityController implements activityApi {
         return activityServices.addNewActivity(reqActivity);
     }
 
+    @Override
+    public void deleteAll() {
+        activityServices.deleteAllActivity();
+    }
+
     // @Override
     // public ResponseEntity<List<activityzResponseDto>>
     // getActivitiesByOffice(String OfficeID) {

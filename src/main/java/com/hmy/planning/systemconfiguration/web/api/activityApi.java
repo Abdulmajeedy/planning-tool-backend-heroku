@@ -48,6 +48,10 @@ public interface activityApi {
         @RequestMapping(value = "count/", method = RequestMethod.GET)
         public ResponseEntity Count();
 
+        @DeleteMapping(path = "delete/")
+        @ResponseStatus(code = HttpStatus.OK, reason = "Objective   Deleted")
+        public void deleteAll();
+
         @RequestMapping(value = "getActivities/", method = RequestMethod.GET)
         public ResponseEntity getActivities();
 

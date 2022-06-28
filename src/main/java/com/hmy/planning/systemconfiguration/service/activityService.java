@@ -59,6 +59,11 @@ public class activityService {
         return activityRepo.findAll(pageRequest).getContent();
     }
 
+    public void deleteAllActivity() {
+
+        activityRepo.deleteAll();
+    }
+
     public List<activityzResponseDto> findActivitiesByOffice(String officeID) {
         List<Activity> activities = activityRepo.findActivitiesByOffice(officeID);
         List<activityzResponseDto> actDto = new ArrayList<>();
