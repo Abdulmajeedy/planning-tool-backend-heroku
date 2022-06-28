@@ -70,7 +70,7 @@ public class subactivityService {
         subactivityResponseDto actDto = new subactivityResponseDto();
         actDto.setSubactivityCode(act.getSubactivityCode());
         actDto.setSubactivityName(act.getSubactivityName());
-        actDto.setActivity(act.getActivity().getActivityCode());
+        actDto.setActivityCode(act.getActivity().getActivityCode());
         actDto.setGfsCode(act.getGfsCode());
         actDto.setEstimates(act.getEstimates());
         actDto.setNo_of_unit(act.getNo_of_unit());
