@@ -33,11 +33,9 @@ public interface subActivityApi {
         @RequestMapping(value = "/{subactivityCode}", method = RequestMethod.GET, produces = "application/json")
         public ResponseEntity<subactivityResponseDto> getSubActivityById(@PathVariable String subactivityCode);
 
-        // @RequestMapping(value = "getByactivityCode/{activityCode}", method =
-        // RequestMethod.GET, produces = "application/json")
-        // public ResponseEntity<List<subactivityResponseDto>>
-        // getSubActivityByActivityCode(
-        // @PathVariable("activityCode") String activityCode);
+        @RequestMapping(value = "getByactivityCode/{activityCode}", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<List<subactivityResponseDto>> getSubActivityByActivityCode(
+                        @PathVariable("activityCode") String activityCode);
 
         @DeleteMapping(path = "/{subactivityCode}")
         @ResponseStatus(code = HttpStatus.OK, reason = "subactivity Deleted")
