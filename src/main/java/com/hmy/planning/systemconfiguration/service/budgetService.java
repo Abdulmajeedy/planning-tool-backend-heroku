@@ -73,6 +73,7 @@ public class budgetService {
         } else {
             Budget bu = budget.get();
             budgetResponseDto responseDto = modelmapper.map(bu, budgetResponseDto.class);
+            responseDto.setActivityCode(bu.getActivities().getActivityCode());
             return responseDto;
         }
     }
