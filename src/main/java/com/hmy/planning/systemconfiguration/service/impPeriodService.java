@@ -37,6 +37,7 @@ public class impPeriodService {
         List<impPeriodResponseDto> roleDto = new ArrayList<>();
         for (impPeriod imp : impPeriod) {
             impPeriodResponseDto responseDto = modelmapper.map(imp, impPeriodResponseDto.class);
+            responseDto.setBudgetYearCode(imp.getBudgetingPeriod().getBudgetYearCode());
             roleDto.add(responseDto);
         }
         return roleDto;
