@@ -25,6 +25,7 @@ public class Budget extends Auditable<String> implements Serializable {
     private String budgetCode;
     private String year;
     private int status;
+    private int isCurrent;
 
     @ManyToOne
     @JoinColumn(name = "activityCode")

@@ -57,4 +57,9 @@ public class budgetController implements budgetApi {
         return ResponseEntity.ok().body(budgService.updateStatus(budgetCode));
     }
 
+    @Override
+    public ResponseEntity<budgetResponseDto> ApproveActivity(budgetRequestDto reqBudget) {
+        return budgService.ApproveActivity(reqBudget);
+    }
+
 }

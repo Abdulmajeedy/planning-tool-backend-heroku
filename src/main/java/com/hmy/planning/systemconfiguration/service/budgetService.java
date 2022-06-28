@@ -60,6 +60,27 @@ public class budgetService {
 
     }
 
+    public ResponseEntity<budgetResponseDto> ApproveActivity(budgetRequestDto reqBudget) {
+        // log.info(reqBudget.toString());
+        Optional<Activity> activity = activityRepo.findById(reqBudget.getActivityCode());
+
+        Activity activityObj = new Activity();
+        activityObj.setActivityCode(activity.get().getActivityCode());
+
+        Budget budget = modelmapper.map(reqBudget, Budget.class);
+        budget.setActivities(activityObj);
+        budget.setStatus(1);
+        budget.setIsCurrent(1);
+        budgetRepo.save(budget);
+
+        activityRepo.UpdateEditStatus(reqBudget.getActivityCode());
+
+        budgetResponseDto bu = modelmapper.map(budget, budgetResponseDto.class);
+        bu.setActivityCode(budget.getActivities().getActivityCode());
+        return ResponseEntity.ok(bu);
+
+    }
+
     public void deleteBudget(String budgetCode) {
 
         budgetRepo.deleteById(budgetCode);

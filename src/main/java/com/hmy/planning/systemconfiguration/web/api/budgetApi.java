@@ -20,27 +20,31 @@ import com.hmy.planning.systemconfiguration.dto.budgetResponseDto;
 @RequestMapping("/budget")
 public interface budgetApi {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<budgetResponseDto>> getBudget(
-            @RequestParam(defaultValue = "0", required = false) int page,
-            @RequestParam(defaultValue = "10", required = false) int size);
+        @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<List<budgetResponseDto>> getBudget(
+                        @RequestParam(defaultValue = "0", required = false) int page,
+                        @RequestParam(defaultValue = "10", required = false) int size);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<budgetResponseDto> registerNewBudget(
-            @RequestBody budgetRequestDto role);
+        @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+        public ResponseEntity<budgetResponseDto> registerNewBudget(
+                        @RequestBody budgetRequestDto budget);
 
-    @RequestMapping(value = "/{budgetCode}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<budgetResponseDto> getBudgetById(@PathVariable String budgetCode);
+        @RequestMapping(value = "/{budgetCode}", method = RequestMethod.GET, produces = "application/json")
+        public ResponseEntity<budgetResponseDto> getBudgetById(@PathVariable String budgetCode);
 
-    @DeleteMapping(path = "/{budgetCode}")
-    @ResponseStatus(code = HttpStatus.OK, reason = "Academic year Deleted")
-    public void deleteById(@PathVariable("budgetCode") String budgetCode);
+        @RequestMapping(value = "approveBudget/", method = RequestMethod.POST, produces = "application/json")
+        public ResponseEntity<budgetResponseDto> ApproveActivity(
+                        @RequestBody budgetRequestDto budget);
 
-    @RequestMapping(value = "/{budgetCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-    public ResponseEntity updateBudget(@PathVariable("budgetCode") String budgetCode,
-            @RequestBody budgetRequestDto reqRoles);
+        @DeleteMapping(path = "/{budgetCode}")
+        @ResponseStatus(code = HttpStatus.OK, reason = "Academic year Deleted")
+        public void deleteById(@PathVariable("budgetCode") String budgetCode);
 
-    @RequestMapping(value = "updateStatus/{budgetCode}", method = RequestMethod.GET)
-    public ResponseEntity updateStatus(@PathVariable("budgetCode") String budgetCode);
+        @RequestMapping(value = "/{budgetCode}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+        public ResponseEntity updateBudget(@PathVariable("budgetCode") String budgetCode,
+                        @RequestBody budgetRequestDto reqRoles);
+
+        @RequestMapping(value = "updateStatus/{budgetCode}", method = RequestMethod.GET)
+        public ResponseEntity updateStatus(@PathVariable("budgetCode") String budgetCode);
 
 }
