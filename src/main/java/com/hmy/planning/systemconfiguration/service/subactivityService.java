@@ -41,17 +41,21 @@ public class subactivityService {
         return subactivityRepo.findAll(pageRequest).getContent();
     }
 
-    public List<subactivityResponseDto> getSubActivityByActivityCode(String activityCode) {
-        List<SubActivity> subActivities = subactivityRepo.findByActivityCode(activityCode);
-        // List<SubActivity> subActivities = subactivityRepo.findAllById(activityCode);
-        List<subactivityResponseDto> roleDto = new ArrayList<>();
-        for (SubActivity sub : subActivities) {
-            subactivityResponseDto responseDto = modelmapper.map(sub, subactivityResponseDto.class);
-            roleDto.add(responseDto);
-        }
-        return roleDto;
+    // public List<subactivityResponseDto> getSubActivityByActivityCode(String
+    // activityCode) {
+    // List<SubActivity> subActivities =
+    // subactivityRepo.findByActivityCode(activityCode);
+    // // List<SubActivity> subActivities =
+    // subactivityRepo.findAllById(activityCode);
+    // List<subactivityResponseDto> roleDto = new ArrayList<>();
+    // for (SubActivity sub : subActivities) {
+    // subactivityResponseDto responseDto = modelmapper.map(sub,
+    // subactivityResponseDto.class);
+    // roleDto.add(responseDto);
+    // }
+    // return roleDto;
 
-    }
+    // }
 
     public ResponseEntity<subactivityResponseDto> addNewSubActivity(subactivityRequestDto reqSubActivity) {
         Optional<Activity> activitites = activityService.getActivityCode(reqSubActivity.getActivityCode());
