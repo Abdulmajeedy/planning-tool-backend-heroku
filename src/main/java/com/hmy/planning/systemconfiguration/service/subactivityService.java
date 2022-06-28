@@ -8,6 +8,8 @@ import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.models.SubActivity;
 import com.hmy.planning.systemconfiguration.repository.SubActivityRepository;
 
+import lombok.Data;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Data
 public class subactivityService {
 
     @Autowired
@@ -27,15 +30,7 @@ public class subactivityService {
 
     @Autowired
     private activityService activityService;
-    private ModelMapper modelmapper;
-
-    @Autowired
-    public subactivityService(SubActivityRepository subactivityRepo, StrategiesService strategiesService,
-            activityService activityService) {
-        this.subactivityRepo = subactivityRepo;
-        this.activityService = activityService;
-        this.strategiesService = strategiesService;
-    }
+    private final ModelMapper modelmapper;
 
     public List<SubActivity> findAllSubActivities(PageRequest pageRequest) {
         return subactivityRepo.findAll(pageRequest).getContent();
