@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.type.TextType;
 
 import lombok.Data;
 
@@ -21,7 +22,7 @@ public class projects extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String projectCode;
     private String projectName;
-    private String description;
+    private TextType description;
     private int status;
 
 }
