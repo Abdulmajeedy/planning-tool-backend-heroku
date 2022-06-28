@@ -12,7 +12,7 @@ public class subactivityResponseDto extends Auditable<String> {
     private int gfsCode;
     private int Unit_cost_per_unit;
     private int no_of_unit;
-    private String activity;
+    private String activityCode;
     private int estimates;
     private int approvalStatus;
     private int status;
