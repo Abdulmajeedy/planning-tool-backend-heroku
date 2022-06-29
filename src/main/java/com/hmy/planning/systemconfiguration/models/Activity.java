@@ -40,6 +40,9 @@ public class Activity extends Auditable<String> implements Serializable {
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<ActivityQuaterPeriod> activityQuaterPeriod;
 
+    @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
+    private List<RequestBudget> requestBudget;
+
     @ManyToOne
     @JoinColumn(name = "officeID")
     private orgStructure orgStructures;
