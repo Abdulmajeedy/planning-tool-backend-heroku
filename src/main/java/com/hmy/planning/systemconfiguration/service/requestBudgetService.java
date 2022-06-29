@@ -19,9 +19,11 @@ import com.hmy.planning.systemconfiguration.repository.BudgetPeriodRepository;
 import com.hmy.planning.systemconfiguration.repository.RequestBudgetRepository;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Data
+@Slf4j
 public class requestBudgetService {
 
     @Autowired
@@ -43,6 +45,7 @@ public class requestBudgetService {
     }
 
     public ResponseEntity<requestBudgetResponseDto> addNewRequestBudget(requestBudgetRequestDto reqRequestBudget) {
+        log.info(reqRequestBudget.toString());
         Optional<Activity> activity = activityRepo.findById(reqRequestBudget.getActivityCode());
 
         Activity activityObj = new Activity();
