@@ -14,8 +14,8 @@ import com.hmy.planning.systemconfiguration.dto.requestBudgetRequestDto;
 import com.hmy.planning.systemconfiguration.dto.requestBudgetResponseDto;
 import com.hmy.planning.systemconfiguration.models.Activity;
 import com.hmy.planning.systemconfiguration.models.RequestBudget;
+import com.hmy.planning.systemconfiguration.models.orgStructure;
 import com.hmy.planning.systemconfiguration.repository.ActivityRepository;
-import com.hmy.planning.systemconfiguration.repository.BudgetPeriodRepository;
 import com.hmy.planning.systemconfiguration.repository.RequestBudgetRepository;
 
 import lombok.Data;
@@ -27,67 +27,91 @@ import lombok.extern.slf4j.Slf4j;
 public class requestBudgetService {
 
     @Autowired
-    private RequestBudgetRepository requestBudgetRepo;
-    private ActivityRepository activityRepo;
-    private final BudgetPeriodRepository budgetPeriodRepo;
+    private RequestBudgetRepository reqBudgetRepo;
+    private final budgetPeriodService budgetPeriodServices;
+    private final activityService actService;
+    private final orgStructureService orgService;
     private final ModelMapper modelmapper;
-    private budgetPeriodService budgetPeriodService;
 
-    public List<requestBudgetResponseDto> findAllRequestBudget(int page, int size) {
+    public List<requestBudgetResponseDto> findAllrequestBudget(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        List<RequestBudget> obj = requestBudgetRepo.findAll(pageRequest).getContent();
-        List<requestBudgetResponseDto> objDto = new ArrayList<>();
-        for (RequestBudget objective : obj) {
-            requestBudgetResponseDto responseDto = modelmapper.map(objective, requestBudgetResponseDto.class);
-            objDto.add(responseDto);
+        List<RequestBudget> impPeriod = reqBudgetRepo.findAll(pageRequest).getContent();
+        List<requestBudgetResponseDto> roleDto = new ArrayList<>();
+        for (RequestBudget imp : impPeriod) {
+            requestBudgetResponseDto responseDto = modelmapper.map(imp, requestBudgetResponseDto.class);
+            responseDto.setActivityCode(imp.getActivity().getActivityCode());
+            roleDto.add(responseDto);
         }
-        return objDto;
+        return roleDto;
     }
 
-    public ResponseEntity<requestBudgetResponseDto> addNewRequestBudget(requestBudgetRequestDto reqRequestBudget) {
-        log.info(reqRequestBudget.toString());
-        Optional<Activity> activity = activityRepo.findById(reqRequestBudget.getActivityCode());
+    public ResponseEntity<requestBudgetResponseDto> addNewrequestBudget(requestBudgetRequestDto reqReqBudget) {
+        log.info(reqReqBudget.toString());
+        Optional<Activity> qPeriod = actService.getActivityCode(reqReqBudget.getActivityCode());
+        Optional<orgStructure> org = orgService.getOrgStructureID(reqReqBudget.getOfficeID());
 
-        Activity activityObj = new Activity();
-        activityObj.setActivityCode(activity.get().getActivityCode());
+        if (!qPeriod.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        RequestBudget objtvs = modelmapper.map(reqRequestBudget, RequestBudget.class);
-        objtvs.setActivity(activityObj);
-        requestBudgetRepo.save(objtvs);
+        if (!org.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        requestBudgetResponseDto obj = modelmapper.map(objtvs, requestBudgetResponseDto.class);
-        return ResponseEntity.ok(obj);
+        Activity actiObj = new Activity();
+        actiObj.setActivityCode(reqReqBudget.getActivityCode());
+
+        orgStructure orgObj = new orgStructure();
+        orgObj.setOfficeID(reqReqBudget.getOfficeID());
+
+        RequestBudget role = modelmapper.map(reqReqBudget, RequestBudget.class);
+        role.setActivity(actiObj);
+        role.setOrgStructure(orgObj);
+        reqBudgetRepo.save(role);
+
+        requestBudgetResponseDto rol = modelmapper.map(role, requestBudgetResponseDto.class);
+        rol.setActivityCode(role.getActivity().getActivityCode());
+        rol.setOfficeID(role.getOrgStructure().getOfficeID());
+        return ResponseEntity.ok(rol);
+
     }
 
-    public void deleteRequestBudget(String objectiveCode) {
+    public void deleterequestBudget(String impPeriodCode) {
 
-        requestBudgetRepo.deleteById(objectiveCode);
+        reqBudgetRepo.deleteById(impPeriodCode);
     }
 
-    public void deleteAllRequestBudget() {
-
-        requestBudgetRepo.deleteAll();
-    }
-
-    public requestBudgetResponseDto getRequestBudgetById(String requestBudgetCode) {
-        Optional<RequestBudget> office = requestBudgetRepo.findById(requestBudgetCode);
-        if (!office.isPresent()) {
+    public requestBudgetResponseDto getrequestBudgetById(String impPeriodCode) {
+        Optional<RequestBudget> roles = reqBudgetRepo.findById(impPeriodCode);
+        if (!roles.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "project  with this code" + requestBudgetCode + "is not Found");
+                    "project  with this code" + impPeriodCode + "is not Found");
         } else {
-            RequestBudget obj = office.get();
-            requestBudgetResponseDto responseDto = modelmapper.map(obj, requestBudgetResponseDto.class);
-            responseDto.setActivityCode(obj.getActivity().getActivityCode());
+            RequestBudget rol = roles.get();
+            requestBudgetResponseDto responseDto = modelmapper.map(rol, requestBudgetResponseDto.class);
             return responseDto;
         }
     }
 
-    public Optional<RequestBudget> getRequestBudgetCode(String ObjectiveCode) {
-        return requestBudgetRepo.findById(ObjectiveCode);
+    public ResponseEntity<requestBudgetResponseDto> updaterequestBudget(String requestBudgetCode,
+            requestBudgetRequestDto reqImp) {
+
+        Optional<RequestBudget> roles = reqBudgetRepo.findById(requestBudgetCode);
+        if (!roles.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "project  with this code" + requestBudgetCode + "is not Found");
+        }
+        RequestBudget rol = modelmapper.map(reqImp, RequestBudget.class);
+        rol.setRequestBudgetCode(requestBudgetCode);
+        reqBudgetRepo.save(rol);
+
+        requestBudgetResponseDto roltDto = modelmapper.map(rol, requestBudgetResponseDto.class);
+        return ResponseEntity.ok(roltDto);
+
     }
 
-    public Map<String, Boolean> updateStatus(String ObjectiveCode) {
-        Optional<RequestBudget> bp = requestBudgetRepo.findById(ObjectiveCode);
+    public Map<String, Boolean> updateStatus(String impPeriodCode) {
+        Optional<RequestBudget> bp = reqBudgetRepo.findById(impPeriodCode);
         if (!bp.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -95,10 +119,14 @@ public class requestBudgetService {
             bp.get().setStatus(0);
         else
             bp.get().setStatus(1);
-        requestBudgetRepo.save(bp.get());
+        reqBudgetRepo.save(bp.get());
         Map<String, Boolean> response = new HashMap<>();
         response.put("response", Boolean.TRUE);
         return response;
+    }
+
+    public Optional<RequestBudget> getrequestBudgetCode(String impPeriodCode) {
+        return reqBudgetRepo.findById(impPeriodCode);
     }
 
 }
