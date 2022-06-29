@@ -40,6 +40,7 @@ public class requestBudgetService {
         for (RequestBudget imp : impPeriod) {
             requestBudgetResponseDto responseDto = modelmapper.map(imp, requestBudgetResponseDto.class);
             responseDto.setActivityCode(imp.getActivity().getActivityCode());
+            responseDto.setOfficeID(imp.getOrgStructure().getOfficeID());
             roleDto.add(responseDto);
         }
         return roleDto;
