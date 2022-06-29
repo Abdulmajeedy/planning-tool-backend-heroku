@@ -62,4 +62,9 @@ public class budgetController implements budgetApi {
         return budgService.ApproveActivity(reqBudget);
     }
 
+    @Override
+    public ResponseEntity<List<budgetResponseDto>> getApprovedBudgetByOffice(String OfficeID) {
+        return ResponseEntity.ok(budgService.getApprovedBudgetsByOffice(OfficeID));
+    }
+
 }

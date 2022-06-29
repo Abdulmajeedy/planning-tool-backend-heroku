@@ -99,6 +99,17 @@ public class budgetService {
         }
     }
 
+    public List<budgetResponseDto> getApprovedBudgetsByOffice(String OfficeID) {
+        List<Budget> Approvedbudgets = budgetRepo.findBudgetByOffice(OfficeID);
+        List<budgetResponseDto> roleDto = new ArrayList<>();
+        for (Budget ApBgt : Approvedbudgets) {
+            budgetResponseDto responseDto = modelmapper.map(ApBgt, budgetResponseDto.class);
+            responseDto.setActivityCode(ApBgt.getActivities().getActivityCode());
+            roleDto.add(responseDto);
+        }
+        return roleDto;
+    }
+
     public ResponseEntity<budgetResponseDto> updateBuget(String budgetCode, budgetRequestDto reqBudgets) {
 
         Optional<Activity> activity = activityRepo.findById(reqBudgets.getActivityCode());
