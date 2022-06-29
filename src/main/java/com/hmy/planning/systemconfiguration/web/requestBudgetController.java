@@ -27,11 +27,6 @@ public class requestBudgetController implements requestBudgetApi {
         this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<List<requestBudgetResponseDto>> getRequestBudget(int page, int size) {
-
-        return ResponseEntity.ok(requestBudgetService.findAllRequestBudget(page, size));
-    }
-
     public ResponseEntity<requestBudgetResponseDto> registerRequestBudget(requestBudgetRequestDto reqRequestBudget) {
         return requestBudgetService.addNewRequestBudget(reqRequestBudget);
     }
@@ -52,19 +47,18 @@ public class requestBudgetController implements requestBudgetApi {
 
     @Override
     public ResponseEntity<List<requestBudgetResponseDto>> getRequestBudge(int page, int size) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+        return ResponseEntity.ok(requestBudgetService.findAllRequestBudget(page, size));
 
-    @Override
-    public ResponseEntity<requestBudgetResponseDto> registerRequestBudge(requestBudgetRequestDto requestBudget) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
     public void deleteAll() {
-        // TODO Auto-generated method stub
+        requestBudgetService.deleteAllRequestBudget();
+    }
+
+    @Override
+    public ResponseEntity<requestBudgetResponseDto> registerRequestBudge(requestBudgetRequestDto requestBudget) {
+        return requestBudgetService.addNewRequestBudget(requestBudget);
 
     }
 
