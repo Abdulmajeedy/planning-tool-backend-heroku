@@ -17,7 +17,7 @@ import com.hmy.planning.systemconfiguration.dto.requestBudgetRequestDto;
 import com.hmy.planning.systemconfiguration.dto.requestBudgetResponseDto;
 
 @CrossOrigin
-@RequestMapping("/budget-Period")
+@RequestMapping("/requestBudget")
 public interface requestBudgetApi {
 
         @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
