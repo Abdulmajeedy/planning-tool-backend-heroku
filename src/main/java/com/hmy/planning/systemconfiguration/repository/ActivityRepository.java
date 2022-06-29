@@ -27,7 +27,7 @@ public interface ActivityRepository extends JpaRepository<Activity, String> {
     @Query(value = "select * from activity_quater_period planAct,activity Act where planAct.activity_code=Act.activity_code AND Act.officeID =?1", nativeQuery = true)
     List<Activity> findActivitiesByOffice(String officeID);
 
-    @Query(value = "select * from activity Act where  Act.activity_code =?1", nativeQuery = true)
+    @Query(value = "update activity Act  SET Act.edit_statsu = 0 where  Act.activity_code =?1", nativeQuery = true)
     List<Activity> UpdateEditStatus(String activityCode);
 
 }
