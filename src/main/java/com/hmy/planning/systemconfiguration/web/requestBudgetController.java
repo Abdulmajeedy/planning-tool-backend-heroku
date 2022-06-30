@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hmy.planning.systemconfiguration.dto.requestBudgetRequestDto;
+import com.hmy.planning.systemconfiguration.dto.requestBudgetResponseDto;
+import com.hmy.planning.systemconfiguration.models.RequestBudget;
+import com.hmy.planning.systemconfiguration.repository.RequestBudgetRepository;
 import com.hmy.planning.systemconfiguration.service.requestBudgetService;
 import com.hmy.planning.systemconfiguration.web.api.requestBudgetApi;
 
@@ -17,6 +20,7 @@ public class requestBudgetController implements requestBudgetApi {
 
     private ModelMapper modelMapper;
     private requestBudgetService reqBudgetService;
+    private RequestBudgetRepository reqRepo;
 
     @Autowired
     public requestBudgetController(requestBudgetService reqBudgetService, ModelMapper modelMapper) {
@@ -58,6 +62,12 @@ public class requestBudgetController implements requestBudgetApi {
     @Override
     public ResponseEntity updateStatus(String requestBudgetCode) {
         return ResponseEntity.ok().body(reqBudgetService.updateStatus(requestBudgetCode));
+
+    }
+
+    @Override
+    public ResponseEntity<List<RequestBudget>> getRequestBudgetByOffice(String officeID) {
+        return ResponseEntity.ok(reqRepo.findRequestBudgetByOffice(officeID));
 
     }
 
