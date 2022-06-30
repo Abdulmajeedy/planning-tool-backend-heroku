@@ -130,4 +130,16 @@ public class requestBudgetService {
         return reqBudgetRepo.findById(impPeriodCode);
     }
 
+    public List<requestBudgetResponseDto> findRequestBudgetByOffice(String officeID) {
+        List<RequestBudget> activities = reqBudgetRepo.findRequestBudgetByOffice(officeID);
+        List<requestBudgetResponseDto> actDto = new ArrayList<>();
+        for (RequestBudget Act : activities) {
+            requestBudgetResponseDto responseDto = modelmapper.map(Act, requestBudgetResponseDto.class);
+            responseDto.setActivityCode(Act.getActivity().getActivityCode());
+            responseDto.setOfficeID(Act.getOrgStructure().getOfficeID());
+            actDto.add(responseDto);
+        }
+        return actDto;
+    }
+
 }
