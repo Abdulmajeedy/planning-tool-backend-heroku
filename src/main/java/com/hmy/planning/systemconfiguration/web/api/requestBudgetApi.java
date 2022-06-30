@@ -44,4 +44,7 @@ public interface requestBudgetApi {
         @RequestMapping(value = "updateStatus/{requestBudgetCode}", method = RequestMethod.GET)
         public ResponseEntity updateStatus(@PathVariable("requestBudgetCode") String requestBudgetCode);
 
+        @RequestMapping(value = "getActivitiesByOffice/{officeID}", method = RequestMethod.GET)
+        public ResponseEntity getRequestBudgetByOffice(@PathVariable("officeID") String officeID);
+
 }
