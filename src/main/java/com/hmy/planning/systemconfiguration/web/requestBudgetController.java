@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hmy.planning.systemconfiguration.dto.requestBudgetRequestDto;
 import com.hmy.planning.systemconfiguration.dto.requestBudgetResponseDto;
-import com.hmy.planning.systemconfiguration.models.RequestBudget;
 import com.hmy.planning.systemconfiguration.repository.RequestBudgetRepository;
 import com.hmy.planning.systemconfiguration.service.requestBudgetService;
 import com.hmy.planning.systemconfiguration.web.api.requestBudgetApi;
@@ -66,8 +65,8 @@ public class requestBudgetController implements requestBudgetApi {
     }
 
     @Override
-    public ResponseEntity<List<RequestBudget>> getRequestBudgetByOffice(String officeID) {
-        return ResponseEntity.ok(reqRepo.findRequestBudgetByOffice(officeID));
+    public ResponseEntity<List<requestBudgetResponseDto>> getRequestBudgetByOffice(String officeID) {
+        return ResponseEntity.ok(reqBudgetService.findRequestBudgetByOffice(officeID));
 
     }
 
